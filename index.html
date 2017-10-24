@@ -1,0 +1,255 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Mangrove</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" >
+    <link rel="stylesheet" href="css/jquery.qtip.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/cytoscape-context-menus.css" type="text/css" />
+
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
+    
+    <link rel="stylesheet" href="css/mangrove.css" type="text/css"/>
+
+
+<style>
+body {font-family: "Lato", sans-serif;}
+
+/* Style the tab */
+div.tab_head {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+div.tab_head button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+div.tab_head button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab_head button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+//    border: 1px solid #ccc;
+    border-top: none;
+}
+
+
+</style>
+
+
+</head>
+<body>
+
+<!-- Slidein Panel -->
+    <nav id="menu" class="menu">
+    <a href="#" target="_blank">
+        <header class="menu-header">
+          <span class="menu-header-title">Mangrove</span>
+        </header>
+    </a>
+
+    <section class="menu-section">
+        <h3 class="menu-section-title">Export</h3>
+        <ul class="menu-section-list">            
+            <a href="#" id="export_button"><button onclick="download('The JSON file containing the analysed argument', 'analysis.json', 'text/plain')">Save to JSON</button></a>
+      </ul>
+      </section>
+      
+    <section class="menu-section">
+        <h3 class="menu-section-title">Import</h3>
+        <ul class="menu-section-list">            
+            <a href="" id="import_button"><button onclick="">Load from JSON</button></a>
+        </ul>
+    </section>
+
+    <section class="menu-section">
+        <h3 class="menu-section-title">Documentation</h3>
+        <ul class="menu-section-list">            
+            <a href="" id="a">About</a>
+            <a href="" id="a">Quick-start</a>
+            <a href="" id="a">API</a>
+            <a href="" id="a">Licensing</a>
+      </ul>
+      </section>
+    </nav>
+
+
+    <main id="panel" class="panel">
+    <div class="ui-container">
+
+        <div class="resource-pane" id="resource-pane">
+
+            <div class="tab_head" id="tab_head">
+        <button id="add_button" type="button" onclick="add_tab()"> <i class="fa fa-plus fa-lg"></i> </button></div>
+
+        <div class="tab_body" id="tab_body"></div>
+
+                
+<!--            [1] Buttons: Clear | Load | Save | Add | Remove | Lock | Unlock<br/>
+            [2] Buttons: Tabs IDs<br/>
+            [3] Tabbed collection of Textareas Here (filling remainder of panel <br/>
+
+            <div style="width:100%;">
+                 <textarea id="resource_text" name="" cols="" rows=""></textarea>
+    
+        </div>-->
+        
+        </div>
+
+        <div class="splitter" id="splitter">
+        </div>
+
+        <div class="visualisation-pane">
+            <div id="navbar"><button class="btn-hamburger toggle-button"></button></div>
+            <div id="cy"></div>
+        </div>
+    </div>
+    </main>
+
+<!--
+    New Atom Modal
+-->
+       <div class="modal fade" id="newAtomModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New Atom</h4>
+            </div>
+            <div class="modal-body">
+                <p>Add some content to the new atom</p>
+                 <div class="form-group">
+                    <textarea class="form-control" rows="2" id="new_atom_content"></textarea>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="add_new_atom_node()">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+<!--
+    New Scheme Modal
+-->
+    <div class="modal fade" id="newSchemeModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">New Scheme</h4>
+            </div>
+            <div class="modal-body">
+                <p>Select a scheme</p>
+                <select class="form-control" id="sel1">
+                    <option>Default Support</option>
+                    <option>Default Conflict</option>
+                    <option>Argument from Expert Opinion</option>
+                    <option>Causal Slippery Slope Argument</option>
+                    <option>Argument from Sign</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="add_new_scheme_node()">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!--
+    JS Libraries
+-->
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/jquery-resizable.js"></script>
+    <script src="lib/jquery.qtip.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/cola.js"></script>
+    <script src="lib/lodash.min.js"></script>
+    <script src='lib/cytoscape.min.js'></script>
+    <script src="lib/cytoscape-cola.js"></script>
+    <script src="lib/cytoscape-edgehandles.js"></script> 
+    <script src="lib/cytoscape-qtip.js"></script>
+    <script src="lib/cytoscape-context-menus.js"></script>    
+    <script src="lib/mousetrap.min.js"></script>
+    <script src="lib/slideout.js"></script>
+    
+    <script src="js/mangrove.js"></script>
+
+    <script>
+var current_tab = 0;
+var last_id = 1;
+var tabs = [];
+
+function set_active_tab(tab_id) {
+    if(tabs.length > 0){
+        current_tab = tab_id.substring( 0, tab_id.indexOf("_body") );
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tab_id).style.display = "block";
+        document.getElementById(current_tab+"_btn").className += " active";
+    }
+}
+
+function add_tab() {
+    tab_id = next_id();
+    tabs.push(tab_id);
+
+    var tab_head = $('<button id="'+tab_id+'_btn" class="tablinks" onclick="set_active_tab(\''+tab_id+'_body\')">'+tab_id+'</button>');
+    $(".tab_head").append(tab_head);
+
+    var tab_body = $('<div id="'+tab_id+'_body" class="tabcontent"><form><div class="form-group"><button type="button" class="btn btn-default" onclick="remove_tab()">Remove</button> <button type="button" class="btn btn-default">Load</button> <button type="button" class="btn btn-default">Edit</button> <button type="button" class="btn btn-default">Save</button></div><div class="form-group"><label for="title">Title</label><input id="title" type="text" class="form-control" placeholder="Text input"> <label for="resource_content">Content</label><textarea id="resource_content" class="form-control" rows="10"  style="resize: vertical; min-height:35px;"></textarea>  </div></form></div>');
+    
+    $(".tab_body").append(tab_body);
+    set_active_tab(tab_id+"_body");
+}
+
+function next_id(){ return last_id++; }
+
+function remove_tab(){
+    $("#"+current_tab+"_btn").remove();
+    $("#"+current_tab+"_body").remove();
+    var idx = tabs.indexOf(Number(current_tab));
+    if (tabs.length >= 1 && idx != -1)
+    {
+        tabs.splice(idx, 1);
+        current_tab = tabs[tabs.length-1];
+        set_active_tab(current_tab+"_body");
+    }
+}
+
+</script>
+
+</body>
+</html>
