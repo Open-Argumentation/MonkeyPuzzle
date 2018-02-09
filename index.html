@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/mangrove.css" type="text/css"/>
 
 
+
 <style>
 body {font-family: "Lato", sans-serif;}
 
@@ -60,7 +61,6 @@ div.tab_head button.active {
 
 </head>
 <body>
-
 <!-- Slidein Panel -->
     <nav id="menu" class="menu">
     <a href="#" target="_blank">
@@ -72,14 +72,25 @@ div.tab_head button.active {
     <section class="menu-section">
         <h3 class="menu-section-title">Export</h3>
         <ul class="menu-section-list">            
-            <a href="#" id="export_button"><button onclick="download('The JSON file containing the analysed argument', 'analysis.json', 'text/plain')">Save to JSON</button></a>
+            <a href="#" id="export_button"><button class="btn btn-default" onclick="filemanager(0,1,0)">Save to JSON</button></a>
       </ul>
       </section>
       
     <section class="menu-section">
         <h3 class="menu-section-title">Import</h3>
         <ul class="menu-section-list">            
-            <a href="" id="import_button"><button onclick="">Load from JSON</button></a>
+            <!--<a href="#" id="import_button"><button onclick="filemanager(1,1,0)">Load from JSON</button></a> -->
+			<span class="upload-span">
+				<a rel="ignore">
+					<div display="inline-block" class="btn btn-default">
+						<div>Load from JSON</div>
+					</div>
+					<div display="inline-block">
+						<input accept=".json" id="loadJSON" display="inline-block" role="button" tabindex="0" type="file" class="upload-button" onchange="filemanager(1,1,0)">
+					</div>
+				</a>
+			</span>
+			
         </ul>
     </section>
 
@@ -180,7 +191,51 @@ div.tab_head button.active {
           </div>
         </div>
       </div>
+	  
+<!--
+    Load File Modal
 
+    <div class="modal fade" id="loadFileModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Load File</h4>
+            </div>
+            <div class="modal-body">
+                <p>Select a file type</p>
+                <select class="form-control" id="sel1">
+                    <option>Text</option>
+                    <option>Word Document</option>
+                </select>
+				<style>
+				  #byte_content {
+					margin: 5px 0;
+					max-height: 100px;
+					overflow-y: auto;
+					overflow-x: hidden;
+				  }
+				  #byte_range { margin-top: 5px; }
+				</style>
+
+				<input type="file" id="files" name="file" /> Read bytes: 
+				<span class="readBytesButtons">
+				  <button data-startbyte="0" data-endbyte="4">1-5</button>
+				  <button data-startbyte="5" data-endbyte="14">6-15</button>
+				  <button data-startbyte="6" data-endbyte="7">7-8</button>
+				  <button>entire file</button>
+				</span>
+				<div id="byte_range"></div>
+				<div id="byte_content"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="load_text">Open</button>
+            </div>
+          </div>
+        </div>
+      </div>
+-->
 <!--
     JS Libraries
 -->
@@ -197,6 +252,7 @@ div.tab_head button.active {
     <script src="lib/cytoscape-context-menus.js"></script>    
     <script src="lib/mousetrap.min.js"></script>
     <script src="lib/slideout.js"></script>
+	<script src="lib/filemanager.js"></script>
     
     <script src="js/mangrove.js"></script>
 
@@ -229,7 +285,7 @@ function add_tab() {
     var tab_head = $('<button id="'+tab_id+'_btn" class="tablinks" onclick="set_active_tab(\''+tab_id+'_body\')">'+tab_id+'</button>');
     $(".tab_head").append(tab_head);
 
-    var tab_body = $('<div id="'+tab_id+'_body" class="tabcontent"><form><div class="form-group"><button type="button" class="btn btn-default" onclick="remove_tab()">Remove</button> <button type="button" class="btn btn-default">Load</button> <button type="button" class="btn btn-default">Edit</button> <button type="button" class="btn btn-default">Save</button></div><div class="form-group"><label for="title">Title</label><input id="title" type="text" class="form-control" placeholder="Text input"> <label for="resource_content">Content</label><textarea id="resource_content" class="form-control" rows="10"  style="resize: vertical; min-height:35px;"></textarea>  </div></form></div>');
+    var tab_body = $('<div id="'+tab_id+'_body" class="tabcontent"><form><div class="form-group"><button type="button" class="btn btn-default" onclick="remove_tab()">Remove</button> <span class="upload-span"><a role="button" rel="ignore"><div display="inline-block" class="btn btn-default" uiconfig="[object Object]"><div>Load</div></div><div display="inline-block"><input accept=".txt" id="load'+tab_id+'" display="inline-block" role="button" tabindex="0" type="file" class="upload-button" onchange="filemanager(1,0,'+tab_id+')"></div></a></span> <button type="button" class="btn btn-default">Edit</button> <button type="button" class="btn btn-default" onclick="filemanager(0,0,'+tab_id+')">Save</button></div><div class="form-group"><label for="title">Title</label><input id="title" type="text" class="form-control" placeholder="Text input"> <label for="textarea'+tab_id+'">Content</label><div id="textarea"><textarea id="textarea'+tab_id+'" class="form-control" rows="10"  style="resize: vertical; min-height:35px;"></textarea></div>  </div></form></div>');
     
     $(".tab_body").append(tab_body);
     set_active_tab(tab_id+"_body");
