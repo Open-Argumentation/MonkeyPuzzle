@@ -28,21 +28,23 @@ function initialise() {
 	{
 		loadJSON();
 		initCytoscape();
-	//else get from file
+	//else use default
 	} else
 	{
-		json = "{\"nodes\": [{ \"data\": { \"id\": \"a1\", \"content\": \"Every person is going to die\",\"type\": \"atom\", \"typeshape\": \"roundrectangle\" },\"classes\": \"atom-label\" },{ \"data\": { \"id\": \"a2\", \"content\": \"You are a person\", \"type\": \"atom\", \"typeshape\": \"roundrectangle\" },\"classes\": \"atom-label\" },{ \"data\": { \"id\": \"a3\", \"content\": \"If you are going to die then you should treasure every moment\",\"type\": \"atom\", \"typeshape\": \"roundrectangle\" }, \"classes\": \"atom-label\" },{ \"data\": { \"id\": \"a4\", \"content\": \"You are going to die\", \"type\": \"atom\", \"typeshape\": \"roundrectangle\" },\"classes\": \"atom-label\" },{ \"data\": { \"id\": \"a5\", \"content\": \"You should treasure every moment\", \"type\": \"atom\", \"typeshape\": \"roundrectangle\" },\"classes\": \"atom-label\" },{ \"data\": { \"id\": \"s1\", \"content\": \"Default\\nSupport\", \"type\": \"scheme\", \"typeshape\": \"diamond\"  },\"classes\": \"scheme-label\" },{ \"data\": { \"id\": \"s2\", \"content\": \"Default\\nSupport\", \"type\": \"scheme\", \"typeshape\": \"diamond\"  },\"classes\": \"scheme-label\"}],\"edges\": [{ \"data\": { \"id\": \"a1s1\", \"source\": \"a1\", \"target\": \"s1\" } },{ \"data\": { \"id\": \"a2s1\", \"source\": \"a2\", \"target\": \"s1\" } },{ \"data\": { \"id\": \"a3s2\", \"source\": \"a3\", \"target\": \"s2\" } },{ \"data\": { \"id\": \"s2a5\", \"source\": \"s2\", \"target\": \"a5\" } },{ \"data\": { \"id\": \"s1a4\", \"source\": \"s1\", \"target\": \"a4\" } },{ \"data\": { \"id\": \"a4s2\", \"source\": \"a4\", \"target\": \"s2\" } }]}";
-		cyJson = JSON.parse(json);
+		json = "{\"analyst_email\":\"40170722@live.napier.ac.uk\",\"analyst_name\":\"Nathan Mair\",\"created\":\"2018-02-23T02:27:36\",\"edges\":[{\"id\":\"a1s1\",\"source_id\":\"a1\",\"target_id\":\"s1\"},{\"id\":\"a2s1\",\"source_id\":\"a2\",\"target_id\":\"s1\"},{\"id\":\"a3s2\",\"source_id\":\"a3\",\"target_id\":\"s2\"},{\"id\":\"s2a5\",\"source_id\":\"s2\",\"target_id\":\"a5\"},{\"id\":\"s1a4\",\"source_id\":\"s1\",\"target_id\":\"a4\"},{\"id\":\"a4s2\",\"source_id\":\"a4\",\"target_id\":\"s2\"}],\"edited\":\"2018-02-23T02:27:36\",\"id\":\"94a975db-25ae-4d25-93cc-1c07c932e2f9\",\"metadata\":{},\"nodes\":[{\"id\":\"a1\",\"metadata\":{},\"sources\":[],\"text\":\"Every person is going to die\",\"type\":\"atom\"},{\"id\":\"a2\",\"metadata\":{},\"sources\":[],\"text\":\"You are a person\",\"type\":\"atom\"},{\"id\":\"a3\",\"metadata\":{},\"sources\":[],\"text\":\"If you are going to die then you should treasure every moment\",\"type\":\"atom\"},{\"id\":\"a4\",\"metadata\":{},\"sources\":[],\"text\":\"You are going to die\",\"type\":\"atom\"},{\"id\":\"a5\",\"metadata\":{},\"sources\":[],\"text\":\"You should treasure every moment\",\"type\":\"atom\"},{\"id\":\"s1\",\"name\":\"Default\\nSupport\",\"type\":\"scheme\"},{\"id\":\"s2\",\"name\":\"Default\\nSupport\",\"type\":\"scheme\"}]}";
+		cyJson = export_cytoscape(import_json(json));
+		localStorage.setItem("state",cyJson);
 		initCytoscape();
 	}
 }
 
 function loadJSON() {
-	cyJson = JSON.parse(localStorage.getItem('state'));
+	cyJson = localStorage.getItem('state');
+	console.log(cyJson);
 	if(cy != null)
 	{
 		cy.elements().remove();
-		cy.json({elements: cyJson});
+		cy.json({elements: JSON.parse(cyJson)});
 		redraw_visualisation();
 	}
 }
@@ -51,7 +53,7 @@ function initCytoscape() {
 cy = cytoscape({
 	container: document.getElementById('cy'),
 	ready: function(){ window.cy = this; },
-	elements: cyJson ,
+	elements: JSON.parse(cyJson),
 	style:[
 		{ selector: 'node', style: { 
 			'content': 'data(content)', 

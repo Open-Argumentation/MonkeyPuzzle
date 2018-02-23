@@ -72,7 +72,7 @@ div.tab_head button.active {
     <section class="menu-section">
         <h3 class="menu-section-title">Export</h3>
         <ul class="menu-section-list">            
-            <a href="#" id="export_button"><button class="btn btn-default" onclick="filemanager(0,1,0)">Save to JSON</button></a>
+            <a href="#" id="export_button"><button class="btn btn-default" onclick="filemanager('save','json',null,null,null)">Save to JSON</button></a>
       </ul>
       </section>
       
@@ -86,7 +86,7 @@ div.tab_head button.active {
 						<div>Load from JSON</div>
 					</div>
 					<div display="inline-block">
-						<input accept=".json" id="loadJSON" display="inline-block" role="button" tabindex="0" type="file" class="upload-button" onchange="filemanager(1,1,0)">
+						<input accept=".json" id="loadJSON" display="inline-block" role="button" tabindex="0" type="file" class="upload-button" onchange="filemanager('load','json',null,null,null)">
 					</div>
 				</a>
 			</span>
@@ -252,9 +252,10 @@ div.tab_head button.active {
     <script src="lib/cytoscape-context-menus.js"></script>    
     <script src="lib/mousetrap.min.js"></script>
     <script src="lib/slideout.js"></script>
-	<script src="lib/filemanager.js"></script>
     
+	<script src="js/sadface.js"></script>
     <script src="js/mangrove.js"></script>
+	<script src="js/filemanager.js"></script>
 
     <script>
 var current_tab = 0;
