@@ -83,5 +83,6 @@
 			"name": "Default\nSupport",
 			"type": "scheme"
 		}
-	]
+	], 
+    "resources": []
 }

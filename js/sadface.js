@@ -98,7 +98,7 @@ function add_conflict(arg_text = null, arg_id = null, confilct_text = null, conf
 
     Returns: a dict
 	*/
-	if((arg_text != null || arg_id != null) && (conflict_text != null || conflict+id != null)) {
+	if((arg_text != null || arg_id != null) && (conflict_text != null || conflict_id != null)) {
 		
 		var c;
 		var s;
@@ -155,7 +155,7 @@ function add_edge(source_id, target_id) {
 		sd["edges"].push(edge);
 		return edge;
 	}
-	throw("Could not create new edge between: " +soruce_id+" & "+target_id);
+	throw("Could not create new edge between: " +source_id+" & "+target_id);
 }
 
 function add_atom(text) {
@@ -191,7 +191,7 @@ function add_resource(content) {
     Returns: the new resource dict
 	*/
 	var res = new_resource(content);
-	sa["resources"].push(res);
+	sd["resources"].push(res);
 	return res;
 }
 
@@ -253,7 +253,15 @@ function delete_atom(atom_id) {
     supplied atom ID
 	*/
 	var atom = get_atom(atom_id);
-	delete sd["nodes"][atom];
+	if (atom != null) {
+		for (node in sd['nodes']) {
+			if (sd['nodes'][node]['id'] == atom['id']) {
+				delete sd['nodes'][node];
+				sd['nodes'] = remove_falsy(sd['nodes']);
+				return;
+			}
+		}
+	}
 }
 
 function delete_edge(edge_id)
@@ -262,11 +270,18 @@ function delete_edge(edge_id)
 	Remove the edge from the sadface document identified by the
     supplied edge ID
 	*/
-	var edge = get_edge(edge_id);
-	delete sd["edges"][edge];
+	var del_edge = get_edge(edge_id);
+	for (edge in sd['edges']) {
+		if (sd['edges'][edge]['id'] == del_edge['id']) {
+			delete sd['edges'][edge];
+			sd['edges'] = remove_falsy(sd['edges']);
+			return;
+		}
+	}
+
 }
 
-function delete_source(resource_id) {
+function delete_source(atom_id, resource_id) {
 	/*
 	Remove a source from the atom identified by the
     supplied atom ID & resource ID respectively
@@ -274,7 +289,13 @@ function delete_source(resource_id) {
 	var source = get_source(atom_id, resource_id);
 	var atom = source[0];
 	var resource = source[1];
-	delete atom["sources"][resources];
+	for (src in sd['nodes'][src][atom_id]['sources']) {
+		if (sd['nodes'][src][atom_id]['sources']['resource_id'] == source['id']) {
+			delete sd['nodes'][src][atom_id]['sources']['resource_id'];
+			sd['nodes'][src][atom_id]['sources'] = remove_falsy(sd["nodes"]);
+			return;
+		}
+	}
 }
 
 function delete_resource(resource_id) {
@@ -283,9 +304,14 @@ function delete_resource(resource_id) {
     supplied resource ID
 	*/
 	var resource = get_resource(resource_id);
-	delete sd["resources"][resource];
+	for (res in sd["resources"]) {
+		if (sd["resources"][res]['id'] == resource["id"]) {
+			delete sd["resources"][res];
+			sd["resources"] = remove_falsy(sd["resources"]);
+			return;
+		}
+	}
 }
-
 function delete_scheme(scheme_id) {
 	/*
     Remove the schemee from the sadface document identified by the
@@ -295,6 +321,20 @@ function delete_scheme(scheme_id) {
 	delete sd["nodes"][scheme];
 }
 
+const remove_falsy = (obj) => {
+	/*
+	The delete function in javascript tends to replace deleted objects with
+	null values. This function removes those from an object after something within it is deleted.
+	*/
+	var newObj = [];
+	Object.keys(obj).forEach((prop) => {
+		if (obj[prop]) { 
+			newObj.push(obj[prop]); 
+		}
+	});
+	return newObj;
+};
+
 function export_cytoscape(sadface=null) {
 	/*
 	Cytoscape.js is a useful graph visualisation library for Javascript. However
@@ -302,7 +342,7 @@ function export_cytoscape(sadface=null) {
     elements, useful to Cytoscape's visualisation, but having no place in SADFace.
 
     Both nodes & edges in a Cytoscape graph are collated together into a single
-    elements object so we need to do that to the SADFace nodea & edges. Furthemore,
+    elements object so we need to do that to the SADFace nodes & edges. Furthermore,
     each node and edge object must contain a data object. After that conversion is
     a relatively straightforward mapping:
 
@@ -363,7 +403,6 @@ function export_cytoscape(sadface=null) {
 	{
 		sadface = sd;
 	}
-	console.log(sadface);
 	var cy = {};
 	cy['nodes'] = [];
     cy['edges'] = [];
@@ -374,7 +413,6 @@ function export_cytoscape(sadface=null) {
         e['data']['id'] = edge['id'];
         e['data']['source'] = edge['source_id'];
         e['data']['target'] = edge['target_id'];
-		console.log(e);
         cy['edges'].push(e);
 	}
 	
@@ -396,7 +434,6 @@ function export_cytoscape(sadface=null) {
 		
 		cy['nodes'].push(n);
 	}
-	console.log(cy);
 	return JSON.stringify(cy);
 }
 
@@ -548,6 +585,7 @@ function import_json(json_string) {
 	*/
 	sd = JSON.parse(json_string);
 	return sd;
+
 }
 
 // the try/catch in sadface.py is not needed as javascript cannot read local files without making an http request (which means app can't be run without server), cfg values have been hardcoded
@@ -578,7 +616,7 @@ function new_edge(source_id, target_id) {
 
     Returns: A dict representing the new edge
 	*/
-	var new_edge = {"id":new_uuid(), "source_id":source_id, "taarget_id":target_id};
+	var new_edge = {"id":new_uuid(), "source_id":source_id, "target_id":target_id};
 	return new_edge;
 }
 
@@ -803,6 +841,38 @@ function update_scheme(scheme_id, scheme_name) {
 	} else {
 		throw ("Could not update the name of scheme: "+scheme_id);
 	}
+}
+
+function update_resource(resource_id, content=null, title=null) {
+	/*
+    Given an ID for an existing resource, update the content and title of the resource.
+    Updates the resource in sd;
+	*/
+	var resource = get_resource(resource_id);
+	if (resource != null) {
+		if (content != null) {
+			resource['content'] = content;
+		}
+		if (title != null) {
+			resource['metadata']['title'] = title;
+		}
+		for (let res of sd["resources"]) {
+			if(res["id"] == resource_id) {
+				res = resource;
+			}
+		}
+	} else {
+		throw ("Could not update the resource: "+resource_id);
+	}
+}
+
+function get_sd() {
+	/*
+    Function to get the current state of SD
+    
+    Returns: Current state of SD
+	*/
+	return sd;
 }
 
 
