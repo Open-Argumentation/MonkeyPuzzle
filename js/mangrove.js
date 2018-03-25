@@ -12,15 +12,16 @@ var cyJson  = {};
 var xhttp = new XMLHttpRequest();
 var filename;
 var json;
-var defaultJSON = "{\"analyst_email\":\"40170722@live.napier.ac.uk\",\"analyst_name\":\"Nathan Mair\",\"created\":\"2018-02-23T02:27:36\",\"edges\":[{\"id\":\"a1s1\",\"source_id\":\"a1\",\"target_id\":\"s1\"},{\"id\":\"a2s1\",\"source_id\":\"a2\",\"target_id\":\"s1\"},{\"id\":\"a3s2\",\"source_id\":\"a3\",\"target_id\":\"s2\"},{\"id\":\"s2a5\",\"source_id\":\"s2\",\"target_id\":\"a5\"},{\"id\":\"s1a4\",\"source_id\":\"s1\",\"target_id\":\"a4\"},{\"id\":\"a4s2\",\"source_id\":\"a4\",\"target_id\":\"s2\"}],\"edited\":\"2018-02-23T02:27:36\",\"id\":\"94a975db-25ae-4d25-93cc-1c07c932e2f9\",\"metadata\":{},\"nodes\":[{\"id\":\"a1\",\"metadata\":{},\"sources\":[],\"text\":\"Every person is going to die\",\"type\":\"atom\"},{\"id\":\"a2\",\"metadata\":{},\"sources\":[],\"text\":\"You are a person\",\"type\":\"atom\"},{\"id\":\"a3\",\"metadata\":{},\"sources\":[],\"text\":\"If you are going to die then you should treasure every moment\",\"type\":\"atom\"},{\"id\":\"a4\",\"metadata\":{},\"sources\":[],\"text\":\"You are going to die\",\"type\":\"atom\"},{\"id\":\"a5\",\"metadata\":{},\"sources\":[],\"text\":\"You should treasure every moment\",\"type\":\"atom\"},{\"id\":\"s1\",\"name\":\"Default\\nSupport\",\"type\":\"scheme\"},{\"id\":\"s2\",\"name\":\"Default\\nSupport\",\"type\":\"scheme\"}],\"resources\": []}";
+var defaultJSON = "{\"analyst_email\":\"40170722@live.napier.ac.uk\",\"analyst_name\":\"Nathan Mair\",\"created\":\"2018-02-23T02:27:36\",\"edges\":[{\"id\":\"a1s1\",\"source_id\":\"a1\",\"target_id\":\"s1\"},{\"id\":\"a2s1\",\"source_id\":\"a2\",\"target_id\":\"s1\"},{\"id\":\"a3s2\",\"source_id\":\"a3\",\"target_id\":\"s2\"},{\"id\":\"s2a5\",\"source_id\":\"s2\",\"target_id\":\"a5\"},{\"id\":\"s1a4\",\"source_id\":\"s1\",\"target_id\":\"a4\"},{\"id\":\"a4s2\",\"source_id\":\"a4\",\"target_id\":\"s2\"}],\"edited\":\"2018-02-23T02:27:36\",\"id\":\"94a975db-25ae-4d25-93cc-1c07c932e2f9\",\"metadata\":{},\"nodes\":[{\"id\":\"a1\",\"metadata\":{},\"sources\":[],\"text\":\"Every person is going to die\",\"type\":\"atom\"},{\"id\":\"a2\",\"metadata\":{},\"sources\":[],\"text\":\"You are a person\",\"type\":\"atom\"},{\"id\":\"a3\",\"metadata\":{\"test\":\"test\"},\"sources\":[],\"text\":\"If you are going to die then you should treasure every moment\",\"type\":\"atom\"},{\"id\":\"a4\",\"metadata\":{},\"sources\":[],\"text\":\"You are going to die\",\"type\":\"atom\"},{\"id\":\"a5\",\"metadata\":{},\"sources\":[],\"text\":\"You should treasure every moment\",\"type\":\"atom\"},{\"id\":\"s1\",\"name\":\"Default Support\",\"type\":\"scheme\"},{\"id\":\"s2\",\"name\":\"Default Support\",\"type\":\"scheme\"}],\"resources\": []}";
 var focused;
 var undo_stack = [];
 var redo_stack = [];
+var edit_atom = null;
 
 var cola_params = {
     name: 'cola',
     animate: true,
-    randomize: false, //set this to false as it makes undo/redo slightly smoother, also seems to keep unlinked nodes on screen after redraw
+    randomize: true,
     padding: 100,
     fit: false,
     maxSimulationTime: 1500
@@ -29,6 +30,7 @@ var cola_params = {
 initialise();
 
 function initialise() {
+
 	//load diagram if there is one in localStorage
 	if (localStorage.getItem('state'))
 	{
@@ -62,6 +64,12 @@ function loadJSON(json_value) {
 	}
 }
 
+function loadTabs(tabs) {
+	for (let tab of tabs) {
+		load_tab(tab);
+	}
+}
+
 function initCytoscape() {
 cy = cytoscape({
 	container: document.getElementById('cy'),
@@ -70,11 +78,13 @@ cy = cytoscape({
 	style:[
 		{ selector: 'node', style: { 
 			'content': 'data(content)', 
-			'text-opacity': 0.8, 
+			'text-opacity': 0.6, 
 			'width' : 'auto',
 			'height' : 'auto',
 			'text-valign': 'bottom', 
 			'text-halign': 'right',
+			"text-outline-color": "#eee",
+			"text-outline-width": 3
 			}
 		},
 		{ selector: '[typeshape]', style: { 
@@ -97,12 +107,13 @@ cy = cytoscape({
 		{
 			selector: '.atom-label', style:{
 				'text-wrap': 'wrap',
-				'text-max-width': 80,
+				'text-max-width': 160
 			}
 		},
 		{
 			selector: '.scheme-label', style:{
 				'text-wrap': 'wrap',
+				'text-max-width': 160
 			}
 		}                    
 		],
@@ -146,11 +157,53 @@ cy = cytoscape({
 		complete: function(event, sourceNode, targetNode, addedEles){
 			var source_id = targetNode[0].source().id();
 			var target_id = targetNode[0].target().id();
-			add_edge(source_id, target_id);
+			
+			//get the mid point between source node and target node
+			var source_position = targetNode[0].source().position();
+			var target_position = targetNode[0].target().position();
+			
+			console.log(source_position);
+			console.log(target_position);
+			
+			position = {};
+			position['x'] = ((source_position['x'] + target_position['x'])/2);
+			position['y'] = ((source_position['y'] + target_position['y'])/2);
+			
+			console.log(position);
+			
+			if (targetNode[0].source().data().type == "atom" && targetNode[0].target().data().type == "atom")
+			{
+				var scheme = add_scheme("Default Support");
+				var scheme_id = scheme.id;
+				var scheme_content = scheme.name;
+				
+				//remove the automatically generated edge
+				targetNode.remove();
+
+				cy.add([
+					{group: "nodes", data: {id: scheme_id.toString(),
+						content: scheme_content, typeshape: 'diamond' }, classes: 'scheme-label', locked: false, position: position},
+				]);
+				
+				var edge1 = add_edge(source_id, scheme_id);
+				var edge2 = add_edge(scheme_id, target_id);
+				cy.add([
+				  { group: "edges", data: { id: edge1.id.toString(), source: source_id, target: scheme_id } },
+				  { group: "edges", data: { id: edge2.id.toString(), source: scheme_id, target: target_id } }
+				]);
+				
+			} else {
+				targetNode.remove();
+				var edge = add_edge(source_id, target_id);
+				cy.add([
+				  { group: "edges", data: { id: edge.id.toString(), source: source_id, target: target_id } }
+				]);
+			}
 			update_local_storage();
-			// ...
-		}
+		},
+
 	});
+
 
 /*
  *
@@ -165,7 +218,10 @@ cm = cy.contextMenus({
         selector: 'node[type = "atom"]',
         onClickFunction: function (event) {
           var target = event.target || event.cyTarget;
-          
+          //TODO: Add modal to edit node content
+		  $('#editContentModal').modal('show');
+		  $('#edit_atom_content').val(target.data().content);
+		  edit_atom = target;
         },
         hasTrailingDivider: false
       },
@@ -174,18 +230,28 @@ cm = cy.contextMenus({
         title: 'edit metadata',
         selector: 'node[type = "atom"]',
         onClickFunction: function (event) {
-          var target = event.target || event.cyTarget;
-          
+			$('#edit_metadata').empty();
+			var target = event.target || event.cyTarget;
+			//TODO: Add modal to edit node metadata
+			var atom = get_atom(target.id());
+			var textArea = $('<textarea id="'+target.id()+'_metadata" class="form-control" rows="2" >'+JSON.stringify(atom['metadata'])+'</textarea>');
+			$('#edit_metadata').append(textArea);
+			$('#editMetadataModal').modal('show');
+			edit_atom = target;
         },
         hasTrailingDivider: true
       },
       {
         id: 'change-scheme',
         title: 'change scheme',
-        selector: 'node[type = "scheme"]',
+        selector: 'node[typeshape = "diamond"]',
         onClickFunction: function (event) {
           var target = event.target || event.cyTarget;
-          
+          //TODO: Add modal to edit scheme
+			var target = event.target || event.cyTarget;
+			var scheme = get_scheme(target.id());
+			$('#editSchemeModal').modal('show');
+			edit_atom = target;
         },
         hasTrailingDivider: true
       },
@@ -201,9 +267,17 @@ cm = cy.contextMenus({
 				}
 				selected = [];
 			} else {
-				delete_edge(target.id());
-				update_local_storage();
-				target.remove();
+				if (target.data().type=="atom") {
+					delete_nodes(event);
+					target.remove();
+				} else if (target.data().typeshape=="diamond"){
+					delete_nodes(event);
+					target.remove();
+				} else {
+					delete_edge(target.id());
+					update_local_storage();
+					target.remove();	
+				}	
 			}
         },
         hasTrailingDivider: true
@@ -251,7 +325,6 @@ cm = cy.contextMenus({
         show: false,
         coreAsWell: true,
         onClickFunction: function (event) {
-		  console.log(undo_stack);
 		  undo();
         },
         hasTrailingDivider: false
@@ -269,16 +342,32 @@ cm = cy.contextMenus({
 		  }
         },
         hasTrailingDivider: true
-      }
+      },
+	  {
+		  id: 'merge_nodes',
+		  title: 'merge nodes',
+		  selector: 'node',
+		  show: false,
+		  coreAsWell: true,
+		  onClickFunction: function (event) {
+			  merge_nodes();
+		  }
+	  }
     ]
 });
 
     cy.on('unselect', 'node', function (e){
         selected.pop(e);
+		cm.hideMenuItem('merge_nodes');
     });
 
     cy.on('select', 'node', function (e){ 
 		selected.push(e);
+		if(selected.length>1) {
+			cm.showMenuItem('merge_nodes');
+		} else {
+			cm.hideMenuItem('merge_nodes');
+		}
     });
 	
 	cy.on('tap', function (e){ 
@@ -301,7 +390,6 @@ cm = cy.contextMenus({
         resizeWidthFrom: 'right',
         onDragStart: function (e, $el, opt) {},
         onDragEnd: function (e, $el, opt) { 
-            console.log("resize");  
             cy.resize(); 
         }
     });
@@ -318,8 +406,11 @@ cm = cy.contextMenus({
 		if (selected_text != null) {
 			var content = selected_text;
 			window.getSelection().removeAllRanges()
+		} else if(document.getElementById("new_atom_content").value != '') {
+			var content = document.getEtById("new_atom_content").value; 
 		} else {
-			var content = document.getElementById("new_atom_content").value; 
+			//this occurs when a user drag/drops text not from the tab textarea, creating a blank node
+			return;
 		}
 		var new_atom = add_atom(content);
 		var atom_id = new_atom['id'];
@@ -340,7 +431,7 @@ cm = cy.contextMenus({
 			if(window.getSelection().baseNode.id=="textarea")
 			{
 				selected_text = window.getSelection().toString();
-				console.log("'" + selected_text + "' selected")
+				console.log("'" + selected_text + "' selected");
 				return selected_text;
 			}
 		}
@@ -357,6 +448,7 @@ cm = cy.contextMenus({
 		cm.showMenuItem('undo');
 		cm.hideMenuItem('redo');
 		localStorage.setItem("state", JSON.stringify(get_sd()));
+		update();
 	}
 	
 	function undo() {
@@ -407,10 +499,85 @@ cm = cy.contextMenus({
 	
 	function drop_handler(ev) {
 		ev.preventDefault();
-		console.log(position);
-		position = {'x': ev.clientX-300, 'y': ev.clientY+200};
-		console.log(position);
+		position = {'x': ev.clientX-350, 'y': ev.clientY+200};
 		add_new_atom_node(get_selected_text());
+	}
+	
+	function merge_nodes() {
+		//From all currently selected nodes, set first in selected to the base node, move all sources and edges related to each other node in selected to base node
+		var target;
+		var id;
+		var atom;
+		var baseNode = selected[0].target || selected[0].cyTarget;
+		var baseId = baseNode.id();
+		var baseAtom = get_atom(baseId);
+		if (baseAtom['type'] == "atom") {
+			var sd = get_sd();
+			for (let node in selected) {
+				if (node > 0) {
+					target = selected[node].target || selected[node].cyTarget;
+					id = target.id();
+					atom = get_atom(id);
+					if (atom['type'] == "atom") {
+						for (let source in atom['sources']) {
+							add_source(baseId, atom['sources'][source]['resource_id'], atom['sources'][source]['text'], atom['sources'][source]['offset'], atom['sources'][source]['length']);
+						}
+						for (let edge in sd['edges']) {
+							if (sd['edges'][edge]['source_id'] == id) {
+								add_edge(baseId,sd['edges'][edge]['target_id']);
+							}
+							if (sd['edges'][edge]['target_id'] == id) {
+								add_edge(sd['edges'][edge]['source_id'], baseId);	
+							}
+						}
+					delete_nodes(selected[node]);
+					loadJSON(localStorage.getItem("state"));
+					} else {
+						alert("cannot merge scheme nodes");
+					}
+				}
+			}
+			selected = [];
+		} else {
+			alert("cannot merge scheme nodes");
+		}
+	}
+	
+	function edit_atom_content() {
+		var content = document.getElementById("edit_atom_content").value;
+		var atom = cy.$('#'+edit_atom.id());
+		update_atom_text(edit_atom.id(), content);
+		update_local_storage();
+		atom.data('content', content);
+		edit_atom = null;
+	}
+	
+	function edit_atom_metadata() {
+		var atom = cy.$('#'+edit_atom.id());
+		var content = document.getElementById(atom.id()+"_metadata").value;
+		if (JSON.parse(content)) {
+			var metadata = JSON.parse(content);
+		} else {
+			//TODO: Improve support for badly formatted JSON
+			alert("Metadata not in JSON format, unable to update");
+		}
+		update_atom_metadata(atom.id(), metadata);
+		update_local_storage();
+		edit_atom=null;
+	}
+	
+	function edit_scheme_content() {
+        var scheme_idx = document.getElementById("sel2").options.selectedIndex;
+        var content = document.getElementById("sel2").options[scheme_idx].text;
+		var scheme = cy.$('#'+edit_atom.id());
+		update_scheme(edit_atom.id(), content);
+		update_local_storage();
+		scheme.data('content', content);
+		edit_atom = null;
+	}
+	
+	function clear_local_storage() {
+		localStorage.clear();
 	}
 	//******************************************************
 
@@ -422,7 +589,7 @@ cm = cy.contextMenus({
 		
         cy.add([
             {group: "nodes", data: {id: scheme_id.toString(),
-                content: scheme, typeshape: 'diamond' }, classes: 'scheme-label', locked: false, renderedPosition: position},
+                content: scheme, typeshape: 'diamond' }, classes: 'scheme-label', locked: false, position: position},
         ]);
 		update_local_storage();
     };
@@ -557,6 +724,13 @@ $('#newSchemeModal').on('shown.bs.modal', function () {
     $('#sel1').focus();
 });
 
+$('#editContentModal').on('show.bs.modal', function() {
+	
+});
+
+$('#editMetadataModal').on('show.bs.modal', function() {
+
+});
 
 
 $("#resource_text").blur(function() {

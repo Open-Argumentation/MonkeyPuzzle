@@ -46,7 +46,11 @@ function filemanager(operation, filetype, tab_id)
 			var reader = loadSADFace(file);
 			reader.onload = function(e) {
 				var result = reader.result;
+				localStorage.setItem("state",result);
 				loadJSON(result);
+				var json = JSON.parse(result);
+				loadTabs(json['resources']);
+
 			}
 
 		}

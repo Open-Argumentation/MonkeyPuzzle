@@ -318,7 +318,16 @@ function delete_scheme(scheme_id) {
     supplied scheme ID
 	*/
 	var scheme = get_scheme(scheme_id);
-	delete sd["nodes"][scheme];
+	if (scheme != null) {
+		for (node in sd['nodes']) {
+			if (sd['nodes'][node]['id'] == scheme['id']) {
+				delete sd["nodes"][node];
+				sd['nodes'] = remove_falsy(sd['nodes']);
+				return;
+			}
+		}
+	}
+
 }
 
 const remove_falsy = (obj) => {
@@ -799,6 +808,22 @@ function update_atom_text(atom_id, new_text) {
 		return atom;
 	} else {
 		throw ("Could not update the text value for atom: "+atom_id);
+	}
+}
+
+function update_atom_metadata(atom_id, metadata) {
+	/*
+	Given an atoms ID and a dict object containing its metadata, updates the atom with
+	new set of metadata.
+	
+	Returns: The updated atom dict
+	*/
+	var atom = get_atom(atom_id);
+	if (atom != null) {
+		atom["metadata"] = metadata;
+		return atom;
+	} else {
+		throw ("Could not update the metadata for atom: "+atom_id);
 	}
 }
 
