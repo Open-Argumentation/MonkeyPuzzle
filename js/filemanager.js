@@ -49,6 +49,7 @@ function filemanager(operation, filetype, tab_id)
 				localStorage.setItem("state",result);
 				loadJSON(result);
 				var json = JSON.parse(result);
+				remove_all_tabs();
 				loadTabs(json['resources']);
 
 			}

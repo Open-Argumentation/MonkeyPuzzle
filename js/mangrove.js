@@ -155,51 +155,50 @@ cy = cytoscape({
 		handleOutlineColor: 'grey',
 		edgeType: function(){ return 'flat'; },
 		complete: function(event, sourceNode, targetNode, addedEles){
-			var source_id = targetNode[0].source().id();
-			var target_id = targetNode[0].target().id();
-			
-			//get the mid point between source node and target node
-			var source_position = targetNode[0].source().position();
-			var target_position = targetNode[0].target().position();
-			
-			console.log(source_position);
-			console.log(target_position);
-			
-			position = {};
-			position['x'] = ((source_position['x'] + target_position['x'])/2);
-			position['y'] = ((source_position['y'] + target_position['y'])/2);
-			
-			console.log(position);
-			
-			if (targetNode[0].source().data().type == "atom" && targetNode[0].target().data().type == "atom")
-			{
-				var scheme = add_scheme("Default Support");
-				var scheme_id = scheme.id;
-				var scheme_content = scheme.name;
+			if (targetNode.length != 0) {
+				var source_id = targetNode[0].source().id();
+				var target_id = targetNode[0].target().id();
 				
-				//remove the automatically generated edge
-				targetNode.remove();
+				//get the mid point between source node and target node
+				var source_position = targetNode[0].source().position();
+				var target_position = targetNode[0].target().position();
+				
+				position = {};
+				position['x'] = ((source_position['x'] + target_position['x'])/2);
+				position['y'] = ((source_position['y'] + target_position['y'])/2);
+				
+				if (targetNode[0].source().data().type == "atom" && targetNode[0].target().data().type == "atom")
+				{
+					var scheme = add_scheme("Default Support");
+					var scheme_id = scheme.id;
+					var scheme_content = scheme.name;
+					
+					//remove the automatically generated edge
+					targetNode.remove();
 
-				cy.add([
-					{group: "nodes", data: {id: scheme_id.toString(),
-						content: scheme_content, typeshape: 'diamond' }, classes: 'scheme-label', locked: false, position: position},
-				]);
-				
-				var edge1 = add_edge(source_id, scheme_id);
-				var edge2 = add_edge(scheme_id, target_id);
-				cy.add([
-				  { group: "edges", data: { id: edge1.id.toString(), source: source_id, target: scheme_id } },
-				  { group: "edges", data: { id: edge2.id.toString(), source: scheme_id, target: target_id } }
-				]);
-				
+					cy.add([
+						{group: "nodes", data: {id: scheme_id.toString(),
+							content: scheme_content, typeshape: 'diamond' }, classes: 'scheme-label', locked: false, position: position},
+					]);
+					
+					var edge1 = add_edge(source_id, scheme_id);
+					var edge2 = add_edge(scheme_id, target_id);
+					cy.add([
+					  { group: "edges", data: { id: edge1.id.toString(), source: source_id, target: scheme_id } },
+					  { group: "edges", data: { id: edge2.id.toString(), source: scheme_id, target: target_id } }
+					]);
+					
+				} else {
+					targetNode.remove();
+					var edge = add_edge(source_id, target_id);
+					cy.add([
+					  { group: "edges", data: { id: edge.id.toString(), source: source_id, target: target_id } }
+					]);
+				}
+				update_local_storage();
 			} else {
 				targetNode.remove();
-				var edge = add_edge(source_id, target_id);
-				cy.add([
-				  { group: "edges", data: { id: edge.id.toString(), source: source_id, target: target_id } }
-				]);
 			}
-			update_local_storage();
 		},
 
 	});

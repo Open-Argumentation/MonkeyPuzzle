@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html manifest="/cache.manifest">
 <head>
     <title>Mangrove</title>
     <meta charset="utf-8"/>
@@ -339,6 +339,7 @@ var tabs = [];
 
 function set_active_tab(tab_id) {
     if(tabs.length > 0){
+		console.log(tabs);
         current_tab = tab_id.substring( 0, tab_id.indexOf("_body") );
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -349,8 +350,10 @@ function set_active_tab(tab_id) {
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
-        document.getElementById(tab_id).style.display = "block";
-        document.getElementById(current_tab+"_btn").className += " active";
+		if (document.getElementById(tab_id)) {
+			document.getElementById(tab_id).style.display = "block";
+			document.getElementById(current_tab+"_btn").className += " active";
+		}
     }
 }
 
@@ -371,6 +374,7 @@ function add_tab(load_id=null, content='',title='') {
 	}
 	tab_number = next_number();
     tabs.push(tab_id);
+	console.log(tabs);
 
     var tab_head = $('<button id="'+tab_id+'_btn" class="tablinks" onclick="set_active_tab(\''+tab_id+'_body\')">'+tab_number+'</button>');
     $(".tab_head").append(tab_head);
@@ -404,6 +408,14 @@ function remove_tab(){
         current_tab = tabs[tabs.length-1];
         set_active_tab(current_tab+"_body");
     }
+	console.log(tabs);
+}
+
+function remove_all_tabs() {
+	for (let tab in tabs) {
+		$("#"+tabs[tab]+"_btn").remove();
+		$("#"+tabs[tab]+"_body").remove();
+	}
 }
 
 function add_tab_resource() {
