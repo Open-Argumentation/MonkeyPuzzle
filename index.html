@@ -339,7 +339,6 @@ var tabs = [];
 
 function set_active_tab(tab_id) {
     if(tabs.length > 0){
-		console.log(tabs);
         current_tab = tab_id.substring( 0, tab_id.indexOf("_body") );
         var i, tabcontent, tablinks;
         tabcontent = document.getElementsByClassName("tabcontent");
@@ -359,9 +358,9 @@ function set_active_tab(tab_id) {
 
 function load_tab(resource) {
 	if (resource != null) {
-		var tab_id = resource['id'];
-		var tab_content = resource['content'];
-		var tab_title = resource['metadata']['title'];
+		var tab_id = resource.id;
+		var tab_content = resource.content;
+		var tab_title = resource.metadata.title;
 		add_tab(tab_id, tab_content, tab_title);
 	}
 }
@@ -374,7 +373,6 @@ function add_tab(load_id=null, content='',title='') {
 	}
 	tab_number = next_number();
     tabs.push(tab_id);
-	console.log(tabs);
 
     var tab_head = $('<button id="'+tab_id+'_btn" class="tablinks" onclick="set_active_tab(\''+tab_id+'_body\')">'+tab_number+'</button>');
     $(".tab_head").append(tab_head);
@@ -393,13 +391,13 @@ function remove_tab(){
     var idx = tabs.indexOf(current_tab);
 	//remove resource and its sources from sd
 	delete_resource(current_tab);
-	for (let node of sd['nodes']) {
-		if (node['type']=='atom') {
-			if (current_tab in node['sources']) {
-				delete_source(node['id'], current_tab);
+    sd.nodes.forEach((node) => {
+		if (node.type == 'atom') {
+			if (current_tab in node.sources) {
+				delete_source(node.id, current_tab);
 			}
 		}
-	}
+    });
 	
 	localStorage.setItem("state",JSON.stringify(get_sd()));
     if (tabs.length >= 1 && idx != -1)
@@ -408,19 +406,20 @@ function remove_tab(){
         current_tab = tabs[tabs.length-1];
         set_active_tab(current_tab+"_body");
     }
-	console.log(tabs);
 }
 
 function remove_all_tabs() {
-	for (let tab in tabs) {
-		$("#"+tabs[tab]+"_btn").remove();
-		$("#"+tabs[tab]+"_body").remove();
-	}
+    var i = 0;
+    tabs.forEach((tab) => {
+		$("#"+tabs[i]+"_btn").remove();
+		$("#"+tabs[i]+"_body").remove();
+        ++i;
+    });
 }
 
 function add_tab_resource() {
-	var new_resource = add_resource('');
-	var resource_id = new_resource['id'];
+	var new_resource = add_resource(' ');
+	var resource_id = new_resource.id;
 	add_resource_metadata(resource_id, 'title', '');
 	localStorage.setItem("state",JSON.stringify(get_sd()));
 	return resource_id;

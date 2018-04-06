@@ -6,7 +6,7 @@ function filemanager(operation, filetype, tab_id)
 	if ("save" == operation)	{
 		// if it's a txt file
 		if ("txt" == filetype) {	
-			if (document.getElementById("title_"+tab_id).value != '') {
+			if (document.getElementById("title_"+tab_id).value !== '') {
 				var filename = document.getElementById("title_"+tab_id).value+".txt";
 			} else {
 				var filename = "tab"+tab_id+"_text.txt";
@@ -38,7 +38,6 @@ function filemanager(operation, filetype, tab_id)
 			}
 			reader.readAsText(file);
 		}
-		
 		// if it's a JSON file
 		if ("json" == filetype) {
 			var files = document.getElementById("loadJSON").files;
@@ -50,12 +49,9 @@ function filemanager(operation, filetype, tab_id)
 				loadJSON(result);
 				var json = JSON.parse(result);
 				remove_all_tabs();
-				loadTabs(json['resources']);
-
+				loadTabs(json.resources);
 			}
-
 		}
-		
 	}
 }
 
