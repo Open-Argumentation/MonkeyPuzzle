@@ -464,13 +464,13 @@ cm = cy.contextMenus({
     }
 
     function change_title(tab_id) {
-        title = document.getElementById("title_"+tab_id).value;
+        var title = document.getElementById("title_"+tab_id).value;
         update_resource(tab_id, null, title);
         update_local_storage();
     }
 
     function change_textarea(tab_id) {
-        text = document.getElementById(tab_id).value;
+        var text = document.getElementById(tab_id).value;
         update_resource(tab_id, text, null);
         update_local_storage();
     }

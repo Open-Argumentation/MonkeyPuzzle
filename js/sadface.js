@@ -966,13 +966,14 @@ function update_resource(resource_id, content, title) {
     Given an ID for an existing resource, update the content and metadata of the resource.
     Updates the resource in sd;
     */
-    if (resource_id && content && title) {
+    if (resource_id && (content || title)) {
+        console.log("hello");
         var resource = get_resource(resource_id);
-        if (resource !== null) {
-            if (content !== null) {
+        if (resource !== null && resource !== undefined) {
+            if (content !== null && content !== undefined) {
                 resource.content = content;
             }
-            if (title !== null) {
+            if (title !== null && title !== undefined) {
                 resource.metadata.title = title;
             }
             sd.resources.forEach((res) => {
