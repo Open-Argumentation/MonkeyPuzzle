@@ -495,6 +495,7 @@ cm = cy.contextMenus({
         var baseNode = selected[0].target || selected[0].cyTarget;
         var baseId = baseNode.id();
         var baseAtom = get_atom(baseId);
+        var edge;
         if (baseAtom.type == "atom") {
             sds = get_sd();
             var i = 0;
@@ -512,15 +513,20 @@ cm = cy.contextMenus({
                         j = 0;
                         sds.edges.forEach(function(edge) {
                             if (sds.edges[j].source_id == id) {
-                                add_edge(baseId,sds.edges[j].target_id);
+                                edge = add_edge(baseId,sds.edges[j].target_id);
+                                cy.add([
+                                  { group: "edges", data: { id: edge.id.toString(), source: baseId, target: sds.edges[j].target_id } }
+                                ]);
                             }
                             if (sds.edges[j].target_id == id) {
-                                add_edge(sds.edges[j].source_id, baseId);
+                                edge = add_edge(sds.edges[j].source_id, baseId);
+                                cy.add([
+                                  { group: "edges", data: { id: edge.id.toString(), source: sds.edges[j].source_id, target: baseId } }
+                                ]);
                             }
                             ++j;
                         });
                     delete_nodes(selected[i]);
-                    loadJSON(JSON.stringify(get_sd()));
                     } else {
                         alert("cannot merge scheme nodes");
                     }
