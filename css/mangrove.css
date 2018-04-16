@@ -137,19 +137,4 @@
         right: 0px;
         min-height: 100%;
     }
-	
-	.upload-span {
-	display: inline-block;
-	position: relative;
-	}
-	
-	.upload-button {
-		bottom: 0;
-		font-size: 1000px !important;
-		height: 100%;
-		width:100%;
-		margin: 0;
-		position: absolute;
-		overflow: hidden;
-	}
 
