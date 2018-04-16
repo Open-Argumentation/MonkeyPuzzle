@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html manifest="/cache.manifest">
 <head>
     <title>Mangrove</title>
     <meta charset="utf-8"/>
@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     
     <link rel="stylesheet" href="css/mangrove.css" type="text/css"/>
+
 
 
 <style>
@@ -60,7 +61,6 @@ div.tab_head button.active {
 
 </head>
 <body>
-
 <!-- Slidein Panel -->
     <nav id="menu" class="menu">
     <a href="#" target="_blank">
@@ -72,15 +72,33 @@ div.tab_head button.active {
     <section class="menu-section">
         <h3 class="menu-section-title">Export</h3>
         <ul class="menu-section-list">            
-            <a href="#" id="export_button"><button onclick="download('The JSON file containing the analysed argument', 'analysis.json', 'text/plain')">Save to JSON</button></a>
+            <a href="#" id="export_button"><button class="btn btn-default" onclick="filemanager('save','json',null,null,null)">Save to JSON</button></a>
       </ul>
       </section>
       
     <section class="menu-section">
         <h3 class="menu-section-title">Import</h3>
         <ul class="menu-section-list">            
-            <a href="" id="import_button"><button onclick="">Load from JSON</button></a>
+            <!--<a href="#" id="import_button"><button onclick="filemanager(1,1,0)">Load from JSON</button></a> -->
+			<span class="upload-span">
+				<a rel="ignore">
+					<div display="inline-block" class="btn btn-default">
+						<div>Load from JSON</div>
+					</div>
+					<div display="inline-block">
+						<input accept=".json" id="loadJSON" display="inline-block" role="button" tabindex="0" type="file" class="upload-button" onchange="filemanager('load','json',null,null,null)">
+					</div>
+				</a>
+			</span>
+			
         </ul>
+    </section>
+	
+	<section class="menu-section">
+        <h3 class="menu-section-title">Storage</h3>
+        <ul class="menu-section-list">            
+            <a href="#" id="clear_storage_button"><button class="btn btn-default" onclick="clear_local_storage()">Clear Local Storage</button></a>
+      </ul>
     </section>
 
     <section class="menu-section">
@@ -122,7 +140,7 @@ div.tab_head button.active {
 
         <div class="visualisation-pane">
             <div id="navbar"><button class="btn-hamburger toggle-button"></button></div>
-            <div id="cy"></div>
+            <div id="cy" ondrop="drop_handler(event);" ondragover="dragover_handler(event);"></div>
         </div>
     </div>
     </main>
@@ -150,7 +168,6 @@ div.tab_head button.active {
           </div>
         </div>
       </div>
-    </div>
 
 
 <!--
@@ -168,9 +185,26 @@ div.tab_head button.active {
                 <select class="form-control" id="sel1">
                     <option>Default Support</option>
                     <option>Default Conflict</option>
-                    <option>Argument from Expert Opinion</option>
-                    <option>Causal Slippery Slope Argument</option>
                     <option>Argument from Sign</option>
+					<option>Argument from an Exceptional Case</option>
+					<option>Argument from Analogy</option>
+					<option>Argument from Bias</option>
+					<option>Argument from Cause to Effect</option>
+					<option>Argument from Correlation to Causes</option>
+					<option>Argument from Established Rule</option>
+					<option>Argument from Evidence to a Hypothesis</option>
+					<option>Argument from Falsification to a Hypothesis</option>
+					<option>Argument from Example</option>
+					<option>Argument from Commitment</option>
+					<option>Circumstantial Argument Against the Person</option>
+					<option>Argument from Popular Practice</option>
+					<option>Argument from Popularity</option>
+					<option>Argument from Position to Know</option>
+					<option>Argument from Expert Opinion</option>
+					<option>Argument from Precedent</option>
+					<option>Argument from Consequences</option>
+					<option>Argument from Waste</option>
+                    <option>Causal Slippery Slope Argument</option>
                 </select>
             </div>
             <div class="modal-footer">
@@ -180,7 +214,103 @@ div.tab_head button.active {
           </div>
         </div>
       </div>
+	  
+<!--
+    Edit Content Modal
+-->
 
+	    <div class="modal fade" id="editContentModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Content</h4>
+            </div>
+            <div class="modal-body">
+                <p>Edit atom content</p>
+                 <div class="form-group">
+                    <textarea class="form-control" rows="2" id="edit_atom_content"></textarea>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="edit_atom_content()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+<!--
+    Edit Metadata Modal
+-->
+
+    <div class="modal fade" id="editMetadataModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Metadata</h4>
+            </div>
+            <div class="modal-body">
+             <p>Edit atom content</p>
+                 <div class="form-group" id="edit_metadata">
+                 
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="edit_atom_metadata()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+	  
+<!--
+    Edit Metadata Modal
+-->
+
+    <div class="modal fade" id="editSchemeModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Scheme</h4>
+            </div>
+			<div class="modal-body">
+                <p>Select a scheme</p>
+                <select class="form-control" id="sel2">
+                    <option>Default Support</option>
+                    <option>Default Conflict</option>
+                    <option>Argument from Sign</option>
+					<option>Argument from an Exceptional Case</option>
+					<option>Argument from Analogy</option>
+					<option>Argument from Bias</option>
+					<option>Argument from Cause to Effect</option>
+					<option>Argument from Correlation to Causes</option>
+					<option>Argument from Established Rule</option>
+					<option>Argument from Evidence to a Hypothesis</option>
+					<option>Argument from Falsification to a Hypothesis</option>
+					<option>Argument from Example</option>
+					<option>Argument from Commitment</option>
+					<option>Circumstantial Argument Against the Person</option>
+					<option>Argument from Popular Practice</option>
+					<option>Argument from Popularity</option>
+					<option>Argument from Position to Know</option>
+					<option>Argument from Expert Opinion</option>
+					<option>Argument from Precedent</option>
+					<option>Argument from Consequences</option>
+					<option>Argument from Waste</option>
+                    <option>Causal Slippery Slope Argument</option>
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="edit_scheme_content()">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+	  
 <!--
     JS Libraries
 -->
@@ -198,11 +328,13 @@ div.tab_head button.active {
     <script src="lib/mousetrap.min.js"></script>
     <script src="lib/slideout.js"></script>
     
+	<script src="js/sadface.js"></script>
     <script src="js/mangrove.js"></script>
+	<script src="js/filemanager.js"></script>
 
     <script>
 var current_tab = 0;
-var last_id = 1;
+var last_number = 1;
 var tabs = [];
 
 function set_active_tab(tab_id) {
@@ -217,36 +349,80 @@ function set_active_tab(tab_id) {
         for (i = 0; i < tablinks.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" active", "");
         }
-        document.getElementById(tab_id).style.display = "block";
-        document.getElementById(current_tab+"_btn").className += " active";
+		if (document.getElementById(tab_id)) {
+			document.getElementById(tab_id).style.display = "block";
+			document.getElementById(current_tab+"_btn").className += " active";
+		}
     }
 }
 
-function add_tab() {
-    tab_id = next_id();
+function load_tab(resource) {
+	if (resource != null) {
+		var tab_id = resource.id;
+		var tab_content = resource.content;
+		var tab_title = resource.metadata.title;
+		add_tab(tab_id, tab_content, tab_title);
+	}
+}
+
+function add_tab(load_id=null, content='',title='') {
+	if (load_id == null) {
+		tab_id = add_tab_resource();
+	} else {
+		tab_id = load_id;
+	}
+	tab_number = next_number();
     tabs.push(tab_id);
 
-    var tab_head = $('<button id="'+tab_id+'_btn" class="tablinks" onclick="set_active_tab(\''+tab_id+'_body\')">'+tab_id+'</button>');
+    var tab_head = $('<button id="'+tab_id+'_btn" class="tablinks" onclick="set_active_tab(\''+tab_id+'_body\')">'+tab_number+'</button>');
     $(".tab_head").append(tab_head);
 
-    var tab_body = $('<div id="'+tab_id+'_body" class="tabcontent"><form><div class="form-group"><button type="button" class="btn btn-default" onclick="remove_tab()">Remove</button> <button type="button" class="btn btn-default">Load</button> <button type="button" class="btn btn-default">Edit</button> <button type="button" class="btn btn-default">Save</button></div><div class="form-group"><label for="title">Title</label><input id="title" type="text" class="form-control" placeholder="Text input"> <label for="resource_content">Content</label><textarea id="resource_content" class="form-control" rows="10"  style="resize: vertical; min-height:35px;"></textarea>  </div></form></div>');
+    var tab_body = $('<div id="'+tab_id+'_body" class="tabcontent"><form><div class="form-group"><button type="button" class="btn btn-default" onclick="remove_tab()">Remove</button> <span class="upload-span"><a role="button" rel="ignore"><div display="inline-block" class="btn btn-default" uiconfig="[object Object]"><div>Load</div></div><div display="inline-block"><input accept=".txt" id="load'+tab_id+'" display="inline-block" role="button" tabindex="0" type="file" class="upload-button" onchange="filemanager(\'load\',\'txt\',\''+tab_id+'\')"></div></a></span> <button type="button" class="btn btn-default">Edit</button> <button type="button" class="btn btn-default" onclick="filemanager(\'save\',\'txt\',\''+tab_id+'\')">Save</button></div><div class="form-group"><label>Title</label><textarea id="title_'+tab_id+'" type="text" rows="1" style="resize: none;" class="form-control" placeholder="Text input" onchange="change_title(\''+tab_id+'\')">'+title+'</textarea> <label>Content</label><div id="textarea"><textarea id="'+tab_id+'" class="form-control" rows="20" onchange="change_textarea(\''+tab_id+'\')" onfocus="setFocused(this)" style="resize: vertical; min-height:35px;">'+content+'</textarea></div>  </div></form></div>');
     
     $(".tab_body").append(tab_body);
     set_active_tab(tab_id+"_body");
 }
 
-function next_id(){ return last_id++; }
+function next_number(){ return last_number++; }
 
 function remove_tab(){
     $("#"+current_tab+"_btn").remove();
     $("#"+current_tab+"_body").remove();
-    var idx = tabs.indexOf(Number(current_tab));
+    var idx = tabs.indexOf(current_tab);
+	//remove resource and its sources from sd
+	delete_resource(current_tab);
+    sd.nodes.forEach((node) => {
+		if (node.type == 'atom') {
+			if (current_tab in node.sources) {
+				delete_source(node.id, current_tab);
+			}
+		}
+    });
+	
+	localStorage.setItem("state",JSON.stringify(get_sd()));
     if (tabs.length >= 1 && idx != -1)
     {
         tabs.splice(idx, 1);
         current_tab = tabs[tabs.length-1];
         set_active_tab(current_tab+"_body");
     }
+}
+
+function remove_all_tabs() {
+    var i = 0;
+    tabs.forEach((tab) => {
+		$("#"+tabs[i]+"_btn").remove();
+		$("#"+tabs[i]+"_body").remove();
+        ++i;
+    });
+}
+
+function add_tab_resource() {
+	var new_resource = add_resource(' ');
+	var resource_id = new_resource.id;
+	add_resource_metadata(resource_id, 'title', '');
+	localStorage.setItem("state",JSON.stringify(get_sd()));
+	return resource_id;
 }
 
 </script>
