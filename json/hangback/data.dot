@@ -1,0 +1,22 @@
+digraph SADFace {node [style="filled"]"9bfb7cdc-116f-47f5-b85d-ff7c5d329f45" [label="The 'Hang Back' campaign
+video should not have
+been published, and
+should be withdrawn."] [shape=box, style=rounded];
+"49a786ce-9066-4230-8e18-42086882a160" [label="support"] [shape=diamond];
+"30c9c0ac-ddef-44e7-897d-52ffee97b837" [label="The 'Hang Back' advert
+does not clearly express
+the intended message"] [shape=box, style=rounded];
+"02b4009b-1a12-4d53-ab3a-efabe6c44694" [label="The 'Hang Back' campaign
+was the wrong campaign to
+run"] [shape=box, style=rounded];
+"5760a93a-55e7-447c-a245-7f8d7e7e4434" [label="conflict"] [shape=diamond];
+"fbaa9b79-0965-45a1-9fd4-60701c2102cf" [label="Road users have a
+responsibility to make
+our roads safer by being
+more vigilant."] [shape=box, style=rounded];
+"49a786ce-9066-4230-8e18-42086882a160" -> "9bfb7cdc-116f-47f5-b85d-ff7c5d329f45";
+"30c9c0ac-ddef-44e7-897d-52ffee97b837" -> "49a786ce-9066-4230-8e18-42086882a160";
+"02b4009b-1a12-4d53-ab3a-efabe6c44694" -> "49a786ce-9066-4230-8e18-42086882a160";
+"5760a93a-55e7-447c-a245-7f8d7e7e4434" -> "02b4009b-1a12-4d53-ab3a-efabe6c44694";
+"fbaa9b79-0965-45a1-9fd4-60701c2102cf" -> "5760a93a-55e7-447c-a245-7f8d7e7e4434";
+}
