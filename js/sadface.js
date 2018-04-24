@@ -615,13 +615,13 @@ function get_scheme(scheme_id) {
     /*
     Retrieve the scheme dict identified by the supplied scheme ID
 
-    Returns: An scheme dict
+    Returns: A scheme dict
     */
     if (scheme_id) {
         var node;
         var size = Object.keys(sd.nodes).length;
         for (var i = 0; i < size; ++i) {
-            node = sd.resources[i];
+            node = sd.nodes[i];
             if (node.id === scheme_id) {
                 return node;
             } 
