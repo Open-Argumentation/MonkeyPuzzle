@@ -78,15 +78,12 @@ div.tab_head button.active {
       
     <section class="menu-section">
         <h3 class="menu-section-title">Import</h3>
-        <ul class="menu-section-list">            
-            <!--<a href="#" id="import_button"><button onclick="filemanager(1,1,0)">Load from JSON</button></a> -->
+        <ul class="menu-section-list">
 			<span class="upload-span">
 				<a rel="ignore">
-					<div display="inline-block" class="btn btn-default">
-						<div>Load from JSON</div>
-					</div>
 					<div display="inline-block">
-						<input accept=".json" id="loadJSON" display="inline-block" role="button" tabindex="0" type="file" class="upload-button" onchange="filemanager('load','json',null,null,null)">
+						<input id="loadJSON" style="display:none;" accept=".json" role="button" tabindex="-1000" type="file" class="upload-button" onchange="filemanager('load','json',null,null,null)">
+                        <input type="button" class="btn btn-default" value="Load SADFace" onclick="document.getElementById('loadJSON').click();" />
 					</div>
 				</a>
 			</span>
