@@ -967,7 +967,6 @@ function update_resource(resource_id, content, title) {
     Updates the resource in sd;
     */
     if (resource_id && (content || title)) {
-        console.log("hello");
         var resource = get_resource(resource_id);
         if (resource !== null && resource !== undefined) {
             if (content !== null && content !== undefined) {
