@@ -14,6 +14,7 @@ var undo_stack = [];
 var redo_stack = [];
 var edit_atom = null;
 var test;
+var resource_pane_viewable_state = true;
 
 var cola_params = {
     name: "cola",
@@ -745,3 +746,27 @@ $(".toggle-button").click(function() {
     if(slideout.isOpen()) { slideout.close(); }
     else { slideout.open(); }
 });
+
+
+/*
+ *
+ * Resource Pane Functions
+ *
+ * */
+
+function toggle_resource_pane()
+{
+    if(resource_pane_viewable_state == true)
+    {
+        $('#resource-pane').children().hide(); 
+        $('#resource-pane').hide(); 
+        resource_pane_viewable_state = false;
+    }
+    else
+    {
+        $('#resource-pane').show(); 
+        $('#resource-pane').children().show();
+        resource_pane_viewable_state = true;
+    }
+}
+
