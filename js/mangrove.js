@@ -418,7 +418,6 @@ cm = cy.contextMenus({
             if(window.getSelection().baseNode.id=="textarea")
             {
                 selected_text = window.getSelection().toString();
-                console.log("\"" + selected_text + "\" selected");
                 return selected_text;
             }
         }
