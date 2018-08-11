@@ -405,7 +405,8 @@ cm = cy.contextMenus({
         }
         cy.add([
             {group: "nodes", data: {id: atom_id.toString(),
-                content: content, type: "atom", typeshape: "roundrectangle" }, classes: "atom-label", locked: false, renderedPosition: position}
+                content: content, type: "atom", typeshape: "roundrectangle" }, 
+                classes: "atom-label", locked: false, renderedPosition: position}
         ]);
         update_local_storage();
     }
