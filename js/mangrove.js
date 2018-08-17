@@ -398,7 +398,6 @@ cm = cy.contextMenus({
             //this occurs when a user drag/drops text not from the tab textarea, creating a blank node
             return;
         }
-        console.log(position);
         var new_atom = add_atom(content);
         var atom_id = new_atom.id;
         if (selected_text !== undefined) {
@@ -412,6 +411,21 @@ cm = cy.contextMenus({
                 content: content, type: "atom", typeshape: "roundrectangle" }, 
                 classes: "atom-label", locked: false, renderedPosition: position}
         ]);
+        node = cy.getElementById(atom_id.toString() );
+        node.qtip({
+        content: "Metadata about this atom",
+        position: {
+            my: "top center",
+            at: "bottom center"
+        },
+        style: {
+            classes: "qtip-bootstrap",
+            tip: {
+                width: 16,
+                height: 8
+            }
+        }
+    });
         position = null;
         update_local_storage();
     }
