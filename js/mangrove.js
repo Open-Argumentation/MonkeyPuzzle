@@ -43,6 +43,7 @@ function initialise() {
         cyJson = export_cytoscape(json);
         initCytoscape();
     }
+    cy.pan({ x: 0, y: 200 });
 }
 
 function loadJSON(json_value) {
@@ -120,7 +121,6 @@ cy = cytoscape({
         selectionType: "single",
         minZoom: 0.05,
         maxZoom: 2
-
 });
 
     layout = build_cola_layout();
