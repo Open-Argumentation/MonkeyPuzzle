@@ -70,7 +70,7 @@ div.tab_head button.active {
     <section class="menu-section">
         <h3 class="menu-section-title">Interface</h3>
         <ul class="menu-section-list">            
-            <a href="#" id="toggle_resources"><button class="btn btn-default" onclick="toggle_resource_pane()" title="Show/Hide Resources">Show/Hide Resources</button></a>
+            <a href="#" id="toggle_resources"><button class="btn btn-default" onclick="toggle_resource_pane()" title="Toggle the visibility of the resources pane">Show/Hide Resources</button></a>
             <a href="#" id="clear_storage_button"><button class="btn btn-default" onclick="clear_local_storage()" title="Reset MonkeyPuzzle to her initial state">Reset</button></a>
 
       </ul>
@@ -80,7 +80,7 @@ div.tab_head button.active {
     <section class="menu-section">
         <h3 class="menu-section-title">Export</h3>
         <ul class="menu-section-list">            
-            <a href="#" id="export_button"><button class="btn btn-default" onclick="filemanager('save','json',null,null,null)">SADFace</button></a>
+            <a href="#" id="export_button"><button class="btn btn-default" onclick="filemanager('save','json',null,null,null)" title="Export the current analysis to a SADFace formatted JSON document">SADFace</button></a>
       </ul>
       </section>
       
@@ -91,7 +91,7 @@ div.tab_head button.active {
 				<a rel="ignore">
 					<div display="inline-block">
 						<input id="loadJSON" style="display:none;" accept=".json" role="button" tabindex="-1000" type="file" class="upload-button" onchange="filemanager('load','json',null,null,null)">
-                        <input type="button" class="btn btn-default" value="SADFace" onclick="document.getElementById('loadJSON').click();" />
+                        <input type="button" class="btn btn-default" value="SADFace" onclick="document.getElementById('loadJSON').click();" title="Load a SADFace formatted JSON document into MonkeyPuzzle"/>
 					</div>
 				</a>
 			</span>
