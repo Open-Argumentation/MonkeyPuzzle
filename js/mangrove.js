@@ -574,6 +574,7 @@ cm = cy.contextMenus({
 
     function clear_local_storage() {
         localStorage.clear();
+        window.location.reload(false);
     }
     //******************************************************
 
