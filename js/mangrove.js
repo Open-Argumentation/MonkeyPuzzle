@@ -398,16 +398,21 @@ cm = cy.contextMenus({
             //this occurs when a user drag/drops text not from the tab textarea, creating a blank node
             return;
         }
+        console.log(position);
         var new_atom = add_atom(content);
         var atom_id = new_atom.id;
         if (selected_text !== undefined) {
             add_source(atom_id, focused, content, 0, 0);
         }
+        if (position == null) {
+            position = {"x": cy.width()/2, "y": cy.height()/2};
+            }
         cy.add([
             {group: "nodes", data: {id: atom_id.toString(),
                 content: content, type: "atom", typeshape: "roundrectangle" }, 
                 classes: "atom-label", locked: false, renderedPosition: position}
         ]);
+        position = null;
         update_local_storage();
     }
 
