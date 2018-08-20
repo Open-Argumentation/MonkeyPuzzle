@@ -38,9 +38,7 @@ function initialise() {
     } else
     {
         localStorage.setItem("state",default_sadface_doc);
-        test = default_sadface_doc ;
-        json = import_json(default_sadface_doc);
-        cy_data = export_cytoscape(json);
+        cy_data = export_cytoscape(import_json(default_sadface_doc));
         initCytoscape();
     }
     cy.pan({ x: 0, y: 200 });
