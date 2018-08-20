@@ -6,9 +6,9 @@ var selected = [];
 var position = null;
 var layout = null;
 var running = false;
-var cyJson  = {};
+var cy_data  = {};
 var json;
-var defaultJSON = "{\"analyst_email\":\"40170722@live.napier.ac.uk\",\"analyst_name\":\"Nathan Mair\",\"created\":\"2018-02-23T02:27:36\",\"edges\":[{\"id\":\"a1s1\",\"source_id\":\"a1\",\"target_id\":\"s1\"},{\"id\":\"a2s1\",\"source_id\":\"a2\",\"target_id\":\"s1\"},{\"id\":\"a3s2\",\"source_id\":\"a3\",\"target_id\":\"s2\"},{\"id\":\"s2a5\",\"source_id\":\"s2\",\"target_id\":\"a5\"},{\"id\":\"s1a4\",\"source_id\":\"s1\",\"target_id\":\"a4\"},{\"id\":\"a4s2\",\"source_id\":\"a4\",\"target_id\":\"s2\"}],\"edited\":\"2018-02-23T02:27:36\",\"id\":\"94a975db-25ae-4d25-93cc-1c07c932e2f9\",\"metadata\":{},\"nodes\":[{\"id\":\"a1\",\"metadata\":{},\"sources\":[],\"text\":\"Every person is going to die\",\"type\":\"atom\"},{\"id\":\"a2\",\"metadata\":{},\"sources\":[],\"text\":\"You are a person\",\"type\":\"atom\"},{\"id\":\"a3\",\"metadata\":{\"test\":\"test\"},\"sources\":[],\"text\":\"If you are going to die then you should treasure every moment\",\"type\":\"atom\"},{\"id\":\"a4\",\"metadata\":{},\"sources\":[],\"text\":\"You are going to die\",\"type\":\"atom\"},{\"id\":\"a5\",\"metadata\":{},\"sources\":[],\"text\":\"You should treasure every moment\",\"type\":\"atom\"},{\"id\":\"s1\",\"name\":\"Default Support\",\"type\":\"scheme\"},{\"id\":\"s2\",\"name\":\"Default Support\",\"type\":\"scheme\"}],\"resources\": []}";
+var default_sadface_doc = "{\"analyst_email\":\"40170722@live.napier.ac.uk\",\"analyst_name\":\"Nathan Mair\",\"created\":\"2018-02-23T02:27:36\",\"edges\":[],\"edited\":\"2018-02-23T02:27:36\",\"id\":\"94a975db-25ae-4d25-93cc-1c07c932e2f9\",\"metadata\":{},\"nodes\":[],\"resources\": []}";
 var focused;
 var undo_stack = [];
 var redo_stack = [];
@@ -37,10 +37,10 @@ function initialise() {
     //else use default
     } else
     {
-        localStorage.setItem("state",defaultJSON);
-        test = defaultJSON;
-        json = import_json(defaultJSON);
-        cyJson = export_cytoscape(json);
+        localStorage.setItem("state",default_sadface_doc);
+        test = default_sadface_doc ;
+        json = import_json(default_sadface_doc);
+        cy_data = export_cytoscape(json);
         initCytoscape();
     }
     cy.pan({ x: 0, y: 200 });
@@ -54,11 +54,11 @@ function loadJSON(json_value) {
     window.onload = function () {
         loadTabs(json.resources);
     };
-    cyJson = export_cytoscape(json);
+    cy_data = export_cytoscape(json);
     if(cy !== null)
     {
         cy.elements().remove();
-        cy.json({elements: JSON.parse(cyJson)});
+        cy.json({elements: JSON.parse(cy_data)});
         redraw_visualisation();
     }
 }
@@ -73,7 +73,7 @@ function initCytoscape() {
 cy = cytoscape({
     container: document.getElementById("cy"),
     ready: function(){ window.cy = this; },
-    elements: JSON.parse(cyJson),
+    elements: JSON.parse(cy_data),
     style:[
         { selector: "node", style: {
             "content": "data(content)",
@@ -788,5 +788,25 @@ function toggle_resource_pane()
         $('#resource-pane').children().show();
         resource_pane_viewable_state = true;
     }
+}
+
+/*
+ *
+ * Demo Functions
+ *
+ * */
+
+
+function load_demo_argument()
+{
+
+    var demo_argument = "{\"analyst_email\":\"40170722@live.napier.ac.uk\",\"analyst_name\":\"Nathan Mair\",\"created\":\"2018-02-23T02:27:36\",\"edges\":[{\"id\":\"a1s1\",\"source_id\":\"a1\",\"target_id\":\"s1\"},{\"id\":\"a2s1\",\"source_id\":\"a2\",\"target_id\":\"s1\"},{\"id\":\"a3s2\",\"source_id\":\"a3\",\"target_id\":\"s2\"},{\"id\":\"s2a5\",\"source_id\":\"s2\",\"target_id\":\"a5\"},{\"id\":\"s1a4\",\"source_id\":\"s1\",\"target_id\":\"a4\"},{\"id\":\"a4s2\",\"source_id\":\"a4\",\"target_id\":\"s2\"}],\"edited\":\"2018-02-23T02:27:36\",\"id\":\"94a975db-25ae-4d25-93cc-1c07c932e2f9\",\"metadata\":{},\"nodes\":[{\"id\":\"a1\",\"metadata\":{},\"sources\":[],\"text\":\"Every person is going to die\",\"type\":\"atom\"},{\"id\":\"a2\",\"metadata\":{},\"sources\":[],\"text\":\"You are a person\",\"type\":\"atom\"},{\"id\":\"a3\",\"metadata\":{\"test\":\"test\"},\"sources\":[],\"text\":\"If you are going to die then you should treasure every moment\",\"type\":\"atom\"},{\"id\":\"a4\",\"metadata\":{},\"sources\":[],\"text\":\"You are going to die\",\"type\":\"atom\"},{\"id\":\"a5\",\"metadata\":{},\"sources\":[],\"text\":\"You should treasure every moment\",\"type\":\"atom\"},{\"id\":\"s1\",\"name\":\"Default Support\",\"type\":\"scheme\"},{\"id\":\"s2\",\"name\":\"Default Support\",\"type\":\"scheme\"}],\"resources\": []}";
+
+    console.log("LOAD DEMO");
+    localStorage.setItem("state",demo_argument);
+    test = demo_argument;
+    json = import_json(demo_argument);
+    cy_data = export_cytoscape(json);
+    initCytoscape();
 }
 
