@@ -9,11 +9,11 @@ var running = false;
 var cy_data  = {};
 var json;
 var default_sadface_doc = "{\"analyst_email\":\"40170722@live.napier.ac.uk\",\"analyst_name\":\"Nathan Mair\",\"created\":\"2018-02-23T02:27:36\",\"edges\":[],\"edited\":\"2018-02-23T02:27:36\",\"id\":\"94a975db-25ae-4d25-93cc-1c07c932e2f9\",\"metadata\":{},\"nodes\":[],\"resources\": []}";
+var current_sadface_doc = null;
 var focused;
 var undo_stack = [];
 var redo_stack = [];
 var edit_atom = null;
-var test;
 var resource_pane_viewable_state = true;
 
 var cola_params = {
@@ -37,8 +37,9 @@ function initialise() {
     //else use default
     } else
     {
-        localStorage.setItem("state",default_sadface_doc);
-        cy_data = export_cytoscape(import_json(default_sadface_doc));
+        current_sadface_doc = default_sadface_doc;
+        localStorage.setItem("state", current_sadface_doc);
+        cy_data = export_cytoscape(import_json(current_sadface_doc));
         initCytoscape();
     }
     cy.pan({ x: 0, y: 200 });
@@ -47,7 +48,7 @@ function initialise() {
 function loadJSON(json_value) {
     json = import_json(json_value);
     localStorage.setItem("state",JSON.stringify(get_sd()));
-    test = JSON.stringify(get_sd());
+    current_sadface_doc = JSON.stringify(get_sd());
     //load any sources in the stored diagram state
     window.onload = function () {
         loadTabs(json.resources);
@@ -445,13 +446,13 @@ cm = cy.contextMenus({
     }
 
     function update_local_storage() {
-        var undo_item = JSON.parse(test);
+        var undo_item = JSON.parse(current_sadface_doc);
         undo_stack.push(undo_item);
         redo_stack = [];
         cm.showMenuItem("undo");
         cm.hideMenuItem("redo");
         localStorage.setItem("state", JSON.stringify(get_sd()));
-        test = JSON.stringify(get_sd());
+        current_sadface_doc = JSON.stringify(get_sd());
         update();
     }
 
@@ -802,7 +803,7 @@ function load_demo_argument()
 
     console.log("LOAD DEMO");
     localStorage.setItem("state",demo_argument);
-    test = demo_argument;
+    current_sadface_doc = demo_argument;
     json = import_json(demo_argument);
     cy_data = export_cytoscape(json);
     initCytoscape();
