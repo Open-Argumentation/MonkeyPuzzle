@@ -32,19 +32,6 @@
             padding: 0px;
             width: 100%;
         }
-        textarea {
-            border: none;
-            overflow: auto;
-            outline: none;
-            -webkit-box-shadow: none;
-            -moz-box-shadow: none;
-            box-shadow: none;
-            width:100%; 
-            background:lightgray; 
-            color:#838383; 
-            height:100%;
-    }
-
 
     body, .panel { background-color: #fff; }
     .menu {
