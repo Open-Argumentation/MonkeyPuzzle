@@ -271,15 +271,8 @@ cm = cy.contextMenus({
         title: "add atom",
         coreAsWell: true,
         onClickFunction: function (event) {
-
-            position = event.position || event.cyPosition;
-            var selected_text = get_selected_text();
-            if (selected_text === undefined)
-            {
-                $("#newAtomModal").modal("show");
-            } else {
-                add_new_atom_node(selected_text);
-            }
+            position = event.renderedPosition;
+            $("#newAtomModal").modal("show");
         }
       },
       {
@@ -386,8 +379,8 @@ cm = cy.contextMenus({
  * */
 
     //******************************************************
-    function add_new_atom_node(selected_text) {
-        var content;
+    function add_new_atom_node(content) {
+        /*var content;
         if (selected_text !== undefined) {
             content = selected_text;
             window.getSelection().removeAllRanges();
@@ -396,10 +389,10 @@ cm = cy.contextMenus({
         } else {
             //this occurs when a user drag/drops text not from the tab textarea, creating a blank node
             return;
-        }
+        }*/
         var new_atom = add_atom(content);
         var atom_id = new_atom.id;
-        if (selected_text !== undefined) {
+        if (content !== undefined) {
             add_source(atom_id, focused, content, 0, 0);
         }
         if (position == null) {
@@ -502,7 +495,7 @@ cm = cy.contextMenus({
 
     function drop_handler(ev) {
         ev.preventDefault();
-        position = {"x": ev.clientX-350, "y": ev.clientY+200};
+        position = {x: ev.clientX-280, y: ev.clientY+200};
         add_new_atom_node(get_selected_text());
     }
 
@@ -683,13 +676,13 @@ function build_cola_layout( opts )
 mt.bind("a", function() {
     //console.log("ADD NODE OR EDGE");
 
-    var selected_text = get_selected_text();
-    if (selected_text === undefined)
-    {
+//    var selected_text = get_selected_text();
+ //   if (selected_text === undefined)
+  //  {
         $("#newAtomModal").modal("show");
-    } else {
-        add_new_atom_node(selected_text);
-    }
+//    } else {
+  //      add_new_atom_node(selected_text);
+   // }
 });
 
 mt.bind("d", function() {
@@ -734,6 +727,12 @@ mt.bind(["command+y","ctrl+y"], function() {
  * Modal Dialog Functions
  *
  * */
+
+
+function new_atom_modal() {
+    var new_content = document.getElementById("new_atom_content").value;
+    add_new_atom_node(new_content);
+}
 
 $("#newAtomModal").on("shown.bs.modal", function () {
     $("#new_atom_content").focus();
@@ -801,7 +800,6 @@ function load_demo_argument()
 
     var demo_sadface_doc = "{\"analyst_email\":\"40170722@live.napier.ac.uk\",\"analyst_name\":\"Nathan Mair\",\"created\":\"2018-02-23T02:27:36\",\"edges\":[{\"id\":\"a1s1\",\"source_id\":\"a1\",\"target_id\":\"s1\"},{\"id\":\"a2s1\",\"source_id\":\"a2\",\"target_id\":\"s1\"},{\"id\":\"a3s2\",\"source_id\":\"a3\",\"target_id\":\"s2\"},{\"id\":\"s2a5\",\"source_id\":\"s2\",\"target_id\":\"a5\"},{\"id\":\"s1a4\",\"source_id\":\"s1\",\"target_id\":\"a4\"},{\"id\":\"a4s2\",\"source_id\":\"a4\",\"target_id\":\"s2\"}],\"edited\":\"2018-02-23T02:27:36\",\"id\":\"94a975db-25ae-4d25-93cc-1c07c932e2f9\",\"metadata\":{},\"nodes\":[{\"id\":\"a1\",\"metadata\":{},\"sources\":[],\"text\":\"Every person is going to die\",\"type\":\"atom\"},{\"id\":\"a2\",\"metadata\":{},\"sources\":[],\"text\":\"You are a person\",\"type\":\"atom\"},{\"id\":\"a3\",\"metadata\":{\"test\":\"test\"},\"sources\":[],\"text\":\"If you are going to die then you should treasure every moment\",\"type\":\"atom\"},{\"id\":\"a4\",\"metadata\":{},\"sources\":[],\"text\":\"You are going to die\",\"type\":\"atom\"},{\"id\":\"a5\",\"metadata\":{},\"sources\":[],\"text\":\"You should treasure every moment\",\"type\":\"atom\"},{\"id\":\"s1\",\"name\":\"Default Support\",\"type\":\"scheme\"},{\"id\":\"s2\",\"name\":\"Default Support\",\"type\":\"scheme\"}],\"resources\": []}";
 
-    console.log("LOAD DEMO");
     localStorage.setItem("state",demo_sadface_doc);
     cy_data = export_cytoscape(import_json(demo_sadface_doc));
     initCytoscape();
