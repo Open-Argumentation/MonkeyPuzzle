@@ -16,8 +16,8 @@
             padding: 0px;
             width: 300px;
             height:100vh;
-            max-width:65%;
-            min-width: 0%;
+            max-width:75%;
+            min-width: 15%;
             background-color: #cbc5c1;
             color: #3E3E3B;
         }
