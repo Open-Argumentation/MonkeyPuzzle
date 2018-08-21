@@ -380,24 +380,15 @@ cm = cy.contextMenus({
 
     //******************************************************
     function add_new_atom_node(content) {
-        /*var content;
-        if (selected_text !== undefined) {
-            content = selected_text;
-            window.getSelection().removeAllRanges();
-        } else if(document.getElementById("new_atom_content").value !== "") {
-            content = document.getElementById("new_atom_content").value;
-        } else {
-            //this occurs when a user drag/drops text not from the tab textarea, creating a blank node
-            return;
-        }*/
+        console.log("CONTENT: "+content);
         var new_atom = add_atom(content);
         var atom_id = new_atom.id;
         if (content !== undefined) {
-            add_source(atom_id, focused, content, 0, 0);
+            add_source(atom_id, focused.id, content, 0, 0);
         }
         if (position == null) {
             position = {"x": cy.width()/2, "y": cy.height()/2};
-            }
+        }
         cy.add([
             {group: "nodes", data: {id: atom_id.toString(),
                 content: content, type: "atom", typeshape: "roundrectangle" }, 
@@ -405,19 +396,19 @@ cm = cy.contextMenus({
         ]);
         node = cy.getElementById(atom_id.toString() );
         node.qtip({
-        content: "Metadata about this atom",
-        position: {
-            my: "top center",
-            at: "bottom center"
-        },
-        style: {
-            classes: "qtip-bootstrap",
-            tip: {
-                width: 16,
-                height: 8
+            content: "Metadata about this atom",
+            position: {
+                my: "top center",
+                at: "bottom center"
+            },
+            style: {
+                classes: "qtip-bootstrap",
+                tip: {
+                    width: 16,
+                    height: 8
+                }
             }
-        }
-    });
+        });
         position = null;
         update_local_storage();
     }
@@ -429,13 +420,32 @@ cm = cy.contextMenus({
             if(window.getSelection().baseNode.id=="textarea")
             {
                 selected_text = window.getSelection().toString();
+                clear_selection();
                 return selected_text;
             }
         }
+        return null;
     }
 
-    function setFocused(element) {
-        focused = document.getElementById(element.id).id;
+    function clear_selection() {
+        if (window.getSelection) {
+            if (window.getSelection().empty) {  // Chrome
+                window.getSelection().empty();
+            } 
+            else if (window.getSelection().removeAllRanges) {  // Firefox
+                window.getSelection().removeAllRanges();
+            }
+            } else if (document.selection) {  // IE?
+            document.selection.empty();
+        }
+    }
+
+    function set_focus(element) {
+        focused = document.getElementById(element.id);//.id;
+    }
+
+    function clear_focus(){
+        focused = null;
     }
 
     function update_local_storage() {
@@ -489,7 +499,6 @@ cm = cy.contextMenus({
 
     function dragover_handler(ev) {
          ev.preventDefault();
-         // Set the dropEffect to move
          ev.dataTransfer.dropEffect = "move";
     }
 
@@ -674,19 +683,10 @@ function build_cola_layout( opts )
 
 
 mt.bind("a", function() {
-    //console.log("ADD NODE OR EDGE");
-
-//    var selected_text = get_selected_text();
- //   if (selected_text === undefined)
-  //  {
-        $("#newAtomModal").modal("show");
-//    } else {
-  //      add_new_atom_node(selected_text);
-   // }
+    $("#newAtomModal").modal("show");
 });
 
 mt.bind("d", function() {
-    //console.log("DELETE SELECTED NODE");
     selected.forEach(function(node) {
         delete_nodes(node);
     });
@@ -712,12 +712,10 @@ mt.bind("t", function() {
 });
 
 mt.bind(["command+z","ctrl+z"], function() {
-    //console.log("UNDO");
     undo();
 });
 
 mt.bind(["command+y","ctrl+y"], function() {
-    //console.log("REDO");
     redo();
 });
 
@@ -771,6 +769,20 @@ $(".toggle-button").click(function() {
  * Resource Pane Functions
  *
  * */
+
+function new_atom_txt_resource_button()
+{   
+    if(focused != null || focused != undefined){
+        if(focused.parentNode.id == "textarea"){
+            selected_text = get_selected_text();
+            if(selected_text != null){
+                add_new_atom_node(selected_text);
+            }
+        }
+        focused == null;
+    }
+    else { console.log("Not a valid text source") }
+}
 
 function toggle_resource_pane()
 {
