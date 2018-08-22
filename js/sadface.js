@@ -543,7 +543,6 @@ function get_atom(atom_id) {
 
     Returns: An atom dict
     */
-    console.log(atom_id);
     if (atom_id) {
         var node;
         var size = Object.keys(sd.nodes).length;
