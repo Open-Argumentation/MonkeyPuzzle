@@ -391,7 +391,7 @@ cm = cy.contextMenus({
         var new_atom = add_atom(content);
         var atom_id = new_atom.id;
         if (focused.id != null) {
-        add_source(atom_id, focused.id, content, 0, 0);
+            add_source(atom_id, focused.id, content, 0, 0);
         }
         if (position == null) {
             position = {"x": cy.width()/2, "y": cy.height()/2};
