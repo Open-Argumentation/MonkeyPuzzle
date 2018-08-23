@@ -149,7 +149,7 @@ cy = cytoscape({
    cy.edgehandles({
         toggleOffOnLeave: true,
         handleNodes: "node",
-        handleSize: 20,
+        handleSize: 10,
         handleColor: "orange",
         handleHitThreshold: 8,
         handleLineWidth: 5,
