@@ -217,6 +217,7 @@ function add_resource_metadata(resource_id, key, value) {
     }
 }
 
+
 function add_sadface_metadata(key, value) {
     /*
     Add metadata, a key:value pair to the base sadface doc
@@ -225,6 +226,7 @@ function add_sadface_metadata(key, value) {
         sd.metadata[key] = value;
     }
 }
+
 
 function add_scheme(name) {
     /*
@@ -239,6 +241,7 @@ function add_scheme(name) {
         return scheme;
     }
 }
+
 
 function add_source(atom_id, resource_id, text, offset, length) {
     /*
@@ -263,6 +266,7 @@ function add_source(atom_id, resource_id, text, offset, length) {
     }
 }
 
+
 function delete_atom(atom_id) {
     /*
     Remove the atom from the sadface document identified by the
@@ -283,6 +287,7 @@ function delete_atom(atom_id) {
     }
 }
 
+
 function delete_edge(edge_id)
 {
     /*
@@ -302,6 +307,7 @@ function delete_edge(edge_id)
     }
 }
 
+
 function delete_source(atom_id, resource_id) {
     /*
     Remove a source from the atom identified by the
@@ -319,6 +325,7 @@ function delete_source(atom_id, resource_id) {
         }
     }
 }
+
 
 function delete_resource(resource_id) {
     /*
@@ -339,6 +346,8 @@ function delete_resource(resource_id) {
         }
     }
 }
+
+
 function delete_scheme(scheme_id) {
     /*
     Remove the schemee from the sadface document identified by the
@@ -359,23 +368,6 @@ function delete_scheme(scheme_id) {
     }
 }
 
-const remove_falsy = (obj) => {
-    /*
-    The delete function in javascript tends to replace deleted objects with
-    null values. This function removes those from an object after something within it is deleted.
-    */
-    if (obj) {
-        var newObj = [];
-        Object.keys(obj).forEach((prop) => {
-            if (obj[prop]) { 
-                newObj.push(obj[prop]); 
-            }
-        });
-        return newObj;
-    } else {
-        return obj;
-    }
-};
 
 function export_cytoscape(sadface) {
     /*
@@ -1015,12 +1007,39 @@ function get_sd() {
 }
 
 
+/*
+*
+*   JS Specific Utility Functions
+*
+*/
+
+
 String.prototype.format = () => {
   var i = 0, args = arguments;
   return this.replace(/{}/g, () => {
     return typeof args[i] !== "undefined" ? args[i++] : "";
   });
 };
+
+
+const remove_falsy = (obj) => {
+    /*
+    The delete function in javascript tends to replace deleted objects with
+    null values. This function removes those from an object after something within it is deleted.
+    */
+    if (obj) {
+        var newObj = [];
+        Object.keys(obj).forEach((prop) => {
+            if (obj[prop]) { 
+                newObj.push(obj[prop]); 
+            }
+        });
+        return newObj;
+    } else {
+        return obj;
+    }
+};
+
 
 //textwrap function from https://gist.github.com/bgrayburn/44fa018b94222590f618
 function textwrap (long_string, max_char){
