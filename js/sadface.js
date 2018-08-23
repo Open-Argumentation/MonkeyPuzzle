@@ -864,12 +864,21 @@ function update() {
     sd.edited = now();
 }
 
-function update_analyst(analyst) {
+function update_analyst_email(analystemail) {
     /*
     Updates the name of the argument analyst in the SADFace doc to the supplied name
     */
-    if (analyst) {
-        sd.analyst = analyst;
+    if (analystemail) {
+        sd.analyst_email = analystemail;
+    }
+}
+
+function update_analyst_name(analystname) {
+    /*
+    Updates the name of the argument analyst in the SADFace doc to the supplied name
+    */
+    if (analystname) {
+        sd.analyst_name = analystname;
     }
 }
 
