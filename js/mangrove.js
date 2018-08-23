@@ -647,25 +647,6 @@ cm = cy.contextMenus({
 
 /*
  *
- * Slideout functions
- *
- * */
-
-    slideout = new Slideout( {
-        "panel": document.getElementById("panel"),
-        "menu": document.getElementById("menu"),
-        "fx": "ease",
-        "side": "right",
-        "duration": 500,
-        "padding": 256,
-        "tolerance": 70
-    });
-
-    slideout.on("close", function() { cy.resize(); } );
-    slideout.on("open", function() { cy.resize(); } );
-
-/*
- *
  * Cola Layout Functions
  *
  *
@@ -726,6 +707,55 @@ mt.bind(["command+z","ctrl+z"], function() {
 mt.bind(["command+y","ctrl+y"], function() {
     redo();
 });
+
+
+/*
+ *
+ * Slideout functions
+ *
+ * */
+
+    slideout = new Slideout( {
+        "panel": document.getElementById("panel"),
+        "menu": document.getElementById("menu"),
+        "fx": "ease",
+        "side": "right",
+        "duration": 500,
+        "padding": 256,
+        "tolerance": 70
+    });
+
+    slideout.on("close", function() { cy.resize(); } );
+    slideout.on("open", function() { cy.resize(); } );
+
+
+function download_sadface()
+{
+    filemanager('save','json',null)
+}
+
+
+function download_png()
+{
+    var filename = document.getElementById("export_filename").value;
+    if(filename.length == 0){ filename = "default"}
+    filename+=".png";
+    
+    var link = document.getElementById("download_png");
+    link.download = filename;
+}
+
+function download_jpg()
+{
+    var filename = document.getElementById("export_filename").value;
+    if(filename.length == 0){ filename = "default"}
+    filename+=".jpg";
+    
+    var link = document.getElementById("download_jpg");
+    link.download = filename;
+}
+
+
 
 
 /*

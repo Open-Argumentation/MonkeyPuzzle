@@ -82,10 +82,12 @@ div.tab_head button.active {
 
     <section class="menu-section">
         <h3 class="menu-section-title">Export</h3>
-        <ul class="menu-section-list">            
-            <a href="#" id="export_button"><button class="btn btn-default" onclick="filemanager('save','json',null,null,null)" title="Export the current analysis to a SADFace formatted JSON document">SADFace</button></a>
-            <li><a id="download_png" href="#" target="_blank" download="analysis.png"><button class="btn btn-default" title="Export the current analysis to a PNG image">PNG</button></a></li>
-            <li><a id="download_jpg" href="#" target="_blank" download="analysis.jpg"><button class="btn btn-default" title="Export the current analysis to a JPG image">JPG</button></a></li>
+        <ul class="menu-section-list">
+            <li><div style="margin-left: 20px; margin-right: 60px;"><textarea id="export_filename" type="text" rows="1" cols="20" maxlength="20" style="resize: none;" class="form-control"  placeholder="Filename" title="The name for the exported file"></textarea></div></li>
+
+            <li><a href="#" id="export_button"><button class="btn btn-default" onclick="download_sadface()" title="Export the current analysis to a SADFace formatted JSON document">SADFace</button></a></li>
+            <li><a href="#" target="_blank" id="download_png"><button class="btn btn-default" title="Export the current analysis to a PNG image" onclick="download_png()">PNG</button></a></li>
+            <li><a href="#" target="_blank" id="download_jpg"><button class="btn btn-default" title="Export the current analysis to a JPG image" onclick="download_jpg()">JPG</button></a></li>
       </ul>
       </section>
       

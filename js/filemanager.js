@@ -17,6 +17,8 @@ function filemanager(operation, filetype, tab_id)
 		
 		// if it's a JSON file
 		if ("json" == filetype) {
+            var filename = document.getElementById("export_filename").value;
+            if(filename.length == 0){ filename = "default"}
 			saveSADFace(filename, filetype);
 		}
 	}
