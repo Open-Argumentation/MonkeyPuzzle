@@ -131,7 +131,7 @@ cy = cytoscape({
     layout.run();
 
     cy.elements("node[type = \"atom\"]").qtip({
-        content: "Metadata about this atom",
+        content: function(){return 'ID: '+this.id()},
         position: {
             my: "top center",
             at: "bottom center"
@@ -391,6 +391,7 @@ cm = cy.contextMenus({
 
     //******************************************************
     function add_new_atom_node(content) {
+        var meta = {"hello":"world"};
         var new_atom = add_atom(content);
         var atom_id = new_atom.id;
         if (focused != null) {
@@ -401,12 +402,12 @@ cm = cy.contextMenus({
         }
         cy.add([
             {group: "nodes", data: {id: atom_id.toString(),
-                content: content, type: "atom", typeshape: "roundrectangle" }, 
+                content: content, type: "atom", typeshape: "roundrectangle", metadata: meta }, 
                 classes: "atom-label", locked: false, renderedPosition: position}
         ]);
         node = cy.getElementById(atom_id.toString() );
         node.qtip({
-            content: "Metadata about this atom",
+            content: "Nothing to see here... yet",
             position: {
                 my: "top center",
                 at: "bottom center"
