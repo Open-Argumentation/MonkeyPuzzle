@@ -555,6 +555,17 @@ function get_atom(atom_id) {
     }
 }
 
+function get_atom_metadata(atom_id) {
+    /*
+    Retrieve the metadata associated with the supplied atom ID.
+    */
+    if (atom_id) {
+        var atom = get_atom(atom_id);
+        return atom.metadata;
+
+    }
+}
+
 function get_edge(edge_id) {
     /*
     Retrieve the edge dict identified by the supplied edge ID
