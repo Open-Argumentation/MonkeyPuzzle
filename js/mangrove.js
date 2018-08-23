@@ -15,6 +15,8 @@ var undo_stack = [];
 var redo_stack = [];
 var edit_atom = null;
 var resource_pane_viewable_state = true;
+var png = null;
+var jpg = null;
 
 var cola_params = {
     name: "cola",
@@ -359,6 +361,12 @@ cm = cy.contextMenus({
 
     cy.on("layoutstop", function(){
         running = false;
+        
+        png = cy.png({ full: true });
+        $('#download_png').attr('href', png);
+
+        jpg = cy.jpg({ full: true });
+        $('#download_jpg').attr('href', jpg);
     });
 
     $(".resource-pane").resizable({
