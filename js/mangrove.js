@@ -10,13 +10,11 @@ var cy_data  = {};
 var json;
 var default_sadface_doc = "{\"analyst_email\":\"40170722@live.napier.ac.uk\",\"analyst_name\":\"Nathan Mair\",\"created\":\"2018-02-23T02:27:36\",\"edges\":[],\"edited\":\"2018-02-23T02:27:36\",\"id\":\"94a975db-25ae-4d25-93cc-1c07c932e2f9\",\"metadata\":{},\"nodes\":[],\"resources\": []}";
 var current_sadface_doc = null;
-var focused;
+var focused = null;
 var undo_stack = [];
 var redo_stack = [];
 var edit_atom = null;
-var resource_pane_viewable_state = true;
-var png = null;
-var jpg = null;
+var resource_pane_viewable_state = false;
 
 var cola_params = {
     name: "cola",
@@ -362,10 +360,10 @@ cm = cy.contextMenus({
     cy.on("layoutstop", function(){
         running = false;
         
-        png = cy.png({ full: true });
+        var png = cy.png({ full: true });
         $('#download_png').attr('href', png);
 
-        jpg = cy.jpg({ full: true });
+        var jpg = cy.jpg({ full: true });
         $('#download_jpg').attr('href', jpg);
     });
 
@@ -390,7 +388,7 @@ cm = cy.contextMenus({
     function add_new_atom_node(content) {
         var new_atom = add_atom(content);
         var atom_id = new_atom.id;
-        if (focused.id != null) {
+        if (focused != null) {
             add_source(atom_id, focused.id, content, 0, 0);
         }
         if (position == null) {
