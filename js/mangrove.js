@@ -8,7 +8,12 @@ var layout = null;
 var running = false;
 var cy_data  = {};
 var json;
-var default_sadface_doc = "{\"analyst_email\":\"40170722@live.napier.ac.uk\",\"analyst_name\":\"Nathan Mair\",\"created\":\"2018-02-23T02:27:36\",\"edges\":[],\"edited\":\"2018-02-23T02:27:36\",\"id\":\"94a975db-25ae-4d25-93cc-1c07c932e2f9\",\"metadata\":{},\"nodes\":[],\"resources\": []}";
+var created_date = now();
+var edited_date = now();
+var analyst_email = "Default Analyst Email";
+var analyst_name = "Default Analsyst Name";
+var document_id = new_uuid();
+var default_sadface_doc = "{\"analyst_email\":\""+analyst_email+"\",\"analyst_name\":\""+analyst_email+"\",\"created\":\""+created_date+"\",\"edges\":[],\"edited\":\""+edited_date+"\",\"id\":\""+document_id+"\",\"metadata\":{},\"nodes\":[],\"resources\": []}";
 var current_sadface_doc = null;
 var focused = null;
 var undo_stack = [];
@@ -752,6 +757,17 @@ function download_jpg()
     link.download = filename;
 }
 
+function set_analyst_name()
+{
+    analyst_name = document.getElementById('analyst_name_textarea').value;
+    update_analyst_name(analyst_name);
+}
+
+function set_analyst_email()
+{
+    analyst_email = document.getElementById('analyst_email_textarea').value;
+    update_analyst_email(analyst_email);
+}
 
 
 
