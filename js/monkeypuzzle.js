@@ -696,6 +696,11 @@ mt.bind("h", function() {
     $( "#splitter" ).toggle();
 });
 
+mt.bind("m", function() {
+    toggle_menu(); 
+});
+
+
 mt.bind("s", function() {
     console.log("SCALE SELECTED NODE");
 });
@@ -719,19 +724,22 @@ mt.bind(["command+y","ctrl+y"], function() {
  *
  * */
 
-    slideout = new Slideout( {
-        "panel": document.getElementById("panel"),
-        "menu": document.getElementById("menu"),
-        "fx": "ease",
-        "side": "right",
-        "duration": 500,
-        "padding": 256,
-        "tolerance": 70
-    });
+slideout = new Slideout( {
+    "panel": document.getElementById("panel"),
+    "menu": document.getElementById("menu"),
+    "fx": "ease",
+    "side": "right",
+    "duration": 500,
+    "padding": 256,
+    "tolerance": 70
+});
 
-    slideout.on("close", function() { cy.resize(); } );
-    slideout.on("open", function() { cy.resize(); } );
+slideout.on("close", function() { cy.resize(); } );
+slideout.on("open", function() { cy.resize(); } );
 
+$(".toggle-button").click(function() {
+    toggle_menu();
+});
 
 function download_sadface()
 {
@@ -780,6 +788,12 @@ function set_analyst_email()
 {
     analyst_email = document.getElementById('analyst_email_textarea').value;
     update_analyst_email(analyst_email);
+}
+
+function toggle_menu()
+{
+    if (slideout.isOpen()) { slideout.close(); }
+    else { slideout.open(); }
 }
 
 function toggle_resource_pane()
@@ -834,13 +848,6 @@ $("#editMetadataModal").on("show.bs.modal", function() {
 $("#resource_text").blur(function() {
     console.log("blur");
 });
-
-
-$(".toggle-button").click(function() {
-    if(slideout.isOpen()) { slideout.close(); }
-    else { slideout.open(); }
-});
-
 
 /*
  *
