@@ -566,6 +566,7 @@ cm = cy.contextMenus({
                 ++i;
             });
             selected = [];
+            cm.hideMenuItem("merge_nodes");
         } else {
             alert("cannot merge scheme nodes");
         }
