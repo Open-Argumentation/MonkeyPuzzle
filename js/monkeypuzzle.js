@@ -690,14 +690,14 @@ mt.bind("f", function() {
     console.log("FIX NODE PLACEMENT");
 });
 
-mt.bind("s", function() {
-    console.log("SCALE SELECTED NODE");
-});
-
 mt.bind("h", function() {
     console.log("hide resource pane");
     $( "#resource-pane" ).toggle();
     $( "#splitter" ).toggle();
+});
+
+mt.bind("s", function() {
+    console.log("SCALE SELECTED NODE");
 });
 
 mt.bind("t", function() {
