@@ -11,55 +11,52 @@
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/mangrove.css" type="text/css"/>
 
+    <style>
+        /*body {font-family: "Lato", sans-serif;}*/
 
+        /* Style the tab */
+        .tab_head {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
 
-<style>
-body {font-family: "Lato", sans-serif;}
+        /* Style the buttons inside the tab */
+        .tab_head button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
 
-/* Style the tab */
-div.tab_head {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-}
+        /* Change background color of buttons on hover */
+        .tab_head button:hover {
+            background-color: #ddd;
+        }
 
-/* Style the buttons inside the tab */
-div.tab_head button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
-}
+        /* Create an active/current tablink class */
+        .tab_head button.active {
+            background-color: #ccc;
+        }
 
-/* Change background color of buttons on hover */
-div.tab_head button:hover {
-    background-color: #ddd;
-}
-
-/* Create an active/current tablink class */
-div.tab_head button.active {
-    background-color: #ccc;
-}
-
-/* Style the tab content */
-.tabcontent {
-    display: none;
-    padding: 6px 12px;
-//    border: 1px solid #ccc;
-    border-top: none;
-}
-
-
-</style>
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+        //    border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
 
 
 </head>
 <body>
-<!-- Slidein Panel -->
+
+    <!-- Slidein Panel: START -->
     <nav id="menu" class="menu">
     <a href="http://arg.napier.ac.uk/monkeypuzzle/" target="_blank">
         <header class="menu-header">
@@ -116,28 +113,20 @@ div.tab_head button.active {
       </ul>
       </section>
     </nav>
+    <!-- Slidein Panel: END -->
 
+
+    <!-- Main UI: START -->
 
     <main id="panel" class="panel">
     <div class="ui-container">
-
         <div class="resource-pane" id="resource-pane">
-
             <div class="tab_head" id="tab_head">
-        <button id="add_button" type="button" onclick="add_tab()"> <i class="fa fa-plus fa-lg"></i> </button></div>
-
-        <div class="tab_body" id="tab_body"></div>
-
-                
-<!--            [1] Buttons: Clear | Load | Save | Add | Remove | Lock | Unlock<br/>
-            [2] Buttons: Tabs IDs<br/>
-            [3] Tabbed collection of Textareas Here (filling remainder of panel <br/>
-
-            <div style="width:100%;">
-                 <textarea id="resource_text" name="" cols="" rows=""></textarea>
-    
-        </div>-->
-        
+                <button id="add_tab_button" class="add_tab_button" onclick="add_tab()"> 
+                    <i class="fa fa-plus fa-lg"></i>
+                </button>
+            </div>
+            <div class="tab_body" id="tab_body"></div>        
         </div>
 
         <div class="splitter" id="splitter">
@@ -152,10 +141,12 @@ div.tab_head button.active {
     </div>
     </main>
 
-<!--
-    New Atom Modal
--->
-       <div class="modal fade" id="newAtomModal" role="dialog">
+    <!-- Main UI: END -->
+
+
+    <!-- New Atom Modal -->
+
+    <div class="modal fade" id="newAtomModal" role="dialog">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             <div class="modal-header">
@@ -174,7 +165,7 @@ div.tab_head button.active {
             </div>
           </div>
         </div>
-      </div>
+    </div>
 
 
 <!--
