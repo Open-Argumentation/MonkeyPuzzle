@@ -1,6 +1,7 @@
 var current_tab = 0;
 var last_number = 1;
 var tabs = [];
+//var content_lock = true;
 
 function set_active_tab(tab_id) {
     if(tabs.length > 0){
@@ -74,9 +75,14 @@ function add_tab(load_id=null, content='',title='') {
                         </button>
                     </span>
                     <span class="upload-span">
-                    <button type="button" class="btn btn-default" title="Add node from text selection" onclick="new_atom_txt_resource_button();">
-                        <i class="fa fa-puzzle-piece fa-lg"></i>
-                    </button>
+                        <button id="toggle_edit_lock_button" type="button" class="btn btn-default" title="Toggle editability of the content area" onclick="toggle_edit_lock();">
+                            <i id="toggle_edit_lock_icon" class="fa fa-lock fa-lg"></i>
+                        </button>
+                    </span>
+                    <span class="upload-span">
+                        <button type="button" class="btn btn-default" title="Add node from text selection" onclick="new_atom_txt_resource_button();">
+                            <i class="fa fa-puzzle-piece fa-lg"></i>
+                        </button>
                     </span>
                 </div>
                 <div class="form-group">
@@ -84,7 +90,7 @@ function add_tab(load_id=null, content='',title='') {
                     <textarea id="title_` + tab_id + `" type="text" rows="1" style="resize: none;" class="form-control" placeholder="The name of this resource..." onchange="change_title('` + tab_id + `')">` + title + `</textarea> 
                     <label>Content</label>
                     <div id="textarea">
-                        <textarea id="` + tab_id + `" class="form-control" placeholder="Enter your source text here..." rows="20" onchange="change_textarea('` + tab_id + `')" onfocus="set_focus(this)" style="resize: vertical; min-height:35px;">` + content + `</textarea>
+                        <textarea id="` + tab_id + `" class="form-control" placeholder="Enter your source text here..." rows="20" onchange="change_textarea('` + tab_id + `')" onfocus="set_focus(this)" style="resize: vertical; min-height:35px;" readonly>` + content + `</textarea>
                     </div>  
                 </div> 
             </form>
@@ -137,3 +143,15 @@ function add_tab_resource() {
 	return resource_id;
 }
 
+function toggle_edit_lock() {
+    if( document.getElementById(current_tab).hasAttribute('readonly') ) {
+        document.getElementById(current_tab).removeAttribute('readonly');
+        document.getElementById('toggle_edit_lock_icon').classList.toggle('fa-lock');
+        document.getElementById('toggle_edit_lock_icon').classList.toggle('fa-unlock');       
+    }
+    else {
+        document.getElementById(current_tab).setAttribute('readonly', 'readonly');
+        document.getElementById('toggle_edit_lock_icon').classList.toggle('fa-unlock');
+        document.getElementById('toggle_edit_lock_icon').classList.toggle('fa-lock');
+    }
+}
