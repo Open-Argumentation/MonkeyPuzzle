@@ -54,14 +54,14 @@ function add_tab(load_id=null, content='',title='') {
                 <div class="form-group">
                     <span class="upload-span">
                         <button type="button" class="btn btn-default" onclick="remove_tab()" title="Remove this tab from the resource pane">
-                            <i class="fa fa-trash fa-lg"></i>
+                            <i class="fa fa-trash fa-fw fa-lg"></i>
                         </button>
                     </span>
                     <span class="upload-span">
                         <a role="button" rel="ignore">
                             <div display="inline-block" class="btn btn-default" uiconfig="[object Object]">
                                 <div>
-                                    <i class="fa fa-upload  fa-lg"></i>
+                                    <i class="fa fa-upload fa-fw fa-lg"></i>
                                 </div>
                             </div>
                             <div display="inline-block">
@@ -71,17 +71,17 @@ function add_tab(load_id=null, content='',title='') {
                     </span>
                     <span class="upload-span">
                         <button type="button" class="btn btn-default" onclick="filemanager('save','txt','` + tab_id + `')" title="Save this resource tab to a text file">
-                            <i class="fa fa-download  fa-lg"></i>
+                            <i class="fa fa-download fa-fw fa-lg"></i>
                         </button>
                     </span>
                     <span class="upload-span">
                         <button id="toggle_edit_lock_button" type="button" class="btn btn-default" title="Toggle editability of the content area" onclick="toggle_edit_lock();">
-                            <i id="toggle_edit_lock_icon" class="fa fa-lock fa-lg"></i>
+                            <i id="toggle_edit_lock_icon" class="fa fa-lock fa-fw fa-lg"></i>
                         </button>
                     </span>
                     <span class="upload-span">
                         <button type="button" class="btn btn-default" title="Add node from text selection" onclick="new_atom_txt_resource_button();">
-                            <i class="fa fa-puzzle-piece fa-lg"></i>
+                            <i class="fa fa-puzzle-piece fa-fw fa-lg"></i>
                         </button>
                     </span>
                 </div>
