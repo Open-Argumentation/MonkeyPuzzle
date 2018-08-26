@@ -73,9 +73,11 @@ function add_tab(load_id=null, content='',title='') {
                             <i class="fa fa-download  fa-lg"></i>
                         </button>
                     </span>
+                    <span class="upload-span">
                     <button type="button" class="btn btn-default" title="Add node from text selection" onclick="new_atom_txt_resource_button();">
                         <i class="fa fa-puzzle-piece fa-lg"></i>
                     </button>
+                    </span>
                 </div>
                 <div class="form-group">
                     <label>File Name</label>
