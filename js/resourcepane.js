@@ -76,7 +76,7 @@ function add_tab(load_id=null, content='',title='') {
                     </span>
                     <span class="upload-span">
                         <button id="toggle_edit_lock_button" type="button" class="btn btn-default" title="Toggle editability of the content area" onclick="toggle_edit_lock();">
-                            <i id="toggle_edit_lock_icon" class="fa fa-lock fa-fw fa-lg"></i>
+                            <i id="toggle_edit_lock_icon_` + tab_id + `" class="fa fa-lock fa-fw fa-lg"></i>
                         </button>
                     </span>
                     <span class="upload-span">
@@ -146,12 +146,12 @@ function add_tab_resource() {
 function toggle_edit_lock() {
     if( document.getElementById(current_tab).hasAttribute('readonly') ) {
         document.getElementById(current_tab).removeAttribute('readonly');
-        document.getElementById('toggle_edit_lock_icon').classList.toggle('fa-lock');
-        document.getElementById('toggle_edit_lock_icon').classList.toggle('fa-unlock');       
+        document.getElementById('toggle_edit_lock_icon_' + tab_id ).classList.toggle('fa-lock');
+        document.getElementById('toggle_edit_lock_icon_' + tab_id ).classList.toggle('fa-unlock');       
     }
     else {
         document.getElementById(current_tab).setAttribute('readonly', 'readonly');
-        document.getElementById('toggle_edit_lock_icon').classList.toggle('fa-unlock');
-        document.getElementById('toggle_edit_lock_icon').classList.toggle('fa-lock');
+        document.getElementById('toggle_edit_lock_icon_' + tab_id ).classList.toggle('fa-unlock');
+        document.getElementById('toggle_edit_lock_icon_' + tab_id ).classList.toggle('fa-lock');
     }
 }
