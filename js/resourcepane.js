@@ -1,7 +1,6 @@
 var current_tab = 0;
 var last_number = 1;
 var tabs = [];
-//var content_lock = true;
 
 function set_active_tab(tab_id) {
     if(tabs.length > 0){
