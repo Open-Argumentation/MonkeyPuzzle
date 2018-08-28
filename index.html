@@ -66,7 +66,7 @@
         <h3 class="menu-section-title">Interface</h3>
         <ul class="menu-section-list">            
            <li> <a href="#" id="toggle_resources"><button class="btn btn-default" onclick="toggle_resource_pane()" title="Toggle the visibility of the resources pane">Toggle Resource Pane</button></a></li>
-            <li><a href="#" id="clear_storage_button"><button class="btn btn-default" onclick="clear_local_storage()" title="Reset MonkeyPuzzle to her initial state">Reset</button></a></li>
+            <li><a href="#" id="clear_storage_button"><button class="btn btn-danger" onclick="$('#confirm_reset_modal').modal('show');" title="Reset MonkeyPuzzle to her initial state">Reset</button></a></li>
             <li><a href="#" id="load_demo_argument_button"><button class="btn btn-default" onclick="load_demo_argument()" title="Load a demonstration SADFace document into MonkeyPuzzle">Load Demo</button></a></li>
             <li><div style="margin-left: 20px; margin-right: 60px;"><textarea id="analyst_name_textarea" type="text" rows="1" cols="20" maxlength="40" style="resize: none;" class="form-control"  placeholder="Name" title="Type your name here..." onchange="set_analyst_name();"></textarea></div></li>
             <li><div style="margin-left: 20px; margin-right: 60px;"><textarea id="analyst_email_textarea" type="text" rows="1" cols="20" maxlength="40" style="resize: none;" class="form-control"  placeholder="Email" title="Type your email address here..." onchange="set_analyst_email();"></textarea></div></li>
@@ -306,6 +306,29 @@
           </div>
         </div>
       </div>
+
+
+<!--Reset Confirmation Modal -->
+
+    <div class="modal fade" id="confirm_reset_modal" role="dialog" tabindex='-1'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Reset MonkeyPuzzle</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure that you want to reset MonkeyPuzzle?<br /> This will empty the current analysis and adjust all options back to their initial settings.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="mp_reset()">Reset</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
 	  
 <!--
     JS Libraries

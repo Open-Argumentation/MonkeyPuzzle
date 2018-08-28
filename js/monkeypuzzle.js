@@ -753,6 +753,10 @@ function load_demo_argument()
     initCytoscape();
 }
 
+function mp_reset()
+{
+    clear_local_storage();
+}
 
 function set_analyst_name()
 {
@@ -788,9 +792,13 @@ function new_atom_modal() {
 
 $("#newAtomModal").on("shown.bs.modal", function () { $("#new_atom_content").focus(); });
 $("#newAtomModal").on("hidden.bs.modal", function(e) { $("#new_atom_content").val("").end(); });
+
 $("#newSchemeModal").on("shown.bs.modal", function () { $("#sel1").focus(); });
+
 $("#editContentModal").on("show.bs.modal", function() { });
+
 $("#editMetadataModal").on("show.bs.modal", function() { });
+
 $("#resource_text").blur(function() { console.log("blur"); });
 
 /*
@@ -830,3 +838,4 @@ function toggle_resource_pane()
     cy.center();
     cy.resize();
 }
+
