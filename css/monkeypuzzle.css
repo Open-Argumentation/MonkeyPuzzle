@@ -5,12 +5,6 @@
         margin: 0 auto;
         overflow: auto;                           
     }
-
-    a {
-        color: #fff;
-        text-decoration: none;
-    }
-
     .ui-container {
         display: flex;
         flex-direction: row;           
@@ -36,10 +30,8 @@
         padding: 0px;
         width: 100%;
     }
-
     .panel { 
         background-color: #fff;
-/*        height: 100vh;*/
     }
     .menu {
         background-color: #cbc5c1;

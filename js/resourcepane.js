@@ -138,3 +138,33 @@ function toggle_edit_lock() {
         document.getElementById('toggle_edit_lock_icon_' + current_tab ).classList.toggle('fa-lock');
     }
 }
+
+function new_atom_txt_resource_button() {   
+    if(focused != null || focused != undefined){
+        if(focused.parentNode.id == "textarea"){
+            selected_text = get_selected_text();
+            if(selected_text != null){
+                add_new_atom_node(selected_text);
+            }
+        }
+        focused == null;
+    }
+    else { console.log("Not a valid text source") }
+}
+
+function toggle_resource_pane() {
+    if(resource_pane_viewable_state == true)
+    {
+        $('#resource-pane').children().hide(); 
+        $('#resource-pane').hide(); 
+        resource_pane_viewable_state = false;
+    }
+    else
+    {
+        $('#resource-pane').show(); 
+        $('#resource-pane').children().show();
+        resource_pane_viewable_state = true;
+    }
+    cy.center();
+    cy.resize();
+}
