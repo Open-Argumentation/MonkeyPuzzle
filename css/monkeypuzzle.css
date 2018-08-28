@@ -21,8 +21,8 @@
     }
     .splitter {
         flex: 0 0 auto;
-        width: 5px;
-        background: url(../assets/vsizegrip.png) center center no-repeat #535353;
+        width: 4px;
+        background: center center no-repeat #535353;
         cursor: col-resize;
     }
     .visualisation-pane {
