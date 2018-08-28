@@ -308,7 +308,9 @@
       </div>
 
 
-<!--Reset Confirmation Modal -->
+<!-- 
+    Reset Confirmation Modal 
+-->
 
     <div class="modal fade" id="confirm_reset_modal" role="dialog" tabindex='-1'>
         <div class="modal-dialog modal-lg">
@@ -323,6 +325,37 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="mp_reset()">Reset</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+<!-- 
+    Help Modal 
+-->
+
+    <div class="modal fade" id="help_modal" role="dialog" tabindex='-1'>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Help</h4>
+            </div>
+            <div class="modal-body">
+                <p>MonkeyPuzzle uses a 3 pane layout. The visualisation pane is in the center, the resource pane is to the left, and the application menu is to the right.</p>
+                <p>Keybord Shortcuts:</p>
+                <ul>
+                    <li><b>a - </b>Create a new atom</li>
+                    <li><b>d - </b>Delete the selected node</li>
+                    <li><b>h - </b>Display this delightfully helpful modal</li>
+                    <li><b>m - </b>Toggle display of the menu</li>
+                    <li><b>r - </b>Toggle display of the resource pane</li>
+                    <li><b>Cmd/Ctrl-z - </b>Undo</li>
+                    <li><b>Cmd/Ctrl-y - </b>Redo</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Dismiss</button>
             </div>
           </div>
         </div>

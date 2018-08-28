@@ -686,6 +686,7 @@ mt.bind("d", function() {
 });
 
 mt.bind("f", function() { console.log("FIX NODE PLACEMENT"); });
+mt.bind("h", function() { $("#help_modal").modal("show"); });
 mt.bind("m", function() { toggle_menu(); });
 mt.bind("r", function() { toggle_resource_pane(); });
 mt.bind("s", function() { console.log("SCALE SELECTED NODE"); });
