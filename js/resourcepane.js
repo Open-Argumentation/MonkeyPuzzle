@@ -40,49 +40,33 @@ function add_tab(load_id=null, content='',title='') {
     tabs.push(tab_id);
 
     // Create the tab header bar using a multiline declaration enclosed in backticks
-    var tab_head = $(`
+    var resource_pane_tab_head = $(`
         <button id="`+ tab_id + `_btn" class="tablinks" onclick="set_active_tab('` + tab_id + `_body')">` + tab_number + `</button>
     `);
 
-    $(".tab_head").append(tab_head);
+    $(".resource_pane_tab_head").append(resource_pane_tab_head);
 
     // Create the tab body using a multiline declaration enclosed in backticks
     var tab_body = $(`
         <div id="` + tab_id + `_body" class="tabcontent">
             <form>
                 <div class="form-group">
-                    <span class="upload-span">
                         <button type="button" class="btn btn-default" onclick="remove_tab()" title="Remove this tab from the resource pane">
                             <i class="fa fa-trash fa-fw fa-lg"></i>
                         </button>
-                    </span>
-                    <span class="upload-span">
-                        <a role="button" rel="ignore">
-                            <div display="inline-block" class="btn btn-default" uiconfig="[object Object]">
-                                <div>
-                                    <i class="fa fa-upload fa-fw fa-lg"></i>
-                                </div>
-                            </div>
-                            <div display="inline-block">
-                                <input accept=".txt" id="load` + tab_id + `" display="inline-block" role="button" tabindex="0" type="file" class="upload-button" onchange="filemanager('load','txt','` + tab_id + `')" title="Load a text file into this resource tab">
-                            </div>
-                        </a>
-                    </span>
-                    <span class="upload-span">
+                        <input type="file" id="load` + tab_id + `" style="display:none" accept=".txt" onchange="filemanager('load','txt','` + tab_id + `')"/>
+                        <button type="button" id="load` + tab_id + `_btn" class="btn btn-default" onclick="$('#load` + tab_id + `').trigger('click');" title="Load a text file into this resource tab">
+                            <i class="fa fa-upload fa-fw fa-lg"></i>
+                        </button>
                         <button type="button" class="btn btn-default" onclick="filemanager('save','txt','` + tab_id + `')" title="Save this resource tab to a text file">
                             <i class="fa fa-download fa-fw fa-lg"></i>
                         </button>
-                    </span>
-                    <span class="upload-span">
                         <button id="toggle_edit_lock_button" type="button" class="btn btn-default" title="Toggle editability of the content area" onclick="toggle_edit_lock();">
                             <i id="toggle_edit_lock_icon_` + tab_id + `" class="fa fa-lock fa-fw fa-lg"></i>
                         </button>
-                    </span>
-                    <span class="upload-span">
                         <button type="button" class="btn btn-default" title="Add node from text selection" onclick="new_atom_txt_resource_button();">
                             <i class="fa fa-puzzle-piece fa-fw fa-lg"></i>
                         </button>
-                    </span>
                 </div>
                 <div class="form-group">
                     <label>File Name</label>
@@ -145,12 +129,12 @@ function add_tab_resource() {
 function toggle_edit_lock() {
     if( document.getElementById(current_tab).hasAttribute('readonly') ) {
         document.getElementById(current_tab).removeAttribute('readonly');
-        document.getElementById('toggle_edit_lock_icon_' + tab_id ).classList.toggle('fa-lock');
-        document.getElementById('toggle_edit_lock_icon_' + tab_id ).classList.toggle('fa-unlock');       
+        document.getElementById('toggle_edit_lock_icon_' + current_tab ).classList.toggle('fa-lock');
+        document.getElementById('toggle_edit_lock_icon_' + current_tab ).classList.toggle('fa-unlock');      
     }
     else {
         document.getElementById(current_tab).setAttribute('readonly', 'readonly');
-        document.getElementById('toggle_edit_lock_icon_' + tab_id ).classList.toggle('fa-unlock');
-        document.getElementById('toggle_edit_lock_icon_' + tab_id ).classList.toggle('fa-lock');
+        document.getElementById('toggle_edit_lock_icon_' + current_tab ).classList.toggle('fa-unlock');
+        document.getElementById('toggle_edit_lock_icon_' + current_tab ).classList.toggle('fa-lock');
     }
 }

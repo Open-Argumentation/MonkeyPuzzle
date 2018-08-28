@@ -136,3 +136,34 @@
         min-height: 100vh;
     }
 
+    .resource_pane_tab_head {
+        overflow: hidden;
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+    }
+
+    .resource_pane_tab_head button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+    .resource_pane_tab_head button:hover {
+        background-color: #ddd;
+    }
+
+    .resource_pane_tab_head button.active {
+        background-color: #ccc;
+    }
+
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border-top: none;
+    }
+
