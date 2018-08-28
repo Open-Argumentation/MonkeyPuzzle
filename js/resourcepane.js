@@ -6,7 +6,7 @@ function set_active_tab(tab_id) {
     if(tabs.length > 0){
         current_tab = tab_id.substring( 0, tab_id.indexOf("_body") );
         var i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
+        tabcontent = document.getElementsByClassName("resource_pane_tab_content");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none";
         }
@@ -48,7 +48,7 @@ function add_tab(load_id=null, content='',title='') {
 
     // Create the tab body using a multiline declaration enclosed in backticks
     var tab_body = $(`
-        <div id="` + tab_id + `_body" class="tabcontent">
+        <div id="` + tab_id + `_body" class="resource_pane_tab_content">
             <form>
                 <div class="form-group">
                         <button type="button" class="btn btn-default" onclick="remove_tab()" title="Remove this tab from the resource pane">

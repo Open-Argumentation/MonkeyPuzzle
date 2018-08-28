@@ -161,7 +161,7 @@
         background-color: #ccc;
     }
 
-    .tabcontent {
+    .resource_pane_tab_content {
         display: none;
         padding: 6px 12px;
         border-top: none;
