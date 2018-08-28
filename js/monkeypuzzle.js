@@ -19,7 +19,7 @@ var focused = null;
 var undo_stack = [];
 var redo_stack = [];
 var edit_atom = null;
-var resource_pane_viewable_state = false;
+var resource_pane_viewable_state = true;
 
 var cola_params = {
     name: "cola",
@@ -47,7 +47,6 @@ function initialise() {
         cy_data = export_cytoscape(import_json(current_sadface_doc));
         initCytoscape();
     }
-    //cy.pan({ x: 0, y: 200 });
 }
 
 function loadJSON(json_value) {
@@ -646,6 +645,8 @@ cm = cy.contextMenus({
         layout.stop();
         layout.options.eles = cy.elements();
         layout.run();
+        cy.center();
+        cy.resize();
     }
 
 
@@ -675,9 +676,7 @@ function build_cola_layout( opts )
  * */
 
 
-mt.bind("a", function() {
-    $("#newAtomModal").modal("show");
-});
+mt.bind("a", function() { $("#newAtomModal").modal("show"); });
 
 mt.bind("d", function() {
     selected.forEach(function(node) {
@@ -686,34 +685,13 @@ mt.bind("d", function() {
     selected = [];
 });
 
-mt.bind("f", function() {
-    console.log("FIX NODE PLACEMENT");
-});
-
-mt.bind("m", function() {
-    toggle_menu(); 
-});
-
-mt.bind("r", function() {
-    $( "#resource-pane" ).toggle();
-    $( "#splitter" ).toggle();
-});
-
-mt.bind("s", function() {
-    console.log("SCALE SELECTED NODE");
-});
-
-mt.bind("t", function() {
-    console.log("TOGGLE TEXT LABEL VISIBILITY");
-});
-
-mt.bind(["command+z","ctrl+z"], function() {
-    undo();
-});
-
-mt.bind(["command+y","ctrl+y"], function() {
-    redo();
-});
+mt.bind("f", function() { console.log("FIX NODE PLACEMENT"); });
+mt.bind("m", function() { toggle_menu(); });
+mt.bind("r", function() { toggle_resource_pane(); });
+mt.bind("s", function() { console.log("SCALE SELECTED NODE"); });
+mt.bind("t", function() { console.log("TOGGLE TEXT LABEL VISIBILITY"); });
+mt.bind(["command+z","ctrl+z"], function() { undo(); });
+mt.bind(["command+y","ctrl+y"], function() { redo(); });
 
 
 /*
@@ -792,22 +770,8 @@ function toggle_menu()
 {
     if (slideout.isOpen()) { slideout.close(); }
     else { slideout.open(); }
-}
-
-function toggle_resource_pane()
-{
-    if(resource_pane_viewable_state == true)
-    {
-        $('#resource-pane').children().hide(); 
-        $('#resource-pane').hide(); 
-        resource_pane_viewable_state = false;
-    }
-    else
-    {
-        $('#resource-pane').show(); 
-        $('#resource-pane').children().show();
-        resource_pane_viewable_state = true;
-    }
+    cy.center();
+    cy.resize();
 }
 
 /*
@@ -822,30 +786,12 @@ function new_atom_modal() {
     add_new_atom_node(new_content);
 }
 
-$("#newAtomModal").on("shown.bs.modal", function () {
-    $("#new_atom_content").focus();
-});
-
-$("#newAtomModal").on("hidden.bs.modal", function(e) {
-    $("#new_atom_content").val("").end();
-});
-
-$("#newSchemeModal").on("shown.bs.modal", function () {
-    $("#sel1").focus();
-});
-
-$("#editContentModal").on("show.bs.modal", function() {
-
-});
-
-$("#editMetadataModal").on("show.bs.modal", function() {
-
-});
-
-
-$("#resource_text").blur(function() {
-    console.log("blur");
-});
+$("#newAtomModal").on("shown.bs.modal", function () { $("#new_atom_content").focus(); });
+$("#newAtomModal").on("hidden.bs.modal", function(e) { $("#new_atom_content").val("").end(); });
+$("#newSchemeModal").on("shown.bs.modal", function () { $("#sel1").focus(); });
+$("#editContentModal").on("show.bs.modal", function() { });
+$("#editMetadataModal").on("show.bs.modal", function() { });
+$("#resource_text").blur(function() { console.log("blur"); });
 
 /*
  *
@@ -867,3 +813,20 @@ function new_atom_txt_resource_button()
     else { console.log("Not a valid text source") }
 }
 
+function toggle_resource_pane()
+{
+    if(resource_pane_viewable_state == true)
+    {
+        $('#resource-pane').children().hide(); 
+        $('#resource-pane').hide(); 
+        resource_pane_viewable_state = false;
+    }
+    else
+    {
+        $('#resource-pane').show(); 
+        $('#resource-pane').children().show();
+        resource_pane_viewable_state = true;
+    }
+    cy.center();
+    cy.resize();
+}
