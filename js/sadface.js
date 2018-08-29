@@ -977,6 +977,7 @@ function update_resource(resource_id, content, title) {
     Given an ID for an existing resource, update the content and metadata of the resource.
     Updates the resource in sd;
     */
+
     if (resource_id && (content || title)) {
         var resource = get_resource(resource_id);
         if (resource !== null && resource !== undefined) {

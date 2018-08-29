@@ -11,3 +11,5 @@ $("#newSchemeModal").on("shown.bs.modal", function () { $("#sel1").focus(); });
 $("#editContentModal").on("show.bs.modal", function() { });
 
 $("#editMetadataModal").on("show.bs.modal", function() { });
+
+$("#resource_pane_selection_modal").on("shown.bs.modal", function () { $("#resource_type").focus(); });

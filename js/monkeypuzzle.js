@@ -504,18 +504,6 @@ function redo() {
     }
 }
 
-function change_title(tab_id) {
-    var title = document.getElementById("title_"+tab_id).value;
-    update_resource(tab_id, null, title);
-    update_local_storage();
-}
-
-function change_textarea(tab_id) {
-    var text = document.getElementById(tab_id).value;
-    update_resource(tab_id, text, null);
-    update_local_storage();
-}
-
 function dragover_handler(ev) {
      ev.preventDefault();
      ev.dataTransfer.dropEffect = "move";
