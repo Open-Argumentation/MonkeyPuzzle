@@ -424,7 +424,7 @@ function add_new_atom_node(content) {
     ]);
     node = cy.getElementById(atom_id.toString() );
     node.qtip({
-        content: "Nothing to see here... yet",
+        content: function(){return 'ID: '+this.id()},
         position: {
             my: "top center",
             at: "bottom center"
