@@ -44,42 +44,51 @@ function initCytoscape() {
         ready: function(){ window.cy = this; },
         elements: JSON.parse(cy_data),
         style:[
-            { selector: "node", style: {
-                "content": "data(content)",
-                "text-opacity": 0.6,
-                "width" : "auto",
-                "height" : "auto",
-                "text-valign": "bottom",
-                "text-halign": "right",
-                "text-outline-color": "#eee",
-                "text-outline-width": 3
+            {   selector: "node", 
+                style: {
+                    "content": "data(content)",
+                    "text-opacity": 0.7,
+                    "width" : "auto",
+                    "height" : "auto",
+                    "text-valign": "bottom",
+                    "text-halign": "right",
+                    "text-outline-color": "#eee",
+                    "text-outline-width": 3
+              }
+            },
+            {   selector: "[typeshape]", 
+                style: {
+                    "shape":"data(typeshape)"
                 }
             },
-            { selector: "[typeshape]", style: {
-                "shape":"data(typeshape)"
+            {   selector: "node[typeshape='diamond']", 
+                style: {
+                    'background-color': '#CC9900'
                 }
             },
-
-            { selector: "edge", style: {
-                "line-color": "#9dbaea",
-                "target-arrow-shape": "triangle",
-                "target-arrow-color": "#9dbaea",
-                "curve-style": "bezier"
+            {   selector: "edge", 
+                style: {
+                    "line-color": "#9dbaea",
+                    "target-arrow-shape": "triangle",
+                    "target-arrow-color": "#9dbaea",
+                    "curve-style": "bezier"
                 }
             },
-            { selector: ":selected", style: {
-                "border-width":"3",
-                "border-color":"#333333"
+            {   selector: ":selected", 
+                style: {
+                    "border-width":"1",
+                    "border-color":"black",
+                    "background-color": "#3399CC"
                 }
             },
-            {
-                selector: ".atom-label", style:{
+            {   selector: ".atom-label", 
+                style:{
                     "text-wrap": "wrap",
                     "text-max-width": 160
                 }
             },
-            {
-                selector: ".scheme-label", style:{
+            {   selector: ".scheme-label", 
+                style:{
                     "text-wrap": "wrap",
                     "text-max-width": 160
                 }
