@@ -60,7 +60,7 @@ function new_atom_txt_resource_button() {
         if(focused.parentNode.id == "textarea"){
             var elem = document.getElementById(focused.id);
             var selection = elem.value.substring(elem.selectionStart, elem.selectionEnd);
-            if(selection != null){
+            if(selection != null || selection != undefined){
                 add_new_atom_node(selection);
                 elem.selectionStart = elem.selectionEnd;
                 clear_focus();

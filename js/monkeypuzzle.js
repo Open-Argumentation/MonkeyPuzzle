@@ -520,9 +520,12 @@ function drop_handler(ev) {
     ev.preventDefault();
     position = {x: ev.clientX-280, y: ev.clientY+200};
     var selection = get_selected_text();
-    add_new_atom_node(selection);
-    clear_selection();
-    clear_focus();
+    if(selection != null || selection != undefined){
+        add_new_atom_node(selection);
+        clear_selection();
+        clear_focus();
+    }
+    else { console.log("Not a valid text selection."); }
 }
 
 function merge_nodes() {
