@@ -21,7 +21,7 @@ function add_text_resource_body(tab_id) {
                         </button>
                 </div>
                 <div class="form-group">
-                    <label>File Name</label>
+                    <label></label>
                     <textarea id="title_` + tab_id + `" type="text" rows="1" style="resize: none;" class="form-control" placeholder="The name of this resource..." onchange="change_title('` + tab_id + `')"></textarea> 
                     <label>Content</label>
                     <div id="textarea">
@@ -55,15 +55,17 @@ function change_textarea(tab_id) {
     set_text_resource_content(tab_id, text)
 }
 
-function new_atom_txt_resource_button() {   
+function new_atom_txt_resource_button() {
     if(focused != null || focused != undefined){
         if(focused.parentNode.id == "textarea"){
-            selected_text = get_selected_text();
-            if(selected_text != null){
-                add_new_atom_node(selected_text);
+            var elem = document.getElementById(focused.id);
+            var selection = elem.value.substring(elem.selectionStart, elem.selectionEnd);
+            if(selection != null){
+                add_new_atom_node(selection);
+                elem.selectionStart = elem.selectionEnd;
+                clear_focus();
             }
         }
-        focused == null;
     }
     else { console.log("Not a valid text source") }
 }

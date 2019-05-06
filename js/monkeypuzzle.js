@@ -442,17 +442,14 @@ function add_new_atom_node(content) {
 }
 
 function get_selected_text() {
-    var selected_text = undefined;
-    if (window.getSelection().toString().length>0)
+    if(document.activeElement.tagName.toLowerCase() == "textarea")
     {
-        if(window.getSelection().baseNode.id=="textarea")
-        {
-            selected_text = window.getSelection().toString();
-            clear_selection();
-            return selected_text;
-        }
+        var selectedTextArea = document.activeElement;
+        var selection = selectedTextArea.value.substring(
+            selectedTextArea.selectionStart, selectedTextArea.selectionEnd);
+        selectedTextArea.selectionStart = selectedTextArea.selectionEnd;
     }
-    return null;
+    return selection;
 }
 
 function clear_selection() {
@@ -460,10 +457,11 @@ function clear_selection() {
         if (window.getSelection().empty) {  // Chrome
             window.getSelection().empty();
         } 
-        else if (window.getSelection().removeAllRanges) {  // Firefox
+        if (window.getSelection().removeAllRanges) {  // Firefox
             window.getSelection().removeAllRanges();
         }
-        } else if (document.selection) {  // IE?
+    } 
+    if (document.selection) {  // IE?
         document.selection.empty();
     }
 }
@@ -521,7 +519,10 @@ function dragover_handler(ev) {
 function drop_handler(ev) {
     ev.preventDefault();
     position = {x: ev.clientX-280, y: ev.clientY+200};
-    add_new_atom_node(get_selected_text());
+    var selection = get_selected_text();
+    add_new_atom_node(selection);
+    clear_selection();
+    clear_focus();
 }
 
 function merge_nodes() {
