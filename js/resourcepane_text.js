@@ -21,7 +21,7 @@ function add_text_resource_body(tab_id) {
                         </button>
                 </div>
                 <div class="form-group">
-                    <label></label>
+                    <label>Title</label>
                     <textarea id="title_` + tab_id + `" type="text" rows="1" style="resize: none;" class="form-control" placeholder="The name of this resource..." onchange="change_title('` + tab_id + `')"></textarea> 
                     <label>Content</label>
                     <div id="textarea">
