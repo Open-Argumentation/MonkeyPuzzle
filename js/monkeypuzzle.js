@@ -53,7 +53,7 @@ function initCytoscape() {
                     "text-valign": "bottom",
                     "text-halign": "right",
                     "text-outline-color": "#eee",
-                    "text-outline-width": 3
+                    "text-outline-width": 1
               }
             },
             {   selector: "[typeshape]", 
@@ -64,6 +64,18 @@ function initCytoscape() {
             {   selector: "node[typeshape='diamond']", 
                 style: {
                     'background-color': '#CC9900'
+                }
+            },
+            {
+                selector: "node[typeshape='diamond'][content='Conflict']",
+                style: {
+                    'background-color': 'red'
+                }
+            },
+            {
+                selector: "node[typeshape='diamond'][content='Support']",
+                style: {
+                    'background-color': 'green'
                 }
             },
             {   selector: "edge", 
@@ -627,7 +639,7 @@ function add_new_scheme_node() {
 
     cy.add([
         {group: "nodes", data: {id: scheme_id.toString(),
-            content: scheme, typeshape: "diamond" }, classes: "scheme-label", locked: false, position: position}
+            content: scheme, type: "scheme", typeshape: "diamond" }, classes: "scheme-label", locked: false, position: position}
     ]);
     update_local_storage();
 }
