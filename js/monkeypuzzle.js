@@ -145,7 +145,7 @@ function initCytoscape() {
 
                 if (targetNode[0].source().data().type == "atom" && targetNode[0].target().data().type == "atom")
                 {
-                    var scheme = add_scheme("Default Support");
+                    var scheme = add_scheme("Support");
                     var scheme_id = scheme.id;
                     var scheme_content = scheme.name;
                     //remove the automatically generated edge
