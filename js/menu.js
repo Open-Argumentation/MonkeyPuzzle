@@ -29,6 +29,8 @@ function download_png()
     if(filename.length == 0){ filename = "default"}
     filename+=".png";
     
+    set_png()
+
     var link = document.getElementById("download_png");
     link.download = filename;
 }
