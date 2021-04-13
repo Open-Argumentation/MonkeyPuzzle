@@ -352,9 +352,7 @@ function initCytoscape() {
         running = false;
         
         set_png()
-
-        var jpg = cy.jpg({ full: true });
-        $('#download_jpg').attr('href', jpg);
+        set_jpg()
     });
 
     $(".resource-pane").resizable({
@@ -483,6 +481,11 @@ function set_focus(element) {
 
 function clear_focus(){
     focused = null;
+}
+
+function set_jpg(){
+    var jpg = cy.jpg({ full: true });
+    $('#download_jpg').attr('href', jpg);
 }
 
 function set_png(){
