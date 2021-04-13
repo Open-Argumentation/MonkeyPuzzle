@@ -40,6 +40,8 @@ function download_jpg()
     var filename = document.getElementById("export_filename").value;
     if(filename.length == 0){ filename = "default"}
     filename+=".jpg";
+
+    set_jpg();
     
     var link = document.getElementById("download_jpg");
     link.download = filename;
