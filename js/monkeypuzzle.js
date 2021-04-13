@@ -351,8 +351,7 @@ function initCytoscape() {
     cy.on("layoutstop", function(){
         running = false;
         
-        var png = cy.png({ full: true });
-        $('#download_png').attr('href', png);
+        set_png()
 
         var jpg = cy.jpg({ full: true });
         $('#download_jpg').attr('href', jpg);
@@ -484,6 +483,11 @@ function set_focus(element) {
 
 function clear_focus(){
     focused = null;
+}
+
+function set_png(){
+    var png = cy.png({ full: true });
+    $('#download_png').attr('href', png);
 }
 
 function update_local_storage() {
