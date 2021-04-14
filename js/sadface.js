@@ -223,7 +223,7 @@ function add_sadface_metadata(key, value) {
     Add metadata, a key:value pair to the base sadface doc
     */
     if (key && value) {
-        sd.metadata[key] = value;
+        sd.metadata.core[key] = value;
     }
 }
 
