@@ -327,20 +327,24 @@ function initCytoscape() {
                   create_named_argument();
               }
           }
+
         ]
     });
 
     cy.on("unselect", "node", function (e){
         selected.pop(e);
         cm.hideMenuItem("merge_nodes");
+        cm.hideMenuItem("group_nodes");
     });
 
     cy.on("select", "node", function (e){
         selected.push(e);
         if(selected.length>1) {
             cm.showMenuItem("merge_nodes");
+            cm.showMenuItem("group_nodes");
         } else {
             cm.hideMenuItem("merge_nodes");
+            cm.hideMenuItem("group_nodes");
         }
     });
 
