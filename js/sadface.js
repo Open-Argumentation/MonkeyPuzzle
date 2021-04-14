@@ -940,7 +940,7 @@ function update_id(id) {
     moving analysed argument data between formats whilst maintaining original metadata.
     */
     if (id) {
-        sd.id = id;
+        sd.metadata.core.id = id;
     }
 }
 
