@@ -708,7 +708,7 @@ function new_sadface() {
 
     Returns: A dict representing the new SADFace document
     */
-    var new_doc = {"id":new_uuid(), "analyst_name":a_name, "analyst_email":a_email, "created":now(), "edited":now(), "metadata":{}, "resources":[], "nodes":[], "edges":[]};
+    var new_doc =  {"metadata":{ "core": {"id":new_uuid(), "analyst_name":a_name, "analyst_email":a_email, "created":now(), "edited":now()}, "notes":"", "title":"", "description":"", "version":"0.2" }, "resources":[], "nodes":[], "edges":[]};
     return new_doc;
 }
 
