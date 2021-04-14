@@ -237,22 +237,18 @@ function initCytoscape() {
             onClickFunction: function (event) {
                 var target = event.target || event.cyTarget;
                 if (selected.length !== 0) {
-                    selected.forEach(function(node) {
-                        delete_nodes(node);
-                    });
-                    selected = [];
-                } else {
                     if (target.data().type=="atom") {
                         delete_nodes(event);
-                        target.remove();
                     } else if (target.data().typeshape=="diamond"){
                         delete_nodes(event);
-                        target.remove();
+                    } else if (target.data().type=="compound"){
+                        delete_node(event);
                     } else {
                         delete_edge(target.id());
-                        update_local_storage();
-                        target.remove();
                     }
+                    update_local_storage();
+                    target.remove();
+                    selected = [];
                 }
             },
             hasTrailingDivider: false
