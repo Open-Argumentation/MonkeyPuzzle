@@ -683,15 +683,4 @@ function mp_reset()
     clear_local_storage();
 }
 
-function set_analyst_name()
-{
-    analyst_name = document.getElementById('analyst_name_textarea').value;
-    update_analyst_name(analyst_name);
-}
-
-function set_analyst_email()
-{
-    analyst_email = document.getElementById('analyst_email_textarea').value;
-    update_analyst_email(analyst_email);
-}
 
