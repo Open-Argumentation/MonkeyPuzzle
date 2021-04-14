@@ -930,7 +930,7 @@ function update_created(timestamp) {
     maintaining original metadata.
     */
     if (timestamp) {
-        sd.timestamp = timestamp;
+        sd.metadata.core.timestamp = timestamp;
     }
 }
 
