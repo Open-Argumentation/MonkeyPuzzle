@@ -872,7 +872,7 @@ function update_analyst_email(analystemail) {
     Updates the name of the argument analyst in the SADFace doc to the supplied name
     */
     if (analystemail) {
-        sd.analyst_email = analystemail;
+        sd.metadata.core.analyst_email = analystemail;
     }
 }
 
