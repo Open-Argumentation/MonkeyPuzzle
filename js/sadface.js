@@ -951,7 +951,7 @@ function update_edited(timestamp) {
     whilst maintaining original metadata.
     */
     if (timestamp) {
-        sd.edited = timestamp;
+        sd.metadata.core.edited = timestamp;
     }
 }
 
