@@ -881,7 +881,7 @@ function update_analyst_name(analystname) {
     Updates the name of the argument analyst in the SADFace doc to the supplied name
     */
     if (analystname) {
-        sd.analyst_name = analystname;
+        sd.metadata.core.analyst_name = analystname;
     }
 }
 
