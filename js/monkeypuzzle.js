@@ -450,6 +450,43 @@ function add_new_atom_node(content) {
     update_local_storage();
 }
 
+
+function create_named_argument(){
+
+    var new_atom = add_atom("Squandering Argument");
+    var atom_id = new_atom.id;
+    var atom_id_str = atom_id.toString();
+     cy.add([
+        {group: "nodes", data: {id: atom_id_str,
+            content: "Squandering Argument", type: "compound", typeshape: "rectangle", metadata: "so meta" }, 
+            classes: "atom-label"}
+    ]);
+    node = cy.getElementById(atom_id.toString() );
+    node.qtip({
+        content: function(){return 'ID: '+this.id()},
+        position: {
+            my: "top center",
+            at: "bottom center"
+        },
+        style: {
+            classes: "qtip-bootstrap",
+            tip: {
+                width: 16,
+                height: 8
+            }
+        }
+    });
+        
+     selected.forEach(function(node){
+        node.target[0].move({
+            parent: cy.getElementById(atom_id_str).id()
+        });
+
+     });
+
+     update_local_storage();
+}
+
 function get_selected_text() {
     if(document.activeElement.tagName.toLowerCase() == "textarea")
     {
