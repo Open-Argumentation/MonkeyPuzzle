@@ -324,8 +324,7 @@ function initCytoscape() {
               show: false,
               coreAsWell: true,
               onClickFunction: function (event) {
-                  create_named_argument();
-              }
+                  $("#newCompoundModal").modal("show");              }
           }
 
         ]
@@ -461,14 +460,14 @@ function add_new_atom_node(content) {
 }
 
 
-function create_named_argument(){
+function create_compound_argument(name){
 
-    var new_atom = add_atom("Squandering Argument");
+    var new_atom = add_atom(name);
     var atom_id = new_atom.id;
     var atom_id_str = atom_id.toString();
      cy.add([
         {group: "nodes", data: {id: atom_id_str,
-            content: "Squandering Argument", type: "compound", typeshape: "rectangle", metadata: "so meta" }, 
+            content: name, type: "compound", typeshape: "rectangle", metadata: "so meta" }, 
             classes: "atom-label"}
     ]);
     node = cy.getElementById(atom_id.toString() );
