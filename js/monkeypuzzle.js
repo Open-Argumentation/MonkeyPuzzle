@@ -217,7 +217,7 @@ function initCytoscape() {
                 $("#editMetadataModal").modal("show");
                 edit_atom = target;
             },
-            hasTrailingDivider: true
+            hasTrailingDivider: false
           },
           {
             id: "change-scheme",
@@ -228,7 +228,7 @@ function initCytoscape() {
                 $("#editSchemeModal").modal("show");
                 edit_atom = target;
             },
-            hasTrailingDivider: true
+            hasTrailingDivider: false
           },
           {
             id: "remove",
@@ -255,7 +255,7 @@ function initCytoscape() {
                     }
                 }
             },
-            hasTrailingDivider: true
+            hasTrailingDivider: false
           },
           {
             id: "add-atom",
@@ -277,14 +277,14 @@ function initCytoscape() {
                 document.getElementById("sel1").options.selectedIndex=0;
                 $("#newSchemeModal").modal("show");
             },
-            hasTrailingDivider: true
+            hasTrailingDivider: false
           },
           {
             id: "redraw",
             title: "redraw",
             coreAsWell: true,
             onClickFunction: function (event) { redraw_visualisation(); },
-            hasTrailingDivider: true
+            hasTrailingDivider: false
           },
           {
             id: "undo",
@@ -309,7 +309,7 @@ function initCytoscape() {
                 cm.hideMenuItem("redo");
               }
             },
-            hasTrailingDivider: true
+            hasTrailingDivider: false
           },
           {
               id: "merge_nodes",
