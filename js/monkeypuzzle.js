@@ -717,7 +717,6 @@ function delete_nodes(event) {
             ++i;
         }
     });
-    update_local_storage();
 }
 
 function redraw_visualisation() {
