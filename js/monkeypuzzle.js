@@ -688,10 +688,17 @@ function add_new_scheme_node() {
     update_local_storage();
 }
 
+function delete_node(event){
+    var target = event.target || event.cyTarget;
+        var id = target.id();
+        target.children().move({parent : (target.parent().id() ? target.parent().id() : null)});
+        delete_atom(id);
+
+}
+
 function delete_nodes(event) {
     var target = event.target || event.cyTarget;
     var id = target.id();
-    removed = target.remove();
     delete_atom(id);
     var i = 0;
     var sds = get_sd();
