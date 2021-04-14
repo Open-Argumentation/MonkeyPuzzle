@@ -316,6 +316,16 @@ function initCytoscape() {
               onClickFunction: function (event) {
                   merge_nodes();
               }
+          },
+          {
+              id: "group_nodes",
+              title: "Make Compound Argument",
+              selector: "node",
+              show: false,
+              coreAsWell: true,
+              onClickFunction: function (event) {
+                  create_named_argument();
+              }
           }
         ]
     });
