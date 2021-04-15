@@ -56,6 +56,11 @@ function initCytoscape() {
                     "text-outline-width": 1
               }
             },
+            {   selector: "node[type='compound']", 
+                style: {
+                    'background-opacity': 0.333,
+                }
+            },
             {   selector: "[typeshape]", 
                 style: {
                     "shape":"data(typeshape)"
@@ -76,21 +81,6 @@ function initCytoscape() {
                 selector: "node[typeshape='diamond'][content='Support']",
                 style: {
                     'background-color': 'green'
-                }
-            },
-            {
-                selector: 'node:parent',
-                css: {
-                    "content": "data(content)",
-                    'background-opacity': 0.333,
-                    'label': "data(name)",
-                    "text-opacity": 0.7,
-                    "width" : "auto",
-                    "height" : "auto",
-                    "text-valign": "bottom",
-                    "text-halign": "right",
-                    "text-outline-color": "#eee",
-                    "text-outline-width": 1
                 }
             },
             {   selector: "edge", 
@@ -126,6 +116,7 @@ function initCytoscape() {
                     "text-max-width": 160
                 }
             }
+
             ],
             boxSelectionEnabled: false,
             autounselectify: false,
@@ -149,7 +140,10 @@ function initCytoscape() {
                 width: 16,
                 height: 8
             }
-        }
+        },
+        show: { event: 'mouseover' },
+        hide: { event: 'mouseout' }
+
     });
 
     cy.elements("node[type = \"compound\"]").qtip({
@@ -164,7 +158,28 @@ function initCytoscape() {
                 width: 16,
                 height: 8
             }
-        }
+        },
+        show: { event: 'mouseover' },
+        hide: { event: 'mouseout' }
+
+    });
+
+    cy.elements("node[type = \"scheme\"]").qtip({
+        content: function(){return 'ID: '+this.id()},
+        position: {
+            my: "top center",
+            at: "bottom center"
+        },
+        style: {
+            classes: "qtip-bootstrap",
+            tip: {
+                width: 16,
+                height: 8
+            }
+        },
+        show: { event: 'mouseover' },
+        hide: { event: 'mouseout' }
+
     });
 
 
@@ -405,12 +420,6 @@ function initCytoscape() {
         selected.push(e);
     });
 
-    cy.on("unselect", "node", function (e){
-        selected.pop(e);
-        cm.hideMenuItem("merge_nodes");
-        cm.hideMenuItem("group_nodes");
-    });
-
     cy.on("unselect", "edge", function (e){
         selected.pop(e);
     });
@@ -420,6 +429,7 @@ function initCytoscape() {
         //when cytoscape is tapped remove any focus from HTML elements like the tab textareas
         //this mainly helps with keybinds
         $(":focus").blur();
+        
     });
 
     cy.on("layoutstart", function(){
