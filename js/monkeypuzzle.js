@@ -395,7 +395,7 @@ function initCytoscape() {
           {
               id: "group_nodes",
               title: "make compound argument",
-              selector: "node",
+              selector: "node[type = \"atom\"],node[type = \"scheme\"]",
               show: false,
               coreAsWell: true,
               onClickFunction: function (event) {
@@ -419,6 +419,11 @@ function initCytoscape() {
     cy.on("select", "edge", function (e){
         selected.push(e);
     });
+
+    cy.on("unselect", "node", function (e){
+        selected.pop(e);
+    });
+
 
     cy.on("unselect", "edge", function (e){
         selected.pop(e);
