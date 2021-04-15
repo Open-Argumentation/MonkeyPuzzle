@@ -23,5 +23,6 @@ mt.bind("m", function() { toggle_menu(); });
 mt.bind("r", function() { toggle_resource_pane(); });
 mt.bind("s", function() { console.log("SCALE SELECTED NODE"); });
 mt.bind("t", function() { $("#resource_pane_selection_modal").modal("show"); });
+mt.bind("c", function() { if(selected.length>1) {$("#newCompoundModal").modal("show"); }});
 mt.bind(["command+z","ctrl+z"], function() { undo(); });
 mt.bind(["command+y","ctrl+y"], function() { redo(); });
