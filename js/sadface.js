@@ -189,6 +189,37 @@ function add_atom_metadata(atom_id, key, value) {
     }
 }
 
+function add_compound(name) {
+    /*
+    Create a new named compound atom & add it to the SADFace document
+
+    Returns: a dict
+    */
+    if (name) {
+        var compound = new_compound(name);
+        sd.nodes.push(compound);
+        return compound;
+    }
+}
+
+
+function add_compound_child(parent_id, child_id) {
+    /*
+    Add a child node (identified by child_id) to the children array of the
+    compound (identified by parent_id)
+
+    Returns: nothing
+    */
+    if (parent_id && child_id) {
+        compound_node = get_node(parent_id);
+        child_node = get_node(child_id);
+        if ((compound_node !== null) && (child_node !== null)) {
+            compound_node.children.push(child_id);
+        }
+    }
+}
+
+
 function add_resource(content) {
     /*
     Create a new resource dict using the supplied content string
