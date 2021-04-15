@@ -146,24 +146,6 @@ function initCytoscape() {
 
     });
 
-    cy.elements("node[type = \"compound\"]").qtip({
-        content: function(){return 'ID: '+this.id()},
-        position: {
-            my: "top center",
-            at: "bottom center"
-        },
-        style: {
-            classes: "qtip-bootstrap",
-            tip: {
-                width: 16,
-                height: 8
-            }
-        },
-        show: { event: 'mouseover' },
-        hide: { event: 'mouseout' }
-
-    });
-
     cy.elements("node[type = \"scheme\"]").qtip({
         content: function(){return 'ID: '+this.id()},
         position: {
@@ -182,6 +164,24 @@ function initCytoscape() {
 
     });
 
+
+ /*   cy.elements("node[type = \"compound\"]").qtip({
+        content: function(){return 'ID: '+this.id()},
+        position: {
+            my: "top center",
+            at: "bottom center"
+        },
+        style: {
+            classes: "qtip-bootstrap",
+            tip: {
+                width: 16,
+                height: 8
+            }
+        },
+        show: { event: 'click' },
+        hide: { event: 'click' }
+
+    });*/
 
    cy.edgehandles({
         toggleOffOnLeave: true,
@@ -555,7 +555,7 @@ function create_compound_argument(name){
             classes: "compound-label"}
     ]);
     node = cy.getElementById(compound_id.toString() );
-    node.qtip({
+/*    node.qtip({
         content: function(){return 'ID: '+this.id()},
         position: {
             my: "top center",
@@ -568,17 +568,18 @@ function create_compound_argument(name){
                 height: 8
             }
         }
-    });
+    });*/
         
-     selected.forEach(function(node){
+    selected.forEach(function(node){
         add_compound_child(compound_id, node.target[0].data("id"))
         node.target[0].move({
             parent: cy.getElementById(compound_id_str).id()
         });
 
-     });
+    });
 
-     update_local_storage();
+    selected = [];
+    update_local_storage();
 }
 
 function get_selected_text() {
