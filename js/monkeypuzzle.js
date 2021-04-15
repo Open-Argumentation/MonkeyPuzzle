@@ -134,55 +134,73 @@ function initCytoscape() {
 
    cy.edgehandles({
         toggleOffOnLeave: true,
-        handleNodes: "node",
+        handleNodes: "node[type = \"atom\"],node[typeshape = \"diamond\"]",
         handleSize: 10,
         handleColor: "orange",
         handleHitThreshold: 8,
         handleLineWidth: 5,
-        //handleLineType: "flat",
         handleOutlineColor: "grey",
-        edgeType: function(){ return "flat"; },
+        edgeType: function(sourceNode, targetNode){ 
+            if (targetNode.data.type == "compound")
+            return "null"; 
+        },
+        edgeType: function( sourceNode, targetNode ) {
+            return sourceNode.edgesWith( targetNode ).empty() ? 'flat' : null;
+        },
+        loopAllowed: function( node ){ return false; },
         complete: function(event, sourceNode, targetNode, addedEles){
-            if (targetNode.length !== 0) {
-                var source_id = targetNode[0].source().id();
-                var target_id = targetNode[0].target().id();
+            var source_id = targetNode[0].source().id();
+            var target_id = targetNode[0].target().id();
+            var source_type = targetNode[0].source().data().type;
+            var target_type = targetNode[0].target().data().type;
 
-                //get the mid point between source node and target node
-                var source_position = targetNode[0].source().position();
-                var target_position = targetNode[0].target().position();
+            var source_position = targetNode[0].source().position();
+            var target_position = targetNode[0].target().position();
 
-                position = {};
-                position.x = ((source_position.x + target_position.x)/2);
-                position.y = ((source_position.y + target_position.y)/2);
+            position = {};
+            position.x = ((source_position.x + target_position.x)/2);
+            position.y = ((source_position.y + target_position.y)/2);
 
-                if (targetNode[0].source().data().type == "atom" && targetNode[0].target().data().type == "atom")
-                {
-                    var scheme = add_scheme("Support");
-                    var scheme_id = scheme.id;
-                    var scheme_content = scheme.name;
-                    //remove the automatically generated edge
-                    targetNode.remove();
-                    cy.add([
-                        {group: "nodes", data: {id: scheme_id.toString(),
-                            content: scheme_content, typeshape: "diamond" }, classes: "scheme-label", locked: false, position: position}
-                    ]);
-                    var edge1 = add_edge(source_id, scheme_id);
-                    var edge2 = add_edge(scheme_id, target_id);
-                    cy.add([
-                      { group: "edges", data: { id: edge1.id.toString(), source: source_id, target: scheme_id } },
-                      { group: "edges", data: { id: edge2.id.toString(), source: scheme_id, target: target_id } }
-                    ]);
-                } else {
-                    targetNode.remove();
-                    var edge = add_edge(source_id, target_id);
-                    cy.add([
-                      { group: "edges", data: { id: edge.id.toString(), source: source_id, target: target_id } }
-                    ]);
-                }
-                update_local_storage();
-            } else {
-                targetNode.remove();
-            }
+                    if (source_type === "atom" && target_type === "atom")
+                    {
+                        var scheme = add_scheme("Support");
+                        var scheme_id = scheme.id;
+                        var scheme_content = scheme.name;
+                        targetNode.remove();
+                        cy.add([
+                            {group: "nodes", data: {id: scheme.id.toString(),
+                                content: scheme_content, type: "scheme", typeshape: "diamond" }, 
+                                classes: "scheme-label", locked: false, position: position}
+                        ]);
+                        var edge1 = add_edge(source_id, scheme_id);
+                        var edge2 = add_edge(scheme_id, target_id);
+                        cy.add([
+                          { group: "edges", data: { id: edge1.id.toString(), 
+                                source: source_id, target: scheme_id } },
+                          { group: "edges", data: { id: edge2.id.toString(), 
+                                source: scheme_id, target: target_id } }
+                        ]);
+                    } else if (source_type === "atom" && target_type === "scheme")
+                    {
+                        targetNode.remove();
+                        var edge = add_edge(source_id, target_id);
+                        cy.add([
+                          { group: "edges", data: { id: edge.id.toString(), 
+                                source: source_id, target: target_id } }
+                        ]);
+
+                    } else if (source_type === "scheme" && target_type === "atom")
+                    {
+                        targetNode.remove();
+                        var edge = add_edge(source_id, target_id);
+                        cy.add([
+                          { group: "edges", data: { id: edge.id.toString(), source: source_id, target: target_id } }
+                        ]);
+                    }
+                    else {
+                        targetNode.remove();
+                    }
+                    update_local_storage();
         }
     });
     /*
