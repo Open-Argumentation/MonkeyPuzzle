@@ -491,11 +491,20 @@ function export_cytoscape(sadface) {
             n.classes = "atom-label";
             n.data.typeshape = "roundrectangle";
             n.data.content = node.text;
-        } else {
+        } else if (n.data.type === "scheme") {
             n.classes = "scheme-label";
             n.data.typeshape = "diamond";
             n.data.content = node.name;
+        } else if (n.data.type === "compound") {
+            n.classes = "atom-label";
+            n.data.typeshape = "rectangle";
+            n.data.content = node.name;
+            node.children.forEach(function(child_id) {
+                child_node_idx = cy.nodes.findIndex(x => x.data.id === child_id)
+                cy.nodes[child_node_idx].data.parent = node.id;
+            });
         }
+
         
         cy.nodes.push(n);
     });
