@@ -462,15 +462,15 @@ function add_new_atom_node(content) {
 
 function create_compound_argument(name){
 
-    var new_atom = add_atom(name);
-    var atom_id = new_atom.id;
-    var atom_id_str = atom_id.toString();
+    var new_compound = add_compound(name);
+    var compound_id = new_compound.id;
+    var compound_id_str = compound_id.toString();
      cy.add([
-        {group: "nodes", data: {id: atom_id_str,
+        {group: "nodes", data: {id: compound_id_str,
             content: name, type: "compound", typeshape: "rectangle", metadata: "so meta" }, 
             classes: "atom-label"}
     ]);
-    node = cy.getElementById(atom_id.toString() );
+    node = cy.getElementById(compound_id.toString() );
     node.qtip({
         content: function(){return 'ID: '+this.id()},
         position: {
@@ -487,8 +487,9 @@ function create_compound_argument(name){
     });
         
      selected.forEach(function(node){
+         add_compound_child(compound_id, node.target[0].data("id"))
         node.target[0].move({
-            parent: cy.getElementById(atom_id_str).id()
+            parent: cy.getElementById(compound_id_str).id()
         });
 
      });
