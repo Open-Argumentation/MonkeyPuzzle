@@ -546,7 +546,7 @@ function create_compound_argument(name){
     var compound_id_str = compound_id.toString();
      cy.add([
         {group: "nodes", data: {id: compound_id_str,
-            content: name, type: "compound", typeshape: "rectangle", metadata: "so meta" }, 
+            content: name, type: "compound", typeshape: "roundrectangle", metadata: "so meta" }, 
             classes: "compound-label"}
     ]);
     node = cy.getElementById(compound_id.toString() );
