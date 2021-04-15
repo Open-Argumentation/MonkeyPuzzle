@@ -354,12 +354,6 @@ function initCytoscape() {
         ]
     });
 
-    cy.on("unselect", "node", function (e){
-        selected.pop(e);
-        cm.hideMenuItem("merge_nodes");
-        cm.hideMenuItem("group_nodes");
-    });
-
     cy.on("select", "node", function (e){
         selected.push(e);
         if(selected.length>1) {
@@ -371,12 +365,18 @@ function initCytoscape() {
         }
     });
 
-    cy.on("unselect", "edge", function (e){
-        selected.pop(e);
-    });
-
     cy.on("select", "edge", function (e){
         selected.push(e);
+    });
+
+    cy.on("unselect", "node", function (e){
+        selected.pop(e);
+        cm.hideMenuItem("merge_nodes");
+        cm.hideMenuItem("group_nodes");
+    });
+
+    cy.on("unselect", "edge", function (e){
+        selected.pop(e);
     });
 
 
@@ -384,7 +384,6 @@ function initCytoscape() {
         //when cytoscape is tapped remove any focus from HTML elements like the tab textareas
         //this mainly helps with keybinds
         $(":focus").blur();
-        
     });
 
     cy.on("layoutstart", function(){
