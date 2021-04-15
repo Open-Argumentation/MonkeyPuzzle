@@ -134,7 +134,7 @@ function initCytoscape() {
 
    cy.edgehandles({
         toggleOffOnLeave: true,
-        handleNodes: "node[type = \"atom\"],node[typeshape = \"diamond\"]",
+        handleNodes: "node[type = \"atom\"],node[type = \"scheme\"]",
         handleSize: 10,
         handleColor: "orange",
         handleHitThreshold: 8,
@@ -240,7 +240,7 @@ function initCytoscape() {
           {
             id: "change-scheme",
             title: "change scheme",
-            selector: "node[typeshape = \"diamond\"]",
+            selector: "node[type = \"scheme\"]",
             onClickFunction: function (event) {
                 var target = event.target || event.cyTarget;
                 $("#editSchemeModal").modal("show");
@@ -254,15 +254,21 @@ function initCytoscape() {
             selector: "node, edge",
             onClickFunction: function (event) {
                 var target = event.target || event.cyTarget;
+                console.log(selected);
                 if (selected.length !== 0) {
                     if (target.data().type=="atom") {
+                        console.log("delete atom")
                         delete_nodes(event);
-                    } else if (target.data().typeshape=="diamond"){
+                    } else if (target.data().type=="scheme"){
+                        console.log("delete scheme")
                         delete_nodes(event);
                     } else if (target.data().type=="compound"){
+                        console.log("delete compound")
                         delete_node(event);
                     } else {
+                        console.log("delete edge "+target.id())
                         delete_edge(target.id());
+                        this.cy.remove('#' + target.id());
                     }
                     update_local_storage();
                     target.remove();
@@ -337,7 +343,7 @@ function initCytoscape() {
           },
           {
               id: "group_nodes",
-              title: "Make Compound Argument",
+              title: "make compound argument",
               selector: "node",
               show: false,
               coreAsWell: true,
@@ -365,10 +371,20 @@ function initCytoscape() {
         }
     });
 
+    cy.on("unselect", "edge", function (e){
+        selected.pop(e);
+    });
+
+    cy.on("select", "edge", function (e){
+        selected.push(e);
+    });
+
+
     cy.on("tap", function (e){
         //when cytoscape is tapped remove any focus from HTML elements like the tab textareas
         //this mainly helps with keybinds
         $(":focus").blur();
+        
     });
 
     cy.on("layoutstart", function(){
@@ -505,7 +521,7 @@ function create_compound_argument(name){
     });
         
      selected.forEach(function(node){
-         add_compound_child(compound_id, node.target[0].data("id"))
+        add_compound_child(compound_id, node.target[0].data("id"))
         node.target[0].move({
             parent: cy.getElementById(compound_id_str).id()
         });
@@ -721,7 +737,6 @@ function delete_node(event){
         var id = target.id();
         target.children().move({parent : (target.parent().id() ? target.parent().id() : null)});
         delete_atom(id);
-
 }
 
 function delete_nodes(event) {
