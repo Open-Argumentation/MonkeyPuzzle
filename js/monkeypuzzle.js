@@ -78,6 +78,21 @@ function initCytoscape() {
                     'background-color': 'green'
                 }
             },
+            {
+                selector: 'node:parent',
+                css: {
+                    "content": "data(content)",
+                    'background-opacity': 0.333,
+                    'label': "data(name)",
+                    "text-opacity": 0.7,
+                    "width" : "auto",
+                    "height" : "auto",
+                    "text-valign": "bottom",
+                    "text-halign": "right",
+                    "text-outline-color": "#eee",
+                    "text-outline-width": 1
+                }
+            },
             {   selector: "edge", 
                 style: {
                     "line-color": "#9dbaea",
@@ -88,8 +103,8 @@ function initCytoscape() {
             },
             {   selector: ":selected", 
                 style: {
-                    "border-width":"1",
-                    "border-color":"black",
+                    "line-color": "#3399CC",
+                    "target-arrow-color": "#3399CC",
                     "background-color": "#3399CC"
                 }
             },
@@ -100,6 +115,12 @@ function initCytoscape() {
                 }
             },
             {   selector: ".scheme-label", 
+                style:{
+                    "text-wrap": "wrap",
+                    "text-max-width": 160
+                }
+            },
+            {   selector: ".compound-label", 
                 style:{
                     "text-wrap": "wrap",
                     "text-max-width": 160
@@ -117,6 +138,21 @@ function initCytoscape() {
     layout.run();
 
     cy.elements("node[type = \"atom\"]").qtip({
+        content: function(){return 'ID: '+this.id()},
+        position: {
+            my: "top center",
+            at: "bottom center"
+        },
+        style: {
+            classes: "qtip-bootstrap",
+            tip: {
+                width: 16,
+                height: 8
+            }
+        }
+    });
+
+    cy.elements("node[type = \"compound\"]").qtip({
         content: function(){return 'ID: '+this.id()},
         position: {
             my: "top center",
@@ -501,7 +537,7 @@ function create_compound_argument(name){
      cy.add([
         {group: "nodes", data: {id: compound_id_str,
             content: name, type: "compound", typeshape: "rectangle", metadata: "so meta" }, 
-            classes: "atom-label"}
+            classes: "compound-label"}
     ]);
     node = cy.getElementById(compound_id.toString() );
     node.qtip({
