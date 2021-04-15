@@ -578,6 +578,20 @@ function get_atom(atom_id) {
     }
 }
 
+function get_compound(compound_id) {
+    
+    if (compound_id) {
+        var node;
+        var size = Object.keys(sd.nodes).length;
+        for (var i = 0; i < size; ++i) {
+            node = sd.nodes[i];
+            if (node.id === compound_id) {
+                return node;
+            } 
+        }
+    }
+}
+
 function get_atom_metadata(atom_id) {
     /*
     Retrieve the metadata associated with the supplied atom ID.
@@ -717,6 +731,18 @@ function new_atom(text) {
     if (text) {
         var new_atom = {"id":new_uuid(), "type":"atom", "text":text, "sources":[], "metadata":{}};
         return new_atom;
+    }
+}
+
+function new_compound(name) {
+    /*
+    Creates & returns a new compound dict using the supplied name
+
+    Returns: A dict representing the new compound
+    */
+    if (name) {
+        var new_compound = {"id":new_uuid(), "name":name, "type":"compound", "children": []};
+        return new_compound;
     }
 }
 
