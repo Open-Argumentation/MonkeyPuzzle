@@ -206,6 +206,13 @@ function initCytoscape() {
                         cy.add([
                           { group: "edges", data: { id: edge.id.toString(), source: source_id, target: target_id } }
                         ]);
+                    }  else if (source_type === "scheme" && target_type === "scheme")
+                    {
+                        targetNode.remove();
+                        var edge = add_edge(source_id, target_id);
+                        cy.add([
+                          { group: "edges", data: { id: edge.id.toString(), source: source_id, target: target_id } }
+                        ]);
                     }
                     else {
                         targetNode.remove();
