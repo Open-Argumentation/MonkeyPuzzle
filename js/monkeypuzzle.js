@@ -52,8 +52,6 @@ function initCytoscape() {
                     "height" : "auto",
                     "text-valign": "bottom",
                     "text-halign": "right",
-                    "text-outline-color": "#eee",
-                    "text-outline-width": 1
               }
             },
             {   selector: "node[type='compound']", 
@@ -68,34 +66,34 @@ function initCytoscape() {
             },
             {   selector: "node[typeshape='diamond']", 
                 style: {
-                    'background-color': '#CC9900'
+                    'background-color': '#C58917'       // Cinnamon
                 }
             },
             {
                 selector: "node[typeshape='diamond'][content='Conflict']",
                 style: {
-                    'background-color': 'red'
+                    'background-color': '#FF6347'       // Tomato
                 }
             },
             {
                 selector: "node[typeshape='diamond'][content='Support']",
                 style: {
-                    'background-color': 'green'
+                    'background-color': '#728C00'       // venom green
                 }
             },
             {   selector: "edge", 
                 style: {
-                    "line-color": "#9dbaea",
+                    "line-color": "#B6B6B4",            // Gray Cloud
                     "target-arrow-shape": "triangle",
-                    "target-arrow-color": "#9dbaea",
+                    "target-arrow-color": "#B6B6B4",    // Gray Cloud
                     "curve-style": "bezier"
                 }
             },
             {   selector: ":selected", 
                 style: {
-                    "line-color": "#3399CC",
-                    "target-arrow-color": "#3399CC",
-                    "background-color": "#3399CC"
+                    "line-color":  "#46C7C7",           // Jellyfish
+                    "target-arrow-color": "#46C7C7",
+                    "background-color": "#46C7C7",      // Jellyfish
                 }
             },
             {   selector: ".atom-label", 
