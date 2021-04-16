@@ -508,11 +508,13 @@ function create_compound_argument(name){
     ]);
     node = cy.getElementById(compound_id.toString() );
         
-    selected.forEach(function(node){
-        add_compound_child(compound_id, node.target[0].data("id"))
-        node.target[0].move({
-            parent: cy.getElementById(compound_id_str).id()
-        });
+    selected.forEach(function(selectee){
+        if(selectee.target[0].data("type") == "atom" || selectee.target[0].data("type") == "scheme") {
+            add_compound_child(compound_id, selectee.target[0].data("id"))
+            selectee.target[0].move({
+                parent: cy.getElementById(compound_id_str).id()
+            });
+        }
 
     });
 
