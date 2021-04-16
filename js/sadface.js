@@ -496,8 +496,8 @@ function export_cytoscape(sadface) {
             n.data.typeshape = "diamond";
             n.data.content = node.name;
         } else if (n.data.type === "compound") {
-            n.classes = "atom-label";
-            n.data.typeshape = "rectangle";
+            n.classes = "compound-label";
+            n.data.typeshape = "roundrectangle";
             n.data.content = node.name;
             node.children.forEach(function(child_id) {
                 child_node_idx = cy.nodes.findIndex(x => x.data.id === child_id)
