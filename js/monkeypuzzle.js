@@ -227,6 +227,8 @@ function initCytoscape() {
      *
      * */
     cm = cy.contextMenus({
+        snap: false,
+        preview: false,
         menuItems: [
           {
             id: "edit-content",
@@ -366,7 +368,8 @@ function initCytoscape() {
               show: false,
               coreAsWell: true,
               onClickFunction: function (event) {
-                  $("#newCompoundModal").modal("show");              }
+                  $("#newCompoundModal").modal("show");
+              }
           }
 
         ]
@@ -396,12 +399,10 @@ function initCytoscape() {
         selected.pop(e);
     });
 
-
     cy.on("tap", function (e){
         //when cytoscape is tapped remove any focus from HTML elements like the tab textareas
         //this mainly helps with keybinds
-        $(":focus").blur();
-        
+        $(":focus").blur();        
     });
 
     cy.on("layoutstart", function(){
