@@ -144,9 +144,12 @@ function initCytoscape() {
     layout.run();
 
    cy.edgehandles({
+        snap: false,
+        preview: false,
+        disableBrowserGestures: true,
         toggleOffOnLeave: true,
         handleNodes: "node[type = \"atom\"],node[type = \"scheme\"]",
-        handleSize: 10,
+        handleSize: 12,
         handleColor: "orange",
         handleHitThreshold: 8,
         handleLineWidth: 5,
@@ -227,8 +230,6 @@ function initCytoscape() {
      *
      * */
     cm = cy.contextMenus({
-        snap: false,
-        preview: false,
         menuItems: [
           {
             id: "edit-content",
