@@ -108,7 +108,7 @@ function initCytoscape() {
             {   selector: ":selected", 
                 style: {
                     "line-color":  "#46C7C7",           // Jellyfish
-                    "target-arrow-color": "#46C7C7",
+                    "target-arrow-color": "#46C7C7",    // Jellyfish
                     "background-color": "#46C7C7",      // Jellyfish
                 }
             },
