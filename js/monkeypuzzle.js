@@ -17,7 +17,7 @@ var focused = null;
 var undo_stack = [];
 var redo_stack = [];
 var edit_atom = null;
-var resource_pane_viewable_state = true;
+var resource_pane_viewable_state = false;
 
 initialise_monkeypuzzle();
 
