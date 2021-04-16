@@ -44,7 +44,7 @@ function initCytoscape() {
         ready: function(){ window.cy = this; },
         elements: JSON.parse(cy_data),
         style:[
-            {   selector: "node", 
+            {   selector: "node[type='atom']", 
                 style: {
                     "content": "data(content)",
                     "text-opacity": 0.7,
@@ -57,7 +57,23 @@ function initCytoscape() {
             {   selector: "node[type='compound']", 
                 style: {
                     'background-opacity': 0.333,
+                    "content": "data(content)",
+                    "text-opacity": 0.7,
+                    "width" : "auto",
+                    "height" : "auto",
+                    "text-valign": "bottom",
+                    "text-halign": "right",
                 }
+            },
+            {   selector: "node[type='scheme']", 
+                style: {
+                    "content": "data(content)",
+                    "text-opacity": 0.7,
+                    "width" : "auto",
+                    "height" : "auto",
+                    "text-valign": "bottom",
+                    "text-halign": "right",
+              }
             },
             {   selector: "[typeshape]", 
                 style: {
