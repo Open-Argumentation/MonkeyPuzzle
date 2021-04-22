@@ -913,17 +913,10 @@ function download(filename, text) {
     /*
     Downloads a file given its filename and its text using utf-8 charset
     */
-    console.log("Downloading "+filename);
-    var outfile = document.createElement("a");
-    outfile.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
-    outfile.setAttribute("download", filename);
-
-    outfile.style.display = "none";
-    document.body.appendChild(outfile);
-
-    outfile.click();
-
-    document.body.removeChild(outfile);
+    var dl_link = document.getElementById('export_button');
+    dl_link.href = "data:text/plain;charset=utf-8, " + encodeURIComponent(text);
+    dl_link.download = filename;
+    dl_link.target = "_blank";
 }
 
 function update() {
