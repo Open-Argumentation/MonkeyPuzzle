@@ -21,6 +21,7 @@
         min-width: 20%;
         background-color: #cbc5c1;
         color: #3E3E3B;
+        display:none;
     }
     .splitter {
         flex: 0 0 auto;
@@ -129,6 +130,10 @@
 		position: absolute;
 		overflow: hidden;
 	}
+
+    #loadJSON {
+        display: none;
+    }
 
     #cy {
         position: relative;
