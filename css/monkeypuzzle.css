@@ -5,6 +5,9 @@
         margin: 0 auto;
         overflow: auto;                           
     }
+    i {
+        color: #cbc5c1;
+    }
     .ui-container {
         display: flex;
         flex-direction: row;           
