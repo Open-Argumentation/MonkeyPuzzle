@@ -750,11 +750,7 @@ function delete_nodes(event) {
 }
 
 function redraw_visualisation() {
-    layout.stop();
-    layout.options.eles = cy.elements();
-    layout.run();
-    cy.center();
-    cy.resize();
+    initCytoscape();
 }
 
 function mp_reset()
