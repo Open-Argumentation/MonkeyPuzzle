@@ -496,7 +496,19 @@ function export_cytoscape(sadface) {
             n.data.typeshape = "diamond";
             n.data.content = node.name;
         } else if (n.data.type === "compound") {
-            n.classes = "compound-label";
+        }
+        cy.nodes.push(n);
+    });
+
+    sadface.nodes.forEach(function(node) {
+        var n = {};
+        n.data = {};
+        n.data.id = node.id;
+        n.data.type = node.type;
+
+        if (n.data.type === "atom") {
+        } else if (n.data.type === "scheme") {
+        } else if (n.data.type === "compound") {
             n.data.typeshape = "roundrectangle";
             n.data.content = node.name;
             node.children.forEach(function(child_id) {
@@ -504,10 +516,10 @@ function export_cytoscape(sadface) {
                 cy.nodes[child_node_idx].data.parent = node.id;
             });
         }
-
-        
         cy.nodes.push(n);
     });
+
+
     return JSON.stringify(cy);
 }
 
