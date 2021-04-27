@@ -26,10 +26,17 @@
            <li> <a href="#" id="toggle_resources"><button class="btn btn-default" onclick="toggle_resource_pane()" title="Toggle the visibility of the resources pane">Toggle Resource Pane</button></a></li>
             <li><a href="#" id="clear_storage_button"><button class="btn btn-danger" onclick="$('#confirm_reset_modal').modal('show');" title="Reset MonkeyPuzzle to her initial state">Reset</button></a></li>
             <li><a href="#" id="load_demo_argument_button"><button class="btn btn-default" onclick="load_demo_argument()" title="Load a demonstration SADFace document into MonkeyPuzzle">Load Demo</button></a></li>
-            <li><div class="menu-input"><textarea id="analyst_name_textarea" type="text" rows="1" cols="20" maxlength="40" class="form-control"  placeholder="Name" title="Type your name here..." onchange="set_analyst_name();"></textarea></div></li>
-            <li><div class="menu-input"><textarea id="analyst_email_textarea" type="text" rows="1" cols="20" maxlength="40" class="form-control"  placeholder="Email" title="Type your email address here..." onchange="set_analyst_email();"></textarea></div></li>
       </ul>
       </section>
+
+
+<section class="menu-section">
+        <h3 class="menu-section-title">Analyst Info</h3>
+        <ul class="menu-section-list">
+            <li><div class="menu-input"><textarea id="analyst_name_textarea" type="text" rows="1" cols="20" maxlength="40" class="form-control"  placeholder="Name" title="Type your name here..." onchange="set_analyst_name();"></textarea></div></li>
+            <li><div class="menu-input"><textarea id="analyst_email_textarea" type="text" rows="1" cols="20" maxlength="40" class="form-control"  placeholder="Email" title="Type your email address here..." onchange="set_analyst_email();"></textarea></div></li>
+        </ul>
+        </section>
 
 
     <section class="menu-section">
