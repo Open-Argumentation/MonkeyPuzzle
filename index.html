@@ -49,7 +49,7 @@
 			<span class="upload-span">
 				<a rel="ignore">
 					<div display="inline-block">
-						<input id="loadJSON" style="display:none;" accept=".json" role="button" tabindex="-1000" type="file" class="upload-button" onchange="filemanager('load','json',null,null,null)">
+						<input id="loadJSON" accept=".json" role="button" tabindex="-1000" type="file" class="upload-button" onchange="filemanager('load','json',null,null,null)">
                         <input type="button" class="btn btn-default" value="SADFace" onclick="document.getElementById('loadJSON').click();" title="Load a SADFace formatted JSON document into MonkeyPuzzle"/>
 					</div>
 				</a>
@@ -76,7 +76,7 @@
 
     <main id="panel" class="panel">
     <div class="ui-container">
-        <div class="resource-pane" id="resource-pane" style="display:none;">
+        <div class="resource-pane" id="resource-pane">
             <div class="resource_pane_tab_head" id="resource_pane_tab_head">
                 <button id="add_tab_button" class="add_tab_button" onclick="$('#resource_pane_selection_modal').modal('show');"> 
                     <i class="fa fa-plus-square fa-lg"></i>
