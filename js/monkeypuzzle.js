@@ -54,7 +54,7 @@ function initCytoscape() {
                     "text-halign": "right",
               }
             },
-            {   selector: "node[type='compound']", 
+            {   selector: "node[type='named']", 
                 style: {
                     'background-opacity': 0.333,
                     "content": "data(content)",
@@ -124,7 +124,7 @@ function initCytoscape() {
                     "text-max-width": 160
                 }
             },
-            {   selector: ".compound-label", 
+            {   selector: ".named-label", 
                 style:{
                     "text-wrap": "wrap",
                     "text-max-width": 160
@@ -155,7 +155,7 @@ function initCytoscape() {
         handleLineWidth: 5,
         handleOutlineColor: "grey",
         edgeType: function(sourceNode, targetNode){ 
-            if (targetNode.data.type == "compound")
+            if (targetNode.data.type == "named")
             return "null"; 
         },
         edgeType: function( sourceNode, targetNode ) {
@@ -283,8 +283,8 @@ function initCytoscape() {
                     } else if (target.data().type=="scheme"){
                         console.log("delete scheme")
                         delete_nodes(event);
-                    } else if (target.data().type=="compound"){
-                        console.log("delete compound")
+                    } else if (target.data().type=="named"){
+                        console.log("delete named")
                         delete_node(event);
                     } else {
                         console.log("delete edge "+target.id())
@@ -364,12 +364,12 @@ function initCytoscape() {
           },
           {
               id: "group_nodes",
-              title: "make compound argument",
+              title: "make named argument",
               selector: "node[type = \"atom\"],node[type = \"scheme\"]",
               show: false,
               coreAsWell: true,
               onClickFunction: function (event) {
-                  $("#newCompoundModal").modal("show");
+                  $("#newNamedModal").modal("show");
               }
           }
 
@@ -498,23 +498,23 @@ function add_new_atom_node(content) {
 }
 
 
-function create_compound_argument(name){
+function create_named_argument(name){
 
-    var new_compound = add_compound(name);
-    var compound_id = new_compound.id;
-    var compound_id_str = compound_id.toString();
+    var new_named = add_named(name);
+    var named_id = new_named.id;
+    var named_id_str = named_id.toString();
      cy.add([
-        {group: "nodes", data: {id: compound_id_str,
-            content: name, type: "compound", typeshape: "roundrectangle", metadata: "so meta" }, 
-            classes: "compound-label"}
+        {group: "nodes", data: {id: named_id_str,
+            content: name, type: "named", typeshape: "roundrectangle", metadata: "so meta" }, 
+            classes: "named-label"}
     ]);
-    node = cy.getElementById(compound_id.toString() );
+    node = cy.getElementById(named_id.toString() );
         
     selected.forEach(function(selectee){
         if(selectee.target[0].data("type") == "atom" || selectee.target[0].data("type") == "scheme") {
-            add_compound_child(compound_id, selectee.target[0].data("id"))
+            add_named_child(named_id, selectee.target[0].data("id"))
             selectee.target[0].move({
-                parent: cy.getElementById(compound_id_str).id()
+                parent: cy.getElementById(named_id_str).id()
             });
         }
 

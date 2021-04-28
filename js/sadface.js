@@ -189,32 +189,32 @@ function add_atom_metadata(atom_id, key, value) {
     }
 }
 
-function add_compound(name) {
+function add_named(name) {
     /*
-    Create a new named compound atom & add it to the SADFace document
+    Create a new named named atom & add it to the SADFace document
 
     Returns: a dict
     */
     if (name) {
-        var compound = new_compound(name);
-        sd.nodes.push(compound);
-        return compound;
+        var named = new_named(name);
+        sd.nodes.push(named);
+        return named;
     }
 }
 
 
-function add_compound_child(parent_id, child_id) {
+function add_named_child(parent_id, child_id) {
     /*
     Add a child node (identified by child_id) to the children array of the
-    compound (identified by parent_id)
+    named (identified by parent_id)
 
     Returns: nothing
     */
     if (parent_id && child_id) {
-        compound_node = get_node(parent_id);
+        named_node = get_node(parent_id);
         child_node = get_node(child_id);
-        if ((compound_node !== null) && (child_node !== null)) {
-            compound_node.children.push(child_id);
+        if ((named_node !== null) && (child_node !== null)) {
+            named_node.children.push(child_id);
         }
     }
 }
@@ -491,13 +491,15 @@ function export_cytoscape(sadface) {
             n.classes = "atom-label";
             n.data.typeshape = "roundrectangle";
             n.data.content = node.text;
+            cy.nodes.push(n);
         } else if (n.data.type === "scheme") {
             n.classes = "scheme-label";
             n.data.typeshape = "diamond";
             n.data.content = node.name;
-        } else if (n.data.type === "compound") {
+            cy.nodes.push(n);
+        } else if (n.data.type === "named") {
         }
-        cy.nodes.push(n);
+        
     });
 
     sadface.nodes.forEach(function(node) {
@@ -508,17 +510,18 @@ function export_cytoscape(sadface) {
 
         if (n.data.type === "atom") {
         } else if (n.data.type === "scheme") {
-        } else if (n.data.type === "compound") {
+        } else if (n.data.type === "named") {
+            n.classes = "named-label";
             n.data.typeshape = "roundrectangle";
             n.data.content = node.name;
             node.children.forEach(function(child_id) {
                 child_node_idx = cy.nodes.findIndex(x => x.data.id === child_id)
                 cy.nodes[child_node_idx].data.parent = node.id;
             });
+            cy.nodes.push(n);
         }
-        cy.nodes.push(n);
+        
     });
-
 
     return JSON.stringify(cy);
 }
@@ -599,14 +602,14 @@ function get_atom(atom_id) {
     }
 }
 
-function get_compound(compound_id) {
+function get_named(named_id) {
     
-    if (compound_id) {
+    if (named_id) {
         var node;
         var size = Object.keys(sd.nodes).length;
         for (var i = 0; i < size; ++i) {
             node = sd.nodes[i];
-            if (node.id === compound_id) {
+            if (node.id === named_id) {
                 return node;
             } 
         }
@@ -755,15 +758,15 @@ function new_atom(text) {
     }
 }
 
-function new_compound(name) {
+function new_named(name) {
     /*
-    Creates & returns a new compound dict using the supplied name
+    Creates & returns a new named dict using the supplied name
 
-    Returns: A dict representing the new compound
+    Returns: A dict representing the new named
     */
     if (name) {
-        var new_compound = {"id":new_uuid(), "name":name, "type":"compound", "children": []};
-        return new_compound;
+        var new_named = {"id":new_uuid(), "name":name, "type":"named", "children": []};
+        return new_named;
     }
 }
 
