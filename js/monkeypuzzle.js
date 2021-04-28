@@ -54,7 +54,7 @@ function initCytoscape() {
                     "text-halign": "right",
               }
             },
-            {   selector: "node[type='named']", 
+            {   selector: "node[type='group']", 
                 style: {
                     'background-opacity': 0.333,
                     "content": "data(content)",
@@ -124,7 +124,7 @@ function initCytoscape() {
                     "text-max-width": 160
                 }
             },
-            {   selector: ".named-label", 
+            {   selector: ".group-label", 
                 style:{
                     "text-wrap": "wrap",
                     "text-max-width": 160
@@ -155,7 +155,7 @@ function initCytoscape() {
         handleLineWidth: 5,
         handleOutlineColor: "grey",
         edgeType: function(sourceNode, targetNode){ 
-            if (targetNode.data.type == "named")
+            if (targetNode.data.type == "group")
             return "null"; 
         },
         edgeType: function( sourceNode, targetNode ) {
@@ -283,8 +283,8 @@ function initCytoscape() {
                     } else if (target.data().type=="scheme"){
                         console.log("delete scheme")
                         delete_nodes(event);
-                    } else if (target.data().type=="named"){
-                        console.log("delete named")
+                    } else if (target.data().type=="group"){
+                        console.log("delete group")
                         delete_node(event);
                     } else {
                         console.log("delete edge "+target.id())
@@ -364,12 +364,12 @@ function initCytoscape() {
           },
           {
               id: "group_nodes",
-              title: "make named argument",
+              title: "group nodes",
               selector: "node[type = \"atom\"],node[type = \"scheme\"]",
               show: false,
               coreAsWell: true,
               onClickFunction: function (event) {
-                  $("#newNamedModal").modal("show");
+                  $("#newGroupModal").modal("show");
               }
           }
 
@@ -498,23 +498,23 @@ function add_new_atom_node(content) {
 }
 
 
-function create_named_argument(name){
+function create_group_argument(name){
 
-    var new_named = add_named(name);
-    var named_id = new_named.id;
-    var named_id_str = named_id.toString();
+    var new_group = add_group(name);
+    var group_id = new_group.id;
+    var group_id_str = group_id.toString();
      cy.add([
-        {group: "nodes", data: {id: named_id_str,
-            content: name, type: "named", typeshape: "roundrectangle", metadata: "so meta" }, 
-            classes: "named-label"}
+        {group: "nodes", data: {id: group_id_str,
+            content: name, type: "group", typeshape: "roundrectangle", metadata: "so meta" }, 
+            classes: "group-label"}
     ]);
-    node = cy.getElementById(named_id.toString() );
+    node = cy.getElementById(group_id.toString() );
         
     selected.forEach(function(selectee){
         if(selectee.target[0].data("type") == "atom" || selectee.target[0].data("type") == "scheme") {
-            add_named_child(named_id, selectee.target[0].data("id"))
+            add_group_child(group_id, selectee.target[0].data("id"))
             selectee.target[0].move({
-                parent: cy.getElementById(named_id_str).id()
+                parent: cy.getElementById(group_id_str).id()
             });
         }
 

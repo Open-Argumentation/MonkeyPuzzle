@@ -189,32 +189,32 @@ function add_atom_metadata(atom_id, key, value) {
     }
 }
 
-function add_named(name) {
+function add_group(name) {
     /*
-    Create a new named named atom & add it to the SADFace document
+    Create a new group atom & add it to the SADFace document
 
     Returns: a dict
     */
     if (name) {
-        var named = new_named(name);
-        sd.nodes.push(named);
-        return named;
+        var group = new_group(name);
+        sd.nodes.push(group);
+        return group;
     }
 }
 
 
-function add_named_child(parent_id, child_id) {
+function add_group_child(parent_id, child_id) {
     /*
     Add a child node (identified by child_id) to the children array of the
-    named (identified by parent_id)
+    group (identified by parent_id)
 
     Returns: nothing
     */
     if (parent_id && child_id) {
-        named_node = get_node(parent_id);
+        group_node = get_node(parent_id);
         child_node = get_node(child_id);
-        if ((named_node !== null) && (child_node !== null)) {
-            named_node.children.push(child_id);
+        if ((group_node !== null) && (child_node !== null)) {
+            group_node.children.push(child_id);
         }
     }
 }
@@ -497,7 +497,7 @@ function export_cytoscape(sadface) {
             n.data.typeshape = "diamond";
             n.data.content = node.name;
             cy.nodes.push(n);
-        } else if (n.data.type === "named") {
+        } else if (n.data.type === "group") {
         }
         
     });
@@ -510,8 +510,8 @@ function export_cytoscape(sadface) {
 
         if (n.data.type === "atom") {
         } else if (n.data.type === "scheme") {
-        } else if (n.data.type === "named") {
-            n.classes = "named-label";
+        } else if (n.data.type === "group") {
+            n.classes = "group-label";
             n.data.typeshape = "roundrectangle";
             n.data.content = node.name;
             node.children.forEach(function(child_id) {
@@ -602,14 +602,14 @@ function get_atom(atom_id) {
     }
 }
 
-function get_named(named_id) {
+function get_group(group_id) {
     
-    if (named_id) {
+    if (group_id) {
         var node;
         var size = Object.keys(sd.nodes).length;
         for (var i = 0; i < size; ++i) {
             node = sd.nodes[i];
-            if (node.id === named_id) {
+            if (node.id === group_id) {
                 return node;
             } 
         }
@@ -758,15 +758,15 @@ function new_atom(text) {
     }
 }
 
-function new_named(name) {
+function new_group(name) {
     /*
-    Creates & returns a new named dict using the supplied name
+    Creates & returns a new group dict using the supplied name
 
-    Returns: A dict representing the new named
+    Returns: A dict representing the new group
     */
     if (name) {
-        var new_named = {"id":new_uuid(), "name":name, "type":"named", "children": []};
-        return new_named;
+        var new_group = {"id":new_uuid(), "name":name, "type":"group", "children": []};
+        return new_group;
     }
 }
 
