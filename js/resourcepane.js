@@ -2,7 +2,7 @@ var current_tab = 0;
 var last_number = 1;
 var tabs = [];
 
-function add_tab(load_id=null) {
+function add_tab(load_id=null, type=null) {
 	if (load_id == null) {
         var new_resource = add_resource(' ');
     	tab_id = new_resource.id;
@@ -13,9 +13,7 @@ function add_tab(load_id=null) {
 
     add_resource_header();
 
-    var resource_type_idx = document.getElementById("resource_type").options.selectedIndex;
-    var resource_type_txt = document.getElementById("resource_type").options[resource_type_idx].text;
-    if (resource_type_txt.toLowerCase() === "text") { add_text_resource_body(tab_id); }
+    if (type === "text") { add_text_resource_body(tab_id); }
 
     set_active_tab(tab_id+"_body");
     return tab_id
@@ -36,7 +34,8 @@ function add_resource_header() {
 function load_tab(resource) {
 	if (resource != null) {
 		var tab_id = resource.id;
-        add_tab(tab_id);
+        var resource_type = resource.type;
+        add_tab(tab_id, resource_type);
         set_text_resource_title(tab_id, resource.metadata.title);
         set_text_resource_content(tab_id, resource.content);
 	}
