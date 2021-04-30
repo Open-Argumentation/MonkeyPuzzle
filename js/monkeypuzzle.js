@@ -264,7 +264,8 @@ function initCytoscape() {
             selector: "node[type = \"scheme\"]",
             onClickFunction: function (event) {
                 var target = event.target || event.cyTarget;
-                $("#editSchemeModal").modal("show");
+                create_edit_scheme_modal();
+                $("#edit_scheme_modal").modal("show");
                 edit_atom = target;
             },
             hasTrailingDivider: false
