@@ -17,7 +17,11 @@ mt.bind("d", function() {
     selected = [];
 });
 
-mt.bind("h", function() { $("#help_modal").modal("show"); });
+mt.bind("h", function() {
+    create_help_modal();
+    $("#help_modal").modal("show"); 
+});
+
 mt.bind("m", function() { toggle_menu(); });
 mt.bind("r", function() { toggle_resource_pane(); });
 mt.bind("s", function() { $("#newSchemeModal").modal("show"); });
