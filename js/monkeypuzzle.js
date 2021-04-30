@@ -452,9 +452,10 @@ function loadJSON(json_value) {
     json = import_json(json_value);
     localStorage.setItem("state",JSON.stringify(get_sd()));
     current_sadface_doc = JSON.stringify(get_sd());
-    //load any sources in the stored diagram state
+
+    remove_all_tabs();
     window.onload = function () {
-        loadTabs(json.resources);
+        json.resources.forEach(function(tab) {load_tab(tab);})
     };
     cy_data = export_cytoscape(json);
     if(cy !== null)
@@ -465,11 +466,7 @@ function loadJSON(json_value) {
     }
 }
 
-function loadTabs(tabs) {
-    tabs.forEach(function(tab) {
-       load_tab(tab);
-    });
-}
+
 
 
 /*
