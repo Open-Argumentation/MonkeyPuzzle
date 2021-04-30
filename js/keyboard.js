@@ -24,3 +24,8 @@ mt.bind("s", function() { $("#newSchemeModal").modal("show"); });
 mt.bind("t", function() { $("#resource_pane_selection_modal").modal("show"); });
 mt.bind("g", function() { if(selected.length>1) {$("#newGroupModal").modal("show"); }});
 
+mt.bind("v", function() { 
+    create_sadface_viewer_modal();
+    $("#SADFaceViewerModal").modal("show"); 
+});
+
