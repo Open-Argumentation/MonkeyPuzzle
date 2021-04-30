@@ -248,12 +248,18 @@ function initCytoscape() {
             title: "edit metadata",
             selector: "node[type = \"atom\"]",
             onClickFunction: function (event) {
-                $("#edit_metadata").empty();
+                
+                //$("#edit_metadata").empty();
                 var target = event.target || event.cyTarget;
                 var atom = get_atom(target.id());
-                var textArea = $("<textarea id=\""+target.id()+"_metadata\" class=\"form-control\" rows=\"2\" >"+JSON.stringify(atom.metadata)+"</textarea>");
-                $("#edit_metadata").append(textArea);
-                $("#editMetadataModal").modal("show");
+//                var metadata = ;
+
+                console.log(JSON.stringify(atom.metadata));
+                create_edit_metadata_modal(target.id(), JSON.stringify(atom.metadata));
+                
+//                var textArea = $("<textarea id=\""+target.id()+"_metadata\" class=\"form-control\" rows=\"2\" >"+JSON.stringify(atom.metadata)+"</textarea>");
+//                $("#edit_metadata").append(textArea);
+                $("#edit_metadata_modal").modal("show");
                 edit_atom = target;
             },
             hasTrailingDivider: false
@@ -679,19 +685,6 @@ function edit_atom_content() {
     update_local_storage();
     atom.data("content", content);
     edit_atom = null;
-}
-
-function edit_atom_metadata() {
-    var atom = cy.$("#"+edit_atom.id());
-    var content = document.getElementById(atom.id()+"_metadata").value;
-    if (JSON.parse(content)) {
-        var metadata = JSON.parse(content);
-        update_atom_metadata(atom.id(), metadata);
-        update_local_storage();
-        edit_atom=null;
-    } else {
-        alert("Metadata not in JSON format, unable to update");
-    }
 }
 
 function edit_scheme_content() {
