@@ -249,16 +249,9 @@ function initCytoscape() {
             selector: "node[type = \"atom\"]",
             onClickFunction: function (event) {
                 
-                //$("#edit_metadata").empty();
                 var target = event.target || event.cyTarget;
                 var atom = get_atom(target.id());
-//                var metadata = ;
-
-                console.log(JSON.stringify(atom.metadata));
                 create_edit_metadata_modal(target.id(), JSON.stringify(atom.metadata));
-                
-//                var textArea = $("<textarea id=\""+target.id()+"_metadata\" class=\"form-control\" rows=\"2\" >"+JSON.stringify(atom.metadata)+"</textarea>");
-//                $("#edit_metadata").append(textArea);
                 $("#edit_metadata_modal").modal("show");
                 edit_atom = target;
             },
