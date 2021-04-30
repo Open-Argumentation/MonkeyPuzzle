@@ -77,7 +77,7 @@
     <div class="ui-container">
         <div class="resource-pane" id="resource-pane">
             <div class="resource_pane_tab_head" id="resource_pane_tab_head">
-                <button id="add_tab_button" class="add_tab_button" onclick="$('#resource_pane_selection_modal').modal('show');"> 
+                <button id="add_tab_button" class="add_tab_button" onclick="create_resource_pane_selection_modal(); $('#resource_pane_selection_modal').modal('show');"> 
                     <i class="fa fa-plus-square fa-lg"></i>
                 </button>
             </div>
@@ -293,7 +293,6 @@
 
 <!--
     New Resource Pane Type Selection Modal
--->
 
     <div class="modal fade" id="resource_pane_selection_modal" role="dialog" tabindex='-1'>
         <div class="modal-dialog modal-lg">
@@ -314,7 +313,8 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
+
 
 <!--
     JS Libraries
@@ -335,6 +335,7 @@
 	<script src="js/sadface.js"></script>
     <script src="js/modal_help.js"></script>     
     <script src="js/modal_reset_confirmation.js"></script>
+    <script src="js/modal_resource_pane_selection.js"></script>
     <script src="js/modal_sadface_viewer.js"></script>
     <script src="js/modal_dialogs.js"></script>
     <script src="js/resourcepane.js"></script>

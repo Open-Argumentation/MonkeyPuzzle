@@ -25,7 +25,13 @@ mt.bind("h", function() {
 mt.bind("m", function() { toggle_menu(); });
 mt.bind("r", function() { toggle_resource_pane(); });
 mt.bind("s", function() { $("#newSchemeModal").modal("show"); });
-mt.bind("t", function() { $("#resource_pane_selection_modal").modal("show"); });
+
+mt.bind("t", function() {
+    create_resource_pane_selection_modal();
+    $("#resource_pane_selection_modal").modal("show"); 
+
+});
+
 mt.bind("g", function() { if(selected.length>1) {$("#newGroupModal").modal("show"); }});
 
 mt.bind("v", function() { 
