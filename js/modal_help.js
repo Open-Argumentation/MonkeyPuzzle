@@ -28,6 +28,7 @@ function create_help_modal() {
                         <li><b>v - </b>Display the SADFace document for the current visualisation</li> 
                         <li><b>Cmd/Ctrl-z - </b>Undo</li> 
                         <li><b>Cmd/Ctrl-y - </b>Redo</li>
+                        <li><b>Shift+Drag Pointer then g - </b> Select multiple nodes (atoms + schemes) then group them. </li>
                     </ul> 
                 </div> 
                 <div class="modal-footer"> 
