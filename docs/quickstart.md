@@ -19,3 +19,5 @@ From here there are generally 3 ways of interacting with MonkeyPuzzle:
 3. Create an analysis from an existing text resource. Load the text resource into a resource-pane tab (on the left of the screen, activated using the 'r' key) then select text in the resource tab to delineate atom content and then drag the selection to the visualisation pane or use puzzle piece button to create an atom. Multiple atoms can then be linked together to constuct the visualisation.
 
 In practise, some combination of all three approaches is often used, loading an existing analysis for further work, adding new nodes from scratch when atoms aren't available in the loaded resources (or to deal with enthymemes) and loading up zero or more resource pane tabs to provide source materials for the analytical or construction process.
+
+From here, perhaps start exploring the [rest of the documentation](overview.md)
