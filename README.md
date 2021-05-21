@@ -8,7 +8,7 @@ To get up and running very rapidly, especially if you're already familiar with a
 
 # Documentation #
 
-More in depth documentation is starting to be recorded in the docs folder. The best place to start is the [overview]{docs/overview.md}
+More in depth documentation is starting to be recorded in the docs folder. The best place to start is the [overview](docs/overview.md)
 
 # Online Demonstration #
 
