@@ -4,4 +4,4 @@ A web-technology based user interface for analysing, primarily text based, argum
 
 # Online Demonstration #
 
-There is an online demonstrator located at [http://arg.napier.ac.uk/monkeypuzzle/](http://arg.napier.ac.uk/monkeypuzzle/).
+There is an online demonstrator located at [https://open-argumentation.github.io/MonkeyPuzzle/index.html](https://open-argumentation.github.io/MonkeyPuzzle/index.html).
