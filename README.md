@@ -4,7 +4,7 @@ A web-technology based user interface for analysing, primarily text based, argum
 
 # Quick-Start#
 
-To get up and running very rapidly, especially if you're already familiar with argument analysis, you can use the [docs/quickstart.md](quick start documentation)
+To get up and running very rapidly, especially if you're already familiar with argument analysis, you can use the [quick start documentation](docs/quickstart.md)
 
 # Online Demonstration #
 
