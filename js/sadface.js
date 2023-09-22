@@ -5,6 +5,8 @@ var a_name = "A user";
 var a_email = "user@email.address";
 var f_name = "data";
 
+var sadface_version = "0.5.3.2";
+
 function add_argument(con_text, prem_text, con_id, prem_id) {
     /*
     Syntactic sugar to create an argument structure from a set of texts.
@@ -789,7 +791,7 @@ function new_sadface() {
 
     Returns: A dict representing the new SADFace document
     */
-    var new_doc =  {"metadata":{ "core": {"id":new_uuid(), "analyst_name":a_name, "analyst_email":a_email, "created":now(), "edited":now()}, "notes":"", "title":"", "description":"", "version":"0.2" }, "resources":[], "nodes":[], "edges":[]};
+    var new_doc =  {"metadata":{ "core": {"id":new_uuid(), "analyst_name":a_name, "analyst_email":a_email, "created":now(), "edited":now()}, "notes":"", "title":"", "description":"", "version":sadface_version }, "resources":[], "nodes":[], "edges":[]};
     return new_doc;
 }
 
