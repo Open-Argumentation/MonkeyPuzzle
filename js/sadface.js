@@ -940,7 +940,7 @@ function update() {
     /*
     Updates the last edited timestamp for the SADFace doc to now
     */
-    sd.edited = now();
+    sd.metadata.core.edited = now();
 }
 
 function update_analyst_email(analystemail) {
