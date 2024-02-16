@@ -11,7 +11,9 @@
     .ui-container {
         display: flex;
         flex-direction: row;           
-        overflow: hidden;                   
+        overflow: none;
+        overflow-y: auto;
+        overscroll-behavior: none;
     }
     .resource-pane {
         flex: 0 0 auto;  
