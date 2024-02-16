@@ -22,10 +22,10 @@ function add_text_resource_body(tab_id) {
                 </div>
                 <div class="form-group">
                     <label>Title</label>
-                    <textarea id="title_` + tab_id + `" type="text" rows="1" style="resize: none;" class="form-control" placeholder="The name of this resource..." onchange="change_title('` + tab_id + `')"></textarea> 
+                    <textarea id="title_` + tab_id + `" type="text" rows="1" class="form-control resource_pane_title_text" placeholder="The name of this resource..." onchange="change_title('` + tab_id + `')"></textarea> 
                     <label>Content</label>
                     <div id="textarea">
-                        <textarea id="` + tab_id + `" class="form-control" placeholder="Enter your source text here..." rows="20" onchange="change_textarea('` + tab_id + `')" onfocus="set_focus(this)" style="resize: vertical; min-height:35px;" readonly></textarea>
+                        <textarea id="` + tab_id + `" class="form-control resource_pane_textarea_content" placeholder="Enter your source text here..." onchange="change_textarea('` + tab_id + `')" onfocus="set_focus(this)" readonly></textarea>
                     </div>  
                 </div> 
             </form>

@@ -177,3 +177,15 @@
         border-top: none;
     }
 
+    .resource_pane_title_text {
+        resize: none;
+    }
+
+    .resource_pane_textarea_content {
+        resize: vertical;
+        min-height:25em;
+    }
+
+/*    .resource_pane_file_loader {
+        display:none;
+    }*/
