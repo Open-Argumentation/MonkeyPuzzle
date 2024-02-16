@@ -6,7 +6,7 @@
         overflow: auto;                           
     }
     i {
-        color: #cbc5c1;
+        color: #ccc;
     }
     .ui-container {
         display: flex;
@@ -21,7 +21,7 @@
         width: 300px;
         max-width:75%;
         min-width: 20%;
-        background-color: #cbc5c1;
+        background-color: #ccc;
         color: #3E3E3B;
         display:none;
     }
@@ -40,7 +40,7 @@
         background-color: #fff;
     }
     .menu {
-        background-color: #cbc5c1;
+        background-color: #ccc;
         color: #3E3E3B;
     }
     .menu a { color: #fff; }
