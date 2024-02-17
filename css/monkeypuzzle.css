@@ -187,6 +187,7 @@
         min-height:25em;
     }
 
-/*    .resource_pane_file_loader {
+    input[id^='load']
+    { 
         display:none;
-    }*/
+    }

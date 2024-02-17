@@ -6,7 +6,7 @@ function add_text_resource_body(tab_id) {
                         <button type="button" class="btn btn-default" onclick="remove_tab()" title="Remove this tab from the resource pane">
                             <i class="fa fa-trash fa-fw fa-lg"></i>
                         </button>
-                        <input type="file" id="load` + tab_id + `" style="display:none" accept=".txt" onchange="filemanager('load','txt','` + tab_id + `')"/>
+                        <input type="file" id="load` + tab_id + `" accept=".txt" onchange="filemanager('load','txt','` + tab_id + `')"/>
                         <button type="button" id="load` + tab_id + `_btn" class="btn btn-default" onclick="$('#load` + tab_id + `').trigger('click');" title="Load a text file into this resource tab">
                             <i class="fa fa-upload fa-fw fa-lg"></i>
                         </button>
