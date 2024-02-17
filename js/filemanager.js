@@ -12,7 +12,13 @@ function filemanager(operation, filetype, tab_id)
 				var filename = "tab"+tab_id+"_text.txt";
 			}
 			var text = document.getElementById(tab_id).value;
-			download(filename,text);
+        
+            const a = document.createElement('a')
+            a.href = "data:text/plain;charset=utf-8, " + encodeURIComponent(text);
+            a.download = filename
+            document.body.appendChild(a)
+            a.click()
+            document.body.removeChild(a)
 		}
 		
 		// if it's a JSON file
