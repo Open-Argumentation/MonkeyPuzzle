@@ -183,7 +183,7 @@
 
     .resource_pane_textarea_content {
         resize: vertical;
-        min-height:25em;
+        min-height:35em;
     }
 
     input[id^='load']
