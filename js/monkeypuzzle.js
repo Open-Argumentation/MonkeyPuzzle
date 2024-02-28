@@ -137,7 +137,8 @@ function initCytoscape() {
             autounselectify: false,
             selectionType: "single",
             minZoom: 0.1,
-            maxZoom: 1.5
+            maxZoom: 1.5,
+            wheelSensitivity: 0.1
     });
 
     layout = build_cola_layout();
